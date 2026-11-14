@@ -1,0 +1,215 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nuestra aventura | Estrellas del Saber</title>
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/historia.css">
+</head>
+
+<body>
+
+    <main class="historia">
+
+        <!-- Fondo espacial -->
+        <div class="historia-estrellas" aria-hidden="true"></div>
+
+        <!-- Planetas decorativos -->
+        <div class="historia-decoracion" aria-hidden="true">
+            <div class="planeta-decorativo planeta-morado"></div>
+            <div class="planeta-decorativo planeta-celeste"></div>
+        </div>
+
+        <!-- Estrellas fugaces -->
+        <div class="historia-fugaces" aria-hidden="true">
+            <span class="fugaz"></span>
+            <span class="fugaz"></span>
+            <span class="fugaz"></span>
+        </div>
+
+        <!-- Escena 1: Bienvenida -->
+        <section
+            class="escena escena-activa"
+            id="escena-1"
+            aria-label="Bienvenida de Starly"
+        >
+
+            <div class="escena-contenido escena-bienvenida">
+
+                <div class="zona-bienvenida">
+
+                    <img
+                        src="../img/personajes/starly/starlycohete.webp"
+                        alt="Starly llegando en su nave espacial"
+                        class="starly-nave starly-bienvenida"
+                    >
+
+                </div>
+
+                <div class="historia-dialogo burbuja-dialogo">
+
+                    <h1>¡Hola, tripulante!</h1>
+
+                    <p>
+                        Soy Starly. ¡Qué alegría que estés aquí!
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Escena 2: Viaje a la Tierra -->
+        <section
+            class="escena"
+            id="escena-2"
+            aria-label="Viaje hacia la Tierra"
+            aria-hidden="true"
+        >
+
+            <div class="escena-contenido escena-viaje">
+
+                <div class="zona-viaje">
+
+                    <img
+                        src="../img/personajes/otros/tierran1.webp"
+                        alt="Planeta Tierra sonriente"
+                        class="planeta-tierra"
+                    >
+
+                    <img
+                        src="../img/personajes/starly/starlycohete.webp"
+                        alt="Starly viajando hacia la Tierra"
+                        class="starly-nave starly-viajando"
+                    >
+
+                </div>
+
+                <div class="historia-dialogo burbuja-dialogo">
+
+                    <h2>¡Mira, la Tierra!</h2>
+
+                    <p>
+                        ¡Allí descubriremos tus derechos!
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Escena 3: Aterrizaje -->
+        <section
+            class="escena"
+            id="escena-3"
+            aria-label="Aterrizaje y comienzo de la exploración"
+            aria-hidden="true"
+        >
+
+            <div class="escena-contenido escena-aterrizaje">
+
+                <!-- Suelo -->
+                <div class="suelo" aria-hidden="true"></div>
+
+                <!-- Aterrizaje -->
+                <div class="zona-aterrizaje">
+
+                    <img
+                        src="../img/personajes/starly/starlycohete.webp"
+                        alt="Starly aterrizando en la Tierra"
+                        class="starly-nave starly-aterrizando"
+                    >
+
+                    <!-- Nube de polvo -->
+                    <div class="polvo" aria-hidden="true">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+
+                    <!-- Starly explorador -->
+                    <img
+                        src="../img/personajes/starly/starly_explorador.webp"
+                        alt="Starly con su sombrero de explorador"
+                        class="starly-explorador"
+                    >
+
+                </div>
+
+                <!-- Diálogo final -->
+                <div class="historia-dialogo burbuja-dialogo dialogo-final">
+
+                    <h2>¡Llegamos, tripulante!</h2>
+
+                    <p>
+                        ¡Vamos a descubrir nuestros derechos!
+                    </p>
+
+                    <button
+                        type="button"
+                        class="boton-explorar"
+                        id="btn-explorar"
+                        disabled
+                    >
+                        ¡Vamos! 🚀
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Controles -->
+        <div class="historia-controles">
+
+            <button
+                type="button"
+                class="boton-control"
+                id="btn-repetir"
+                aria-label="Repetir narración"
+                title="Repetir narración"
+            >
+                🔊
+            </button>
+
+            <button
+                type="button"
+                class="boton-saltar"
+                id="btn-saltar"
+            >
+                Saltar ⏭
+            </button>
+
+        </div>
+
+
+        <!-- Progreso -->
+        <div class="historia-progreso" aria-label="Progreso de la historia">
+            <span class="punto punto-activo"></span>
+            <span class="punto"></span>
+            <span class="punto"></span>
+        </div>
+
+    </main>
+
+    <!-- JavaScript -->
+    <script src="../js/historia.js" defer></script>
+
+</body>
+
+</html>

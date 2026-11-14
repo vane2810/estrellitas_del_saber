@@ -1,0 +1,1155 @@
+
+/* ==========================================
+   ESTRELLAS DEL SABER
+   HISTORIA ANIMADA
+========================================== */
+
+
+/* ==========================================
+   1. CONTENEDOR PRINCIPAL
+========================================== */
+
+.historia {
+    position: relative;
+    isolation: isolate;
+
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 320px;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 35%,
+            rgba(132, 103, 215, 0.4),
+            transparent 55%
+        ),
+        linear-gradient(
+            180deg,
+            #241653,
+            var(--color-espacio)
+        );
+}
+
+
+/* ==========================================
+   2. FONDO DE ESTRELLAS
+========================================== */
+
+.historia-estrellas {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+
+    pointer-events: none;
+
+    background-image:
+        radial-gradient(2px 2px at 30px 40px, #FFFFFF 98%, transparent),
+        radial-gradient(3px 3px at 160px 100px, #FFD84D 98%, transparent),
+        radial-gradient(2px 2px at 280px 190px, #55D6F5 98%, transparent),
+        radial-gradient(2px 2px at 90px 240px, #FFFFFF 98%, transparent),
+        radial-gradient(2px 2px at 350px 60px, #FFFFFF 98%, transparent);
+
+    background-size: 400px 290px;
+
+    animation: estrellas-historia 4s ease-in-out infinite alternate;
+}
+
+@keyframes estrellas-historia {
+    from {
+        opacity: 0.4;
+    }
+
+    to {
+        opacity: 0.95;
+    }
+}
+
+
+/* ==========================================
+   3. PLANETAS DECORATIVOS
+========================================== */
+
+.historia-decoracion {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.planeta-decorativo {
+    position: absolute;
+    border-radius: 50%;
+
+    opacity: 0.65;
+
+    box-shadow:
+        inset -12px -12px 18px rgba(0, 0, 0, 0.15),
+        0 0 30px rgba(255, 255, 255, 0.08);
+
+    animation: planeta-flotar 7s ease-in-out infinite;
+}
+
+.planeta-morado {
+    top: 14%;
+    right: 9%;
+
+    width: 90px;
+    height: 90px;
+
+    background: radial-gradient(
+        circle at 30% 30%,
+        #C6A8FF,
+        #8467D7 55%,
+        #49309A
+    );
+}
+
+.planeta-morado::after {
+    content: "";
+
+    position: absolute;
+    top: 42%;
+    left: -25%;
+
+    width: 150%;
+    height: 20%;
+
+    border: 6px solid rgba(220, 204, 255, 0.75);
+    border-radius: 50%;
+
+    transform: rotate(-25deg);
+}
+
+.planeta-celeste {
+    bottom: 17%;
+    left: 8%;
+
+    width: 65px;
+    height: 65px;
+
+    background: radial-gradient(
+        circle at 30% 30%,
+        #D7F8FF,
+        #55D6F5 55%,
+        #258ECA
+    );
+
+    animation-delay: -3s;
+}
+
+@keyframes planeta-flotar {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-12px);
+    }
+}
+
+
+/* ==========================================
+   4. ESTRELLAS FUGACES
+========================================== */
+
+.historia-fugaces {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.fugaz {
+    position: absolute;
+
+    width: 4px;
+    height: 4px;
+
+    border-radius: 50%;
+    background: #FFFFFF;
+
+    box-shadow:
+        0 0 8px #FFFFFF,
+        0 0 15px var(--color-celeste);
+
+    opacity: 0;
+
+    animation: fugaz-historia 7s linear infinite;
+}
+
+.fugaz::after {
+    content: "";
+
+    position: absolute;
+    top: 50%;
+    right: 50%;
+
+    width: 65px;
+    height: 2px;
+
+    border-radius: 50%;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--color-celeste),
+        #FFFFFF
+    );
+
+    transform: translateY(-50%);
+}
+
+.fugaz:nth-child(1) {
+    top: 20%;
+    left: 32%;
+
+    animation-duration: 5s;
+    animation-delay: -1s;
+}
+
+.fugaz:nth-child(2) {
+    top: 40%;
+    left: 85%;
+
+    animation-duration: 7s;
+    animation-delay: -3s;
+}
+
+.fugaz:nth-child(3) {
+    top: 70%;
+    left: 42%;
+
+    animation-duration: 6s;
+    animation-delay: -4s;
+}
+
+@keyframes fugaz-historia {
+    0%, 5% {
+        opacity: 0;
+        transform: translate(0, 0) rotate(-25deg);
+    }
+
+    7% {
+        opacity: 1;
+    }
+
+    17% {
+        opacity: 0;
+        transform: translate(-140px, 65px) rotate(-25deg);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-140px, 65px) rotate(-25deg);
+    }
+}
+
+
+/* ==========================================
+   5. ESCENAS
+========================================== */
+
+.escena {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding:
+        max(75px, env(safe-area-inset-top))
+        20px
+        max(65px, env(safe-area-inset-bottom));
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition:
+        opacity 0.6s ease,
+        visibility 0.6s;
+}
+
+.escena-activa {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.escena-contenido {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
+    max-width: 900px;
+
+    gap: 25px;
+
+    text-align: center;
+}
+
+
+/* ==========================================
+   6. NAVE DE STARLY
+========================================== */
+
+.starly-nave {
+    display: block;
+
+    width: clamp(150px, 24vw, 240px);
+    max-width: 100%;
+    height: auto;
+
+    object-fit: contain;
+
+    filter: drop-shadow(
+        0 15px 20px rgba(0, 0, 0, 0.25)
+    );
+}
+
+
+/* ==========================================
+   7. PRIMERA ESCENA
+========================================== */
+
+.escena-bienvenida {
+    gap: 30px;
+}
+
+.zona-bienvenida {
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    min-height: 270px;
+}
+
+.starly-bienvenida {
+    width: clamp(170px, 26vw, 260px);
+
+    opacity: 0;
+    transform: translateX(-110vw) rotate(-15deg);
+}
+
+.escena-activa .starly-bienvenida {
+    animation:
+        starly-entrar 2.2s ease-out forwards,
+        starly-flotar 3s ease-in-out 2.2s infinite;
+}
+
+@keyframes starly-entrar {
+    0% {
+        opacity: 0;
+        transform: translateX(-110vw) rotate(-15deg) scale(0.8);
+    }
+
+    25% {
+        opacity: 1;
+    }
+
+    75% {
+        transform: translateX(25px) rotate(6deg) scale(1.05);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0) rotate(0) scale(1);
+    }
+}
+
+@keyframes starly-flotar {
+    0%, 100% {
+        transform: translateY(0) rotate(-3deg);
+    }
+
+    50% {
+        transform: translateY(-14px) rotate(3deg);
+    }
+}
+
+
+/* ==========================================
+   8. BURBUJAS DE DIÁLOGO
+========================================== */
+
+.burbuja-dialogo {
+    position: relative;
+    z-index: 4;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: min(100%, 580px);
+
+    padding: 22px 30px;
+
+    border: 3px solid #DCD0FF;
+    border-radius: 28px;
+
+    background: #FFFFFF;
+
+    box-shadow:
+        0 8px 0 rgba(73, 48, 154, 0.25),
+        0 15px 30px rgba(0, 0, 0, 0.2);
+
+    text-align: center;
+}
+
+.burbuja-dialogo::before {
+    content: "";
+
+    position: absolute;
+    top: -20px;
+    left: 50%;
+
+    width: 30px;
+    height: 30px;
+
+    background: #FFFFFF;
+
+    border-top: 3px solid #DCD0FF;
+    border-left: 3px solid #DCD0FF;
+
+    transform: translateX(-50%) rotate(45deg);
+}
+
+.burbuja-dialogo h1,
+.burbuja-dialogo h2 {
+    position: relative;
+    z-index: 1;
+
+    font-family: var(--fuente-titulos);
+    font-size: clamp(1.8rem, 4vw, 2.7rem);
+    font-weight: 600;
+    line-height: 1.15;
+
+    color: var(--color-morado);
+}
+
+.burbuja-dialogo p {
+    position: relative;
+    z-index: 1;
+
+    margin-top: 8px;
+
+    font-family: var(--fuente-textos);
+    font-size: clamp(1rem, 2.2vw, 1.3rem);
+    font-weight: 700;
+    line-height: 1.4;
+
+    color: var(--color-espacio);
+}
+
+
+/* Aparición del diálogo de bienvenida */
+
+.escena-bienvenida .burbuja-dialogo {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.escena-activa .escena-bienvenida .burbuja-dialogo {
+    animation: burbuja-aparecer 0.7s ease-out 2.5s forwards;
+}
+
+@keyframes burbuja-aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+/* ==========================================
+   9. SEGUNDA ESCENA
+========================================== */
+
+.escena-viaje {
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.zona-viaje {
+    position: relative;
+
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+}
+
+.planeta-tierra {
+    position: absolute;
+    top: 8%;
+    left: 50%;
+
+    width: clamp(150px, 23vw, 260px);
+    height: auto;
+
+    opacity: 0;
+    transform: translateX(-50%) scale(0.4);
+
+    filter: drop-shadow(
+        0 0 20px rgba(85, 214, 245, 0.25)
+    );
+}
+
+.escena-activa .planeta-tierra {
+    animation: tierra-acercarse 8s ease-out forwards;
+}
+
+@keyframes tierra-acercarse {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) scale(0.4);
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1.25);
+    }
+}
+
+.starly-viajando {
+    position: absolute;
+    top: 35%;
+    left: 15%;
+    z-index: 2;
+
+    width: clamp(110px, 18vw, 190px);
+}
+
+.escena-activa .starly-viajando {
+    animation: nave-viajar 8s ease-in-out forwards;
+}
+
+@keyframes nave-viajar {
+    0% {
+        transform: translate(-40px, 30px) rotate(-10deg);
+    }
+
+    50% {
+        transform: translate(80px, -25px) rotate(5deg);
+    }
+
+    100% {
+        transform: translate(150px, 20px) scale(0.7);
+    }
+}
+
+.escena-viaje .burbuja-dialogo {
+    flex-shrink: 0;
+
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.escena-activa .escena-viaje .burbuja-dialogo {
+    animation: burbuja-aparecer 0.7s ease-out 1s forwards;
+}
+
+
+/* ==========================================
+   10. TERCERA ESCENA
+========================================== */
+
+#escena-3 {
+    background: linear-gradient(
+        180deg,
+        #80D8F5 0%,
+        #C5F2FF 65%,
+        #DDF8D5 100%
+    );
+}
+
+.escena-aterrizaje {
+    justify-content: flex-end;
+    gap: 15px;
+}
+
+.suelo {
+    position: absolute;
+    bottom: -12%;
+    left: -15%;
+
+    width: 130%;
+    height: 35%;
+
+    border-radius: 50% 50% 0 0;
+
+    background: linear-gradient(
+        180deg,
+        #80D86C,
+        #43B95C
+    );
+}
+
+.zona-aterrizaje {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+
+    width: 100%;
+    height: 55%;
+    flex-shrink: 0;
+}
+
+.starly-aterrizando {
+    position: absolute;
+    bottom: 12%;
+    left: 50%;
+
+    width: clamp(130px, 20vw, 210px);
+
+    opacity: 0;
+    transform: translate(-50%, -220px);
+}
+
+.escena-activa .starly-aterrizando {
+    animation: nave-aterrizar 4.5s ease-in forwards;
+}
+
+@keyframes nave-aterrizar {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -220px) scale(0.8);
+    }
+
+    65% {
+        opacity: 1;
+        transform: translate(-50%, 0) scale(1);
+    }
+
+    85% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-50%, 0) scale(1);
+    }
+}
+
+
+/* ==========================================
+   11. NUBE DE POLVO
+========================================== */
+
+.polvo {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+
+    width: 240px;
+    height: 100px;
+
+    opacity: 0;
+    transform: translateX(-50%);
+
+    pointer-events: none;
+}
+
+.polvo span {
+    position: absolute;
+    bottom: 0;
+
+    width: 65px;
+    height: 65px;
+
+    border-radius: 50%;
+
+    background: #F5E7C7;
+
+    box-shadow:
+        0 0 15px rgba(255, 255, 255, 0.35);
+}
+
+.polvo span:nth-child(1) {
+    left: 0;
+}
+
+.polvo span:nth-child(2) {
+    left: 35px;
+    bottom: 20px;
+}
+
+.polvo span:nth-child(3) {
+    left: 75px;
+    bottom: 5px;
+}
+
+.polvo span:nth-child(4) {
+    left: 110px;
+    bottom: 25px;
+}
+
+.polvo span:nth-child(5) {
+    left: 150px;
+    bottom: 0;
+}
+
+.polvo span:nth-child(6) {
+    left: 180px;
+    bottom: 15px;
+}
+
+.escena-activa .polvo {
+    animation: polvo-aparecer 3s ease-out 3s forwards;
+}
+
+@keyframes polvo-aparecer {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) scale(0.4);
+    }
+
+    25% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1.2);
+    }
+
+    60% {
+        opacity: 0.9;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) scale(1.8);
+    }
+}
+
+
+/* ==========================================
+   12. STARLY EXPLORADOR
+========================================== */
+
+.starly-explorador {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+
+    width: clamp(130px, 19vw, 200px);
+    height: auto;
+
+    opacity: 0;
+    transform: translateX(-50%) scale(0.5);
+
+    filter: drop-shadow(
+        0 10px 12px rgba(0, 0, 0, 0.2)
+    );
+}
+
+.escena-activa .starly-explorador {
+    animation: explorador-aparecer 1s ease-out 5.5s forwards;
+}
+
+@keyframes explorador-aparecer {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) scale(0.5);
+    }
+
+    70% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1.12);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
+    }
+}
+
+
+/* ==========================================
+   13. DIÁLOGO FINAL
+========================================== */
+
+.dialogo-final {
+    flex-shrink: 0;
+
+    opacity: 0;
+    transform: translateY(15px);
+}
+
+.escena-activa .dialogo-final {
+    animation: burbuja-aparecer 0.8s ease 6s forwards;
+}
+
+
+/* ==========================================
+   14. BOTÓN EXPLORAR
+========================================== */
+
+.boton-explorar {
+    min-height: 60px;
+
+    margin-top: 15px;
+    padding: 12px 35px;
+
+    border: none;
+    border-radius: 50px;
+
+    font-family: var(--fuente-titulos);
+    font-size: clamp(1.3rem, 3vw, 1.8rem);
+    font-weight: 600;
+
+    color: var(--color-blanco);
+    background: var(--color-naranja);
+
+    box-shadow:
+        0 6px 0 #B84B20,
+        0 10px 20px rgba(0, 0, 0, 0.2);
+
+    cursor: pointer;
+    touch-action: manipulation;
+}
+
+.boton-explorar:disabled {
+    cursor: default;
+}
+
+.boton-explorar:not(:disabled):active {
+    transform: translateY(4px);
+    box-shadow: 0 2px 0 #B84B20;
+}
+
+
+/* ==========================================
+   15. CONTROLES
+========================================== */
+
+.historia-controles {
+    position: absolute;
+    top: max(20px, env(safe-area-inset-top));
+    left: max(20px, env(safe-area-inset-left));
+    right: max(20px, env(safe-area-inset-right));
+    z-index: 10;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.boton-control,
+.boton-saltar {
+    min-height: 48px;
+
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 30px;
+
+    font-family: var(--fuente-titulos);
+    font-weight: 600;
+
+    color: var(--color-blanco);
+    background: rgba(23, 16, 68, 0.7);
+
+    cursor: pointer;
+    touch-action: manipulation;
+}
+
+.boton-control {
+    width: 52px;
+    font-size: 1.5rem;
+}
+
+.boton-saltar {
+    padding: 10px 20px;
+    font-size: 1.1rem;
+}
+
+
+/* ==========================================
+   16. INDICADORES
+========================================== */
+
+.historia-progreso {
+    position: absolute;
+    bottom: max(18px, env(safe-area-inset-bottom));
+    left: 50%;
+    z-index: 10;
+
+    display: flex;
+    gap: 10px;
+
+    transform: translateX(-50%);
+}
+
+.punto {
+    width: 11px;
+    height: 11px;
+
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.punto-activo {
+    width: 28px;
+    border-radius: 10px;
+    background: var(--color-amarillo);
+}
+
+
+/* ==========================================
+   17. CELULARES
+========================================== */
+
+@media (max-width: 600px) {
+
+    .escena {
+        padding:
+            max(85px, env(safe-area-inset-top))
+            15px
+            max(65px, env(safe-area-inset-bottom));
+    }
+
+    .escena-contenido {
+        gap: 20px;
+    }
+
+    .zona-bienvenida {
+        min-height: 220px;
+    }
+
+    .starly-bienvenida {
+        width: 185px;
+    }
+
+    .burbuja-dialogo {
+        width: min(100%, 360px);
+        padding: 18px 20px;
+        border-radius: 22px;
+    }
+
+    .burbuja-dialogo h1,
+    .burbuja-dialogo h2 {
+        font-size: clamp(1.7rem, 7vw, 2.3rem);
+    }
+
+    .burbuja-dialogo p {
+        font-size: 1.05rem;
+    }
+
+    .planeta-morado {
+        top: 16%;
+        right: -15px;
+
+        width: 65px;
+        height: 65px;
+    }
+
+    .planeta-celeste {
+        bottom: 20%;
+        left: -15px;
+
+        width: 48px;
+        height: 48px;
+    }
+
+    .planeta-tierra {
+        top: 10%;
+        width: 155px;
+    }
+
+    .starly-viajando {
+        top: 38%;
+        left: 5%;
+        width: 115px;
+    }
+
+    .zona-aterrizaje {
+        height: 48%;
+    }
+
+    .starly-aterrizando {
+        width: 150px;
+    }
+
+    .starly-explorador {
+        width: 145px;
+    }
+
+    .polvo {
+        width: 240px;
+    }
+
+    .boton-explorar {
+        min-height: 58px;
+        padding: 12px 25px;
+        font-size: 1.3rem;
+    }
+
+    .fugaz::after {
+        width: 45px;
+    }
+}
+
+
+/* ==========================================
+   18. CELULARES PEQUEÑOS
+========================================== */
+
+@media (max-width: 380px) {
+
+    .zona-bienvenida {
+        min-height: 180px;
+    }
+
+    .starly-bienvenida {
+        width: 150px;
+    }
+
+    .burbuja-dialogo {
+        padding: 15px;
+    }
+
+    .burbuja-dialogo h1,
+    .burbuja-dialogo h2 {
+        font-size: 1.65rem;
+    }
+
+    .burbuja-dialogo p {
+        font-size: 0.95rem;
+    }
+
+    .boton-explorar {
+        min-height: 52px;
+        padding: 10px 20px;
+        font-size: 1.2rem;
+    }
+}
+
+
+/* ==========================================
+   19. CELULARES EN HORIZONTAL
+========================================== */
+
+@media (max-height: 500px) and (orientation: landscape) {
+
+    .escena {
+        padding: 55px 20px 40px;
+    }
+
+    .escena-contenido {
+        gap: 8px;
+    }
+
+    .zona-bienvenida {
+        min-height: 105px;
+    }
+
+    .starly-bienvenida {
+        width: 100px;
+    }
+
+    .burbuja-dialogo {
+        padding: 10px 18px;
+        border-radius: 18px;
+    }
+
+    .burbuja-dialogo h1,
+    .burbuja-dialogo h2 {
+        font-size: 1.5rem;
+    }
+
+    .burbuja-dialogo p {
+        margin-top: 4px;
+        font-size: 0.9rem;
+    }
+
+    .planeta-tierra {
+        top: 0;
+        width: 90px;
+    }
+
+    .starly-viajando {
+        top: 15%;
+        width: 85px;
+    }
+
+    .zona-aterrizaje {
+        height: 48%;
+    }
+
+    .starly-aterrizando,
+    .starly-explorador {
+        width: 90px;
+    }
+
+    .boton-explorar {
+        min-height: 42px;
+        margin-top: 5px;
+        padding: 8px 20px;
+        font-size: 1.05rem;
+    }
+
+    .planeta-decorativo {
+        opacity: 0.3;
+    }
+
+    .historia-progreso {
+        bottom: 10px;
+    }
+}
+
+
+/* ==========================================
+   20. ACCESIBILIDAD
+========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .historia-estrellas,
+    .planeta-decorativo,
+    .fugaz {
+        animation: none;
+    }
+
+    .escena {
+        transition: none;
+    }
+
+    .escena-activa .starly-bienvenida,
+    .escena-activa .escena-bienvenida .burbuja-dialogo,
+    .escena-activa .planeta-tierra,
+    .escena-activa .starly-viajando,
+    .escena-activa .escena-viaje .burbuja-dialogo,
+    .escena-activa .starly-aterrizando,
+    .escena-activa .polvo,
+    .escena-activa .starly-explorador,
+    .escena-activa .dialogo-final {
+        animation-duration: 0.01ms !important;
+        animation-delay: 0ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}

@@ -1,0 +1,155 @@
+/* ==========================================
+   ESTRELLAS DEL SABER
+   ESTILOS GLOBALES
+========================================== */
+
+/* ==========================================
+   TIPOGRAFÍAS LOCALES
+========================================== */
+
+@font-face {
+  font-family: 'Fredoka';
+  src: url('./fonts/Fredoka-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Fredoka';
+  src: url('./fonts/Fredoka-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Nunito';
+  src: url('./fonts/Nunito-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Nunito';
+  src: url('./fonts/Nunito-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ==========================================
+   2. VARIABLES DE COLORES
+========================================== */
+
+:root {
+
+  /* Colores principales */
+  --color-espacio: #171044;
+  --color-morado: #49309A;
+  --color-morado-claro: #8467D7;
+
+  /* Colores de acento */
+  --color-amarillo: #FFD84D;
+  --color-naranja: #FF8745;
+  --color-celeste: #55D6F5;
+
+  /* Colores de texto */
+  --color-blanco: #FFFFFF;
+  --color-blanco-suave: #FFF9F0;
+
+  /* Colores de retroalimentación */
+  --color-acierto: #43C98B;
+  --color-error: #F36B79;
+
+  /* Tipografías */
+  --fuente-titulos: 'Fredoka', sans-serif;
+  --fuente-textos: 'Nunito', sans-serif;
+
+}
+
+
+/* ==========================================
+   3. REINICIO DE ESTILOS
+========================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  font-family: var(--fuente-textos);
+  font-size: 16px;
+
+  color: var(--color-blanco);
+  background-color: var(--color-espacio);
+
+  -webkit-font-smoothing: antialiased;
+}
+
+
+/* ==========================================
+   4. TIPOGRAFÍA GENERAL
+========================================== */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--fuente-titulos);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+p {
+  font-family: var(--fuente-textos);
+  line-height: 1.5;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+
+/* ==========================================
+   5. ELEMENTOS GENERALES
+========================================== */
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-celeste);
+  outline-offset: 4px;
+}

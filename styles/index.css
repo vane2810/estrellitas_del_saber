@@ -1,0 +1,697 @@
+/* ==========================================
+   ESTRELLAS DEL SABER
+   PANTALLA DE INICIO
+========================================== */
+
+
+/* ==========================================
+   1. CONTENEDOR PRINCIPAL
+========================================== */
+
+.inicio {
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    padding: 30px 20px;
+    padding:
+        max(30px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right)) max(30px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(ellipse at 50% 35%,
+            rgba(132, 103, 215, 0.38) 0%,
+            transparent 48%),
+        radial-gradient(ellipse at 15% 75%,
+            rgba(85, 214, 245, 0.12) 0%,
+            transparent 40%),
+        radial-gradient(ellipse at 85% 15%,
+            rgba(132, 103, 215, 0.2) 0%,
+            transparent 35%),
+        linear-gradient(180deg,
+            #241653 0%,
+            #171044 100%);
+}
+
+
+/* ==========================================
+   2. ESTRELLAS DEL FONDO
+========================================== */
+
+.inicio-estrellas {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+
+    pointer-events: none;
+
+    background-image:
+        radial-gradient(2px 2px at 25px 40px, #FFFFFF 98%, transparent),
+        radial-gradient(3px 3px at 140px 120px, #FFD84D 98%, transparent),
+        radial-gradient(2px 2px at 260px 60px, #FFFFFF 98%, transparent),
+        radial-gradient(2px 2px at 80px 210px, #55D6F5 98%, transparent),
+        radial-gradient(3px 3px at 320px 190px, #FFFFFF 98%, transparent),
+        radial-gradient(1px 1px at 190px 250px, #FFFFFF 98%, transparent),
+        radial-gradient(2px 2px at 380px 90px, #FFD84D 98%, transparent);
+
+    background-size: 420px 300px;
+
+    opacity: 0.8;
+
+    animation: estrellas-brillar 4s ease-in-out infinite alternate;
+}
+
+@keyframes estrellas-brillar {
+    from {
+        opacity: 0.4;
+    }
+
+    to {
+        opacity: 0.9;
+    }
+}
+
+
+/* ==========================================
+   3. ESTRELLAS FUGACES
+========================================== */
+
+.inicio-fugaces {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.estrella-fugaz {
+    position: absolute;
+
+    width: 4px;
+    height: 4px;
+
+    border-radius: 50%;
+    background: var(--color-blanco);
+
+    box-shadow:
+        0 0 6px var(--color-blanco),
+        0 0 12px var(--color-celeste);
+
+    opacity: 0;
+
+    animation: fugaz-mover 12s linear infinite;
+}
+
+/* Estela luminosa */
+
+.estrella-fugaz::after {
+    content: "";
+
+    position: absolute;
+    top: 50%;
+    right: 50%;
+
+    width: 70px;
+    height: 2px;
+
+    border-radius: 50%;
+
+    background: linear-gradient(90deg,
+            transparent,
+            var(--color-celeste),
+            var(--color-blanco));
+
+    transform: translateY(-50%);
+}
+
+/* Estrella superior izquierda */
+
+.estrella-fugaz:nth-child(1) {
+    top: 18%;
+    left: 28%;
+
+    animation-duration: 8s;
+    animation-delay: -1s;
+}
+
+/* Estrella superior derecha */
+
+.estrella-fugaz:nth-child(2) {
+    top: 28%;
+    left: 82%;
+
+    animation-duration: 9s;
+    animation-delay: -3s;
+}
+
+/* Estrella inferior izquierda */
+
+.estrella-fugaz:nth-child(3) {
+    top: 75%;
+    left: 38%;
+
+    animation-duration: 7s;
+    animation-delay: -4s;
+}
+
+/* Movimiento diagonal */
+
+@keyframes fugaz-mover {
+
+    0%,
+    5% {
+        opacity: 0;
+        transform: translate(0, 0) rotate(-25deg);
+    }
+
+    7% {
+        opacity: 1;
+    }
+
+    17% {
+        opacity: 0;
+        transform: translate(-140px, 65px) rotate(-25deg);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-140px, 65px) rotate(-25deg);
+    }
+}
+
+
+/* ==========================================
+   4. CONTENIDO PRINCIPAL
+========================================== */
+
+.inicio-contenido {
+    position: relative;
+    z-index: 1;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    max-width: 850px;
+
+    gap: 22px;
+
+    text-align: center;
+}
+
+
+/* ==========================================
+   5. PERSONAJE STARLY
+========================================== */
+
+.inicio-personaje {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+}
+
+.inicio-starly {
+    display: block;
+
+    width: clamp(160px, 21vw, 230px);
+    max-width: 100%;
+    height: auto;
+
+    object-fit: contain;
+
+    filter: drop-shadow(0 12px 25px rgba(0, 0, 0, 0.3));
+
+    animation: starly-flotar 3s ease-in-out infinite;
+}
+
+@keyframes starly-flotar {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(-3deg);
+    }
+
+    50% {
+        transform: translateY(-14px) rotate(3deg);
+    }
+}
+
+
+/* ==========================================
+   6. TÍTULO
+========================================== */
+
+.inicio-titulo {
+    max-width: 800px;
+
+    font-family: var(--fuente-titulos);
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 600;
+    line-height: 1.1;
+
+    color: var(--color-amarillo);
+
+    text-shadow:
+        0 4px 0 #A85D27,
+        0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+
+/* ==========================================
+   7. DESCRIPCIÓN
+========================================== */
+
+.inicio-descripcion {
+    max-width: 600px;
+
+    font-family: var(--fuente-textos);
+    font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+    font-weight: 700;
+    line-height: 1.4;
+
+    color: var(--color-blanco-suave);
+}
+
+
+/* ==========================================
+   8. CONTENEDOR DEL BOTÓN
+========================================== */
+
+.inicio-acciones {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+
+    margin-top: 12px;
+}
+
+
+/* ==========================================
+   9. BOTÓN DESPEGAR
+========================================== */
+
+.inicio-boton-jugar {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    min-width: 220px;
+    min-height: 75px;
+
+    padding: 18px 45px;
+
+    border: none;
+    border-radius: 50px;
+
+    font-family: var(--fuente-titulos);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 600;
+    line-height: 1.2;
+
+    color: var(--color-blanco);
+
+    background: linear-gradient(180deg,
+            #FFA15D,
+            var(--color-naranja));
+
+    box-shadow:
+        0 7px 0 #B84B20,
+        0 12px 25px rgba(0, 0, 0, 0.3);
+
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+
+    animation: boton-pulso 1.8s ease-in-out infinite;
+}
+
+
+/* ==========================================
+   10. ANIMACIÓN DEL BOTÓN
+========================================== */
+
+@keyframes boton-pulso {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.06);
+    }
+}
+
+@media (hover: hover) {
+
+    .inicio-boton-jugar:hover {
+        animation-play-state: paused;
+        transform: scale(1.06);
+    }
+}
+
+.inicio-boton-jugar:active {
+    animation: none;
+
+    transform: translateY(5px) scale(0.98);
+
+    box-shadow:
+        0 2px 0 #B84B20,
+        0 5px 12px rgba(0, 0, 0, 0.2);
+}
+
+
+/* ==========================================
+   11. CELULARES
+========================================== */
+
+@media (max-width: 600px) {
+
+    .inicio {
+        padding:
+            max(25px, env(safe-area-inset-top)) max(15px, env(safe-area-inset-right)) max(25px, env(safe-area-inset-bottom)) max(15px, env(safe-area-inset-left));
+    }
+
+    .inicio-contenido {
+        gap: 18px;
+    }
+
+    .inicio-starly {
+        width: 170px;
+    }
+
+    .inicio-titulo {
+        font-size: clamp(2.4rem, 9vw, 3.5rem);
+    }
+
+    .inicio-descripcion {
+        max-width: 330px;
+        font-size: 1.1rem;
+    }
+
+    .inicio-acciones {
+        margin-top: 10px;
+    }
+
+    .inicio-boton-jugar {
+        min-width: 200px;
+        min-height: 65px;
+
+        padding: 15px 30px;
+
+        font-size: 1.5rem;
+    }
+
+    .estrella-fugaz::after {
+        width: 45px;
+    }
+}
+
+
+/* ==========================================
+   12. CELULARES PEQUEÑOS
+========================================== */
+
+@media (max-width: 380px) {
+
+    .inicio {
+        padding: 20px 12px;
+    }
+
+    .inicio-contenido {
+        gap: 14px;
+    }
+
+    .inicio-starly {
+        width: 140px;
+    }
+
+    .inicio-titulo {
+        font-size: 2.1rem;
+    }
+
+    .inicio-descripcion {
+        font-size: 1rem;
+    }
+
+    .inicio-boton-jugar {
+        min-width: 180px;
+        min-height: 60px;
+
+        padding: 12px 25px;
+
+        font-size: 1.3rem;
+    }
+}
+
+
+/* ==========================================
+   13. TABLETAS
+========================================== */
+
+@media (min-width: 601px) and (max-width: 1024px) {
+
+    .inicio-starly {
+        width: clamp(190px, 25vw, 250px);
+    }
+
+    .inicio-titulo {
+        font-size: clamp(3rem, 6vw, 4.5rem);
+    }
+
+    .inicio-descripcion {
+        font-size: 1.4rem;
+    }
+}
+
+
+/* ==========================================
+   14. CELULARES EN HORIZONTAL
+========================================== */
+
+@media (max-height: 500px) and (orientation: landscape) {
+
+    .inicio {
+        min-height: 100dvh;
+        padding: 12px 20px;
+    }
+
+    .inicio-contenido {
+        gap: 8px;
+    }
+
+    .inicio-starly {
+        width: 95px;
+    }
+
+    .inicio-titulo {
+        font-size: 2rem;
+    }
+
+    .inicio-descripcion {
+        font-size: 0.95rem;
+    }
+
+    .inicio-acciones {
+        margin-top: 5px;
+    }
+
+    .inicio-boton-jugar {
+        min-width: 160px;
+        min-height: 50px;
+
+        padding: 10px 25px;
+
+        font-size: 1.2rem;
+    }
+}
+
+
+/* ==========================================
+   15. PANTALLAS DE POCA ALTURA
+========================================== */
+
+@media (max-height: 650px) and (min-width: 601px) {
+
+    .inicio {
+        padding: 20px;
+    }
+
+    .inicio-contenido {
+        gap: 12px;
+    }
+
+    .inicio-starly {
+        width: 150px;
+    }
+
+    .inicio-titulo {
+        font-size: 3rem;
+    }
+
+    .inicio-boton-jugar {
+        min-height: 60px;
+        padding: 12px 35px;
+    }
+}
+
+
+/* ==========================================
+   16. ACCESIBILIDAD
+========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .inicio-estrellas,
+    .estrella-fugaz,
+    .inicio-starly,
+    .inicio-boton-jugar {
+        animation: none;
+    }
+}
+
+
+/* ==========================================
+   PLANETAS DECORATIVOS DEL INICIO
+========================================== */
+
+.inicio-planetas {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.inicio-planeta {
+    position: absolute;
+
+    border-radius: 50%;
+    opacity: 0.65;
+
+    box-shadow:
+        inset -12px -12px 18px rgba(0, 0, 0, 0.15),
+        0 0 30px rgba(255, 255, 255, 0.08);
+
+    animation: planeta-flotar-inicio 7s ease-in-out infinite;
+}
+
+/* Planeta morado con anillo */
+
+.inicio-planetas .planeta-morado {
+    top: 15%;
+    right: 9%;
+
+    width: 90px;
+    height: 90px;
+
+    background: radial-gradient(circle at 30% 30%,
+            #C6A8FF,
+            #8467D7 55%,
+            #49309A);
+}
+
+.inicio-planetas .planeta-morado::after {
+    content: "";
+
+    position: absolute;
+    top: 42%;
+    left: -25%;
+
+    width: 150%;
+    height: 20%;
+
+    border: 6px solid rgba(220, 204, 255, 0.75);
+    border-radius: 50%;
+
+    transform: rotate(-25deg);
+}
+
+/* Planeta celeste */
+
+.inicio-planetas .planeta-celeste {
+    bottom: 18%;
+    left: 8%;
+
+    width: 65px;
+    height: 65px;
+
+    background: radial-gradient(circle at 30% 30%,
+            #D7F8FF,
+            #55D6F5 55%,
+            #258ECA);
+
+    animation-delay: -3s;
+}
+
+/* Movimiento suave */
+
+@keyframes planeta-flotar-inicio {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-12px);
+    }
+}
+
+/* Mantener el contenido sobre los planetas */
+
+.inicio-contenido {
+    position: relative;
+    z-index: 2;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 600px) {
+
+    .inicio-planetas .planeta-morado {
+        top: 15%;
+        right: 9%;
+        width: 75px;
+        height: 75px;
+    }
+
+    .inicio-planetas .planeta-celeste {
+        bottom: 15%;
+        left: -10px;
+
+        width: 48px;
+        height: 48px;
+    }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+
+    .inicio-planeta {
+        opacity: 0.80;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .inicio-planeta {
+        animation: none;
+    }
+}
