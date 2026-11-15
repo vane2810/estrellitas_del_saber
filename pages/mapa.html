@@ -5,10 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <meta name="theme-color" content="#87DDF5">
 
-    <title>La Escuela de las Estrellas | Estrellitas del Saber</title>
+    <title>Estrellitas del Saber | Misiones </title>
 
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/mapa.css">
@@ -26,21 +25,44 @@
             <a href="../index.html"
                class="boton-regresar"
                aria-label="Regresar al inicio">
-                <span aria-hidden="true">←</span>
+                <span aria-hidden="true">⌂</span>
                 <span>Inicio</span>
             </a>
 
             <div class="mapa-titulo">
-                <span class="titulo-superior">ESTRELLITAS DEL SABER</span>
                 <h1>La Escuela de las Estrellas</h1>
-                <p>¡Una aventura para aprender nuestros derechos!</p>
             </div>
 
-            <div class="contador-estrellas"
-                 aria-label="Estrellas conseguidas">
-                <span aria-hidden="true">⭐</span>
-                <span id="total-estrellas">0</span>
-                <span class="contador-maximo">/ 12</span>
+            <div class="mapa-controles">
+
+                <div class="contador-estrellas"
+                     aria-label="Estrellas conseguidas">
+                    <span aria-hidden="true">⭐</span>
+                    <span id="total-estrellas">0</span>
+                    <span class="contador-maximo">/ 12</span>
+                </div>
+
+                <button class="boton-configuracion"
+                        id="btn-configuracion"
+                        type="button"
+                        aria-label="Abrir configuración"
+                        aria-haspopup="dialog"
+                        aria-controls="modal-configuracion">
+                    <svg viewBox="0 0 24 24"
+                         aria-hidden="true"
+                         focusable="false">
+                        <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-1.86 1.86-.06-.06A1.7 1.7 0 0 0 16 18.4a1.7 1.7 0 0 0-1 .4 1.7 1.7 0 0 0-.6 1.3V21h-2.8v-.9a1.7 1.7 0 0 0-1.6-1.7 1.7 1.7 0 0 0-1 .4l-.06.06-1.86-1.86.06-.06A1.7 1.7 0 0 0 7.6 15a1.7 1.7 0 0 0-1.7-1.6H5v-2.8h.9A1.7 1.7 0 0 0 7.6 9a1.7 1.7 0 0 0-.4-1l-.06-.06 1.86-1.86.06.06A1.7 1.7 0 0 0 11 5.6a1.7 1.7 0 0 0 .6-1.3V3h2.8v1.3A1.7 1.7 0 0 0 16 5.6a1.7 1.7 0 0 0 1-.4l.06-.06 1.86 1.86-.06.06A1.7 1.7 0 0 0 18.4 9a1.7 1.7 0 0 0 1.7 1.6h.9v2.8h-.9A1.7 1.7 0 0 0 19.4 15Z"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="1.8"
+                              stroke-linejoin="round"/>
+                        <circle cx="13" cy="12" r="3"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"/>
+                    </svg>
+                </button>
+
             </div>
 
         </header>
@@ -65,11 +87,11 @@
         </div>
 
 
-        <!-- Zona principal del mapa -->
+        <!-- Mapa de aventuras -->
         <section class="mapa-aventura"
                  aria-label="Mapa de misiones">
 
-            <!-- Escuela decorativa -->
+            <!-- Escuela -->
             <div class="escuela" aria-hidden="true">
 
                 <div class="escuela-techo"></div>
@@ -92,7 +114,7 @@
             </div>
 
 
-            <!-- Camino entre misiones -->
+            <!-- Camino -->
             <svg class="camino-misiones"
                  viewBox="0 0 1000 650"
                  preserveAspectRatio="none"
@@ -123,7 +145,7 @@
                 <span class="mision-numero">1</span>
 
                 <span class="mision-etiqueta">
-                    ¡Tengo derecho a aprender!
+                    ¡A aprender!
                 </span>
 
                 <span class="mision-estrellas" aria-hidden="true">
@@ -144,7 +166,7 @@
                 <span class="mision-numero">2</span>
 
                 <span class="mision-etiqueta">
-                    ¡La escuela es para todos!
+                    ¡Para todos!
                 </span>
 
                 <span class="mision-candado" aria-hidden="true">🔒</span>
@@ -163,7 +185,7 @@
                 <span class="mision-numero">3</span>
 
                 <span class="mision-etiqueta">
-                    ¡Aprendemos jugando!
+                    ¡A jugar!
                 </span>
 
                 <span class="mision-candado" aria-hidden="true">🔒</span>
@@ -182,7 +204,7 @@
                 <span class="mision-numero">4</span>
 
                 <span class="mision-etiqueta">
-                    ¡Cuidemos nuestra escuela!
+                    ¡Mi escuela!
                 </span>
 
                 <span class="mision-candado" aria-hidden="true">🔒</span>
@@ -190,7 +212,7 @@
             </button>
 
 
-            <!-- Decoraciones del suelo -->
+            <!-- Decoraciones -->
             <div class="decoracion-suelo" aria-hidden="true">
 
                 <span class="flor flor-1">🌼</span>
@@ -208,7 +230,7 @@
         </section>
 
 
-        <!-- Guía de Starly -->
+        <!-- Starly como guía -->
         <aside class="starly-guia">
 
             <img src="../img/personajes/starly/starly_explorador.webp"
@@ -216,50 +238,124 @@
                  class="starly-mapa">
 
             <div class="starly-mensaje">
-                <strong>¡Hola, tripulante!</strong>
+
+                <strong id="titulo-starly">
+                    ¡Hola, tripulante!
+                </strong>
 
                 <p id="mensaje-starly">
-                    ¡Aquí descubriremos que todos tenemos derecho a aprender!
-                    Presiona la primera misión para comenzar.
+                    ¡Elige la primera misión!
                 </p>
+
             </div>
+
+            <button class="boton-escuchar"
+                    id="btn-escuchar"
+                    type="button"
+                    aria-label="Escuchar a Starly"
+                    title="Escuchar a Starly">
+
+                <svg viewBox="0 0 24 24"
+                     aria-hidden="true"
+                     focusable="false">
+                    <path d="M4 9v6h4l5 4V5L8 9H4Z"
+                          fill="currentColor"/>
+                    <path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"/>
+                </svg>
+
+            </button>
 
         </aside>
 
 
-        <!-- Mensaje al seleccionar una misión -->
+
+
+
+        <!-- Configuración -->
         <div class="modal-fondo"
-             id="modal-mision"
+             id="modal-configuracion"
              hidden>
 
-            <section class="modal-contenido"
+            <section class="modal-contenido modal-configuracion"
                      role="dialog"
                      aria-modal="true"
-                     aria-labelledby="modal-titulo">
+                     aria-labelledby="configuracion-titulo"
+                     tabindex="-1">
 
                 <button class="modal-cerrar"
+                        id="configuracion-cerrar"
                         type="button"
-                        id="modal-cerrar"
-                        aria-label="Cerrar">
+                        aria-label="Cerrar configuración">
                     ×
                 </button>
 
-                <span class="modal-icono" id="modal-icono" aria-hidden="true">
-                    📖
-                </span>
+                <div class="configuracion-icono" aria-hidden="true">⚙️</div>
 
-                <h2 id="modal-titulo">
-                    ¡Tengo derecho a aprender!
+                <h2 id="configuracion-titulo">
+                    Configuración
                 </h2>
 
-                <p id="modal-descripcion">
-                    Descubriremos por qué aprender es tan importante.
+                <p class="configuracion-subtitulo">
+                    Ajusta los sonidos de tu aventura.
                 </p>
 
+                <div class="configuracion-opciones">
+
+                    <label class="configuracion-opcion">
+
+                        <span class="opcion-nombre">
+                            <span aria-hidden="true">🎵</span>
+                            Música
+                        </span>
+
+                        <input type="checkbox"
+                               id="config-musica"
+                               checked>
+
+                        <span class="interruptor" aria-hidden="true"></span>
+
+                    </label>
+
+                    <label class="configuracion-opcion">
+
+                        <span class="opcion-nombre">
+                            <span aria-hidden="true">✨</span>
+                            Efectos
+                        </span>
+
+                        <input type="checkbox"
+                               id="config-efectos"
+                               checked>
+
+                        <span class="interruptor" aria-hidden="true"></span>
+
+                    </label>
+
+                    <label class="configuracion-opcion">
+
+                        <span class="opcion-nombre">
+                            <span aria-hidden="true">🔊</span>
+                            Voz de Starly
+                        </span>
+
+                        <input type="checkbox"
+                               id="config-voz"
+                               checked>
+
+                        <span class="interruptor" aria-hidden="true"></span>
+
+                    </label>
+
+                </div>
+
                 <button class="boton-comenzar"
-                        id="btn-comenzar"
+                        id="configuracion-listo"
                         type="button">
-                    ¡Comenzar! 🚀
+                    ¡Listo! ⭐
                 </button>
 
             </section>
@@ -267,6 +363,8 @@
         </div>
 
     </main>
+
+    
 
 </body>
 </html>

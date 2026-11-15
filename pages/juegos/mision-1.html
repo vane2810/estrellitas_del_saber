@@ -1,0 +1,167 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Misión 1 | Estrellitas del Saber</title>
+
+    <link rel="stylesheet" href="../../styles/global.css">
+    <link rel="stylesheet" href="../../styles/juegos/mision-1.css">
+</head>
+
+<body>
+
+    <main class="juego">
+
+        <!-- Encabezado -->
+        <header class="juego-encabezado">
+
+            <a href="../mapa.html" class="boton-volver">
+                ← Mapa
+            </a>
+
+            <div class="juego-titulo">
+                <span>MISIÓN 1</span>
+                <h1>¡Preparemos la mochila!</h1>
+            </div>
+
+            <div class="contador">
+                ⭐ <span id="contador-utiles">0</span>/3
+            </div>
+
+        </header>
+
+        <!-- Mensaje de Starly -->
+        <section class="guia-starly">
+
+            <img
+                src="../../img/personajes/starly/starly_explorador.webp"
+                alt="Starly"
+                class="starly"
+            >
+
+            <div class="mensaje-starly" aria-live="polite">
+                <strong id="mensaje-titulo">
+                    ¡Hola, tripulante!
+                </strong>
+
+                <p id="mensaje-texto">
+                    ¡Ayúdame a preparar mi mochila!
+                </p>
+            </div>
+
+        </section>
+
+        <!-- Área del juego -->
+        <section class="zona-juego">
+
+            <div class="zona-mochila">
+
+                <h2>Mi mochila</h2>
+
+                <div class="mochila" id="mochila">
+
+                    <span class="mochila-dibujo">🎒</span>
+
+                    <div class="mochila-contenido" id="mochila-contenido">
+                    </div>
+
+                </div>
+
+                <div class="progreso-utiles" aria-label="Progreso">
+                    <span class="estrella-progreso">☆</span>
+                    <span class="estrella-progreso">☆</span>
+                    <span class="estrella-progreso">☆</span>
+                </div>
+
+            </div>
+
+            <div class="zona-objetos">
+
+                <h2>¡Elige los útiles!</h2>
+
+                <div class="objetos" id="objetos">
+
+                    <button class="objeto" data-id="libro" data-correcto="true"
+                        aria-label="Libro">
+                        <span>📚</span>
+                        <small>Libros</small>
+                    </button>
+
+                    <button class="objeto" data-id="lapiz" data-correcto="true"
+                        aria-label="Lápiz">
+                        <span>✏️</span>
+                        <small>Lápiz</small>
+                    </button>
+
+                    <button class="objeto" data-id="cuaderno" data-correcto="true"
+                        aria-label="Cuaderno">
+                        <span>📓</span>
+                        <small>Cuaderno</small>
+                    </button>
+
+                    <button class="objeto" data-id="oso" data-correcto="false"
+                        aria-label="Osito de peluche">
+                        <span>🧸</span>
+                        <small>Osito</small>
+                    </button>
+
+                    <button class="objeto" data-id="dulce" data-correcto="false"
+                        aria-label="Dulce">
+                        <span>🍭</span>
+                        <small>Dulce</small>
+                    </button>
+
+                    <button class="objeto" data-id="pelota" data-correcto="false"
+                        aria-label="Pelota">
+                        <span>⚽</span>
+                        <small>Pelota</small>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Recompensa -->
+        <div class="recompensa-fondo" id="recompensa" hidden>
+
+            <section class="recompensa" role="dialog"
+                aria-modal="true"
+                aria-labelledby="recompensa-titulo">
+
+                <img
+                    src="../../img/personajes/starly/starly_explorador.webp"
+                    alt="Starly celebrando"
+                    class="starly-premio"
+                >
+
+                <h2 id="recompensa-titulo">
+                    ¡Lo lograste!
+                </h2>
+
+                <p>¡Todos tenemos derecho a aprender!</p>
+
+                <div class="estrellas-premio" aria-label="Tres estrellas">
+                    <span>⭐</span>
+                    <span>⭐</span>
+                    <span>⭐</span>
+                </div>
+
+                <a href="../mapa.html" class="boton-continuar">
+                    ¡Continuar! 🚀
+                </a>
+
+            </section>
+
+        </div>
+
+    </main>
+
+    <script src="../../js/juegos/mision-1.js"></script>
+
+</body>
+</html>
