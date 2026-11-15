@@ -35,7 +35,7 @@ const rutasAudio = {
 };
 
 const volumenes = {
-    musica: 0.10,
+    musica: 0.20,
     narracion: 1,
     efectos: 0.45
 };

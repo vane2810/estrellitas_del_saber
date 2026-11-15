@@ -11,43 +11,145 @@ const contador = document.getElementById("contador-utiles");
 const mochila = document.getElementById("mochila");
 const mochilaContenido = document.getElementById("mochila-contenido");
 
-const estrellasProgreso = document.querySelectorAll(
-    ".estrella-progreso"
-);
+const estrellasProgreso = document.querySelectorAll(".estrella-progreso");
 
 const mensajeTitulo = document.getElementById("mensaje-titulo");
 const mensajeTexto = document.getElementById("mensaje-texto");
 
+const botonAudio = document.getElementById("btn-audio");
 const recompensa = document.getElementById("recompensa");
+const confeti = document.getElementById("confeti");
 
 /* 2. Configuración */
 
 const TOTAL_UTILES = 3;
+const RUTA_AUDIO = "../../audio/juegos/mision-1/";
+
+const narraciones = {
+    inicio: "inicio.mp3",
+    libro: "libros.mp3",
+    lapiz: "lapiz.mp3",
+    cuaderno: "cuaderno.mp3",
+    incorrecto: "intenta-otra-vez.mp3",
+    victoria: "victoria.mp3"
+};
+
+const efectoVictoria = new Audio(
+    "../../audio/efecto/victoria.mp3"
+);
+
+efectoVictoria.volume = 0.35;
+const mensajes = {
+    inicio: {
+        titulo: "¡Hola, tripulante!",
+        texto: "¡Elige 3 útiles para mi mochila!"
+    },
+
+    libro: {
+        titulo: "¡Muy bien!",
+        texto: "¡Los libros nos ayudan a aprender!"
+    },
+
+    lapiz: {
+        titulo: "¡Excelente!",
+        texto: "¡Con el lápiz podemos escribir!"
+    },
+
+    cuaderno: {
+        titulo: "¡Genial!",
+        texto: "¡En el cuaderno podemos practicar!"
+    },
+
+    incorrecto: {
+        titulo: "¡Sigue intentando!",
+        texto: "¡Ese no es un útil escolar! ¡Busquemos otro!"
+    },
+
+    victoria: {
+        titulo: "¡Lo lograste!",
+        texto: "¡Todos tenemos derecho a aprender!"
+    }
+};
+
+
 
 let utilesGuardados = 0;
 let juegoTerminado = false;
-let temporizadorMensaje = null;
+let audioActual = null;
+let ultimaNarracion = "inicio";
+let temporizadorFinal = null;
 
-const mensajes = {
-    correcto: [
-        "¡Muy bien!",
-        "¡Excelente!",
-        "¡Lo estás logrando!"
-    ],
+/* 3. Narraciones de Starly */
 
-    incorrecto: [
-        "¡Ese es para jugar! Busca otro.",
-        "¡Intenta con otro objeto!",
-        "¡Vamos a buscar un útil escolar!"
-    ]
-};
+function detenerNarracion() {
+    if (!audioActual) return;
 
-/* 3. Sonidos sencillos */
+    audioActual.pause();
+    audioActual.currentTime = 0;
+    audioActual = null;
+
+    botonAudio.classList.remove("reproduciendo");
+}
+
+function reproducirNarracion(nombre) {
+    const archivo = narraciones[nombre];
+
+    if (!archivo) return;
+
+    detenerNarracion();
+
+    ultimaNarracion = nombre;
+
+    const audio = new Audio(RUTA_AUDIO + archivo);
+    audio.volume = 1;
+
+    audioActual = audio;
+
+    audio.addEventListener("ended", () => {
+        if (audioActual === audio) {
+            audioActual = null;
+            botonAudio.classList.remove("reproduciendo");
+        }
+    });
+
+    audio.addEventListener("error", () => {
+        if (audioActual === audio) {
+            audioActual = null;
+            botonAudio.classList.remove("reproduciendo");
+        }
+    });
+
+    audio.play()
+        .then(() => {
+            if (audioActual === audio) {
+                botonAudio.classList.add("reproduciendo");
+            }
+        })
+        .catch(() => {
+            // Algunos navegadores requieren interacción
+            // antes de permitir reproducir audio.
+            if (audioActual === audio) {
+                botonAudio.classList.remove("reproduciendo");
+            }
+        });
+}
+
+function mostrarMensaje(nombre) {
+    const mensaje = mensajes[nombre];
+
+    if (!mensaje) return;
+
+    mensajeTitulo.textContent = mensaje.titulo;
+    mensajeTexto.textContent = mensaje.texto;
+
+    reproducirNarracion(nombre);
+}
+
+/* 4. Efectos suaves */
 
 let contextoAudio = null;
 
 function reproducirTono(frecuencia, duracion = 0.15) {
-
     try {
         const AudioContexto =
             window.AudioContext || window.webkitAudioContext;
@@ -69,7 +171,7 @@ function reproducirTono(frecuencia, duracion = 0.15) {
         oscilador.frequency.value = frecuencia;
 
         ganancia.gain.setValueAtTime(
-            0.08,
+            0.045,
             contextoAudio.currentTime
         );
 
@@ -85,56 +187,32 @@ function reproducirTono(frecuencia, duracion = 0.15) {
         oscilador.stop(contextoAudio.currentTime + duracion);
 
     } catch (error) {
-        // El juego funciona aunque no haya sonido.
+        // El juego continúa sin efectos de sonido.
     }
 }
 
 function sonidoCorrecto() {
-    reproducirTono(523);
-    setTimeout(() => reproducirTono(659), 120);
-}
-
-function sonidoIncorrecto() {
-    reproducirTono(330, 0.2);
+    reproducirTono(523, 0.13);
+    setTimeout(() => reproducirTono(659, 0.16), 120);
 }
 
 function sonidoVictoria() {
-    [523, 659, 784, 1046].forEach((nota, indice) => {
-        setTimeout(() => reproducirTono(nota, 0.25), indice * 140);
+    efectoVictoria.currentTime = 0;
+
+    efectoVictoria.play().catch(() => {
+        // El juego continúa si el audio no está disponible.
     });
-}
-
-/* 4. Mensajes de Starly */
-
-function cambiarMensaje(titulo, texto) {
-
-    clearTimeout(temporizadorMensaje);
-
-    mensajeTitulo.textContent = titulo;
-    mensajeTexto.textContent = texto;
-
-    if (!juegoTerminado) {
-        temporizadorMensaje = setTimeout(() => {
-            mensajeTitulo.textContent = "¡Tú puedes!";
-            mensajeTexto.textContent =
-                "¡Elige los objetos para aprender!";
-        }, 2500);
-    }
 }
 
 /* 5. Guardar útiles */
 
 function guardarUtil(boton) {
-
-    if (juegoTerminado || boton.disabled) {
-        return;
-    }
+    if (juegoTerminado || boton.disabled) return;
 
     boton.disabled = true;
     boton.classList.add("seleccionado");
 
     utilesGuardados++;
-
     contador.textContent = utilesGuardados;
 
     const icono = boton.querySelector("span").textContent;
@@ -146,9 +224,7 @@ function guardarUtil(boton) {
     mochilaContenido.appendChild(util);
 
     mochila.classList.remove("mochila-acierto");
-
     void mochila.offsetWidth;
-
     mochila.classList.add("mochila-acierto");
 
     const estrella = estrellasProgreso[utilesGuardados - 1];
@@ -160,39 +236,25 @@ function guardarUtil(boton) {
 
     sonidoCorrecto();
 
-    cambiarMensaje(
-        mensajes.correcto[
-            (utilesGuardados - 1) % mensajes.correcto.length
-        ],
-        "¡Ese objeto nos ayuda a aprender!"
-    );
+    const tipo = boton.dataset.id;
 
     if (utilesGuardados === TOTAL_UTILES) {
         finalizarJuego();
+    } else {
+        mostrarMensaje(tipo);
     }
 }
 
-/* 6. Respuesta incorrecta */
+/* 6. Objetos que no son útiles */
 
 function respuestaIncorrecta(boton) {
-
-    if (juegoTerminado) {
-        return;
-    }
+    if (juegoTerminado) return;
 
     boton.classList.remove("incorrecto");
-
     void boton.offsetWidth;
-
     boton.classList.add("incorrecto");
 
-    sonidoIncorrecto();
-
-    const mensaje = mensajes.incorrecto[
-        Math.floor(Math.random() * mensajes.incorrecto.length)
-    ];
-
-    cambiarMensaje("¡Sigue intentando!", mensaje);
+    mostrarMensaje("incorrecto");
 
     setTimeout(() => {
         boton.classList.remove("incorrecto");
@@ -202,7 +264,6 @@ function respuestaIncorrecta(boton) {
 /* 7. Guardar progreso */
 
 function guardarProgreso() {
-
     try {
         const clave = "estrellitas_progreso";
 
@@ -225,22 +286,47 @@ function guardarProgreso() {
         );
 
     } catch (error) {
-        // Si el almacenamiento no está disponible,
-        // el niño puede continuar jugando.
+        // El juego funciona sin almacenamiento local.
     }
 }
 
-/* 8. Finalizar misión */
+/* 8. Confeti */
+
+function crearConfeti() {
+    confeti.innerHTML = "";
+
+    const colores = [
+        "#ffd84d",
+        "#ff8745",
+        "#55d6f5",
+        "#8467d7",
+        "#43c98b",
+        "#f36b79"
+    ];
+
+    for (let i = 0; i < 45; i++) {
+        const pieza = document.createElement("span");
+
+        pieza.className = "confeti-pieza";
+
+        pieza.style.left = Math.random() * 100 + "%";
+        pieza.style.backgroundColor =
+            colores[Math.floor(Math.random() * colores.length)];
+
+        pieza.style.animationDuration =
+            (2 + Math.random() * 2) + "s";
+
+        pieza.style.animationDelay =
+            (Math.random() * 0.7) + "s";
+
+        confeti.appendChild(pieza);
+    }
+}
+
+/* 9. Finalizar misión */
 
 function finalizarJuego() {
-
     juegoTerminado = true;
-
-    clearTimeout(temporizadorMensaje);
-
-    mensajeTitulo.textContent = "¡Lo lograste!";
-    mensajeTexto.textContent =
-        "¡Todos tenemos derecho a aprender!";
 
     objetos.forEach((objeto) => {
         objeto.disabled = true;
@@ -250,28 +336,30 @@ function finalizarJuego() {
 
     sonidoVictoria();
 
-    setTimeout(() => {
+    // Dejamos que se vea el último útil entrando.
+    temporizadorFinal = setTimeout(() => {
         recompensa.hidden = false;
+        crearConfeti();
 
-        const boton = recompensa.querySelector(".boton-continuar");
+        mostrarMensaje("victoria");
 
-        if (boton) {
-            boton.focus();
+        const botonContinuar =
+            recompensa.querySelector(".boton-continuar");
+
+        if (botonContinuar) {
+            botonContinuar.focus();
         }
-    }, 1100);
+    }, 900);
 }
 
-/* 9. Eventos */
+/* 10. Eventos */
 
 objetos.forEach((boton) => {
-
     boton.addEventListener("click", () => {
+        if (juegoTerminado || boton.disabled) return;
 
-        if (juegoTerminado || boton.disabled) {
-            return;
-        }
-
-        const esCorrecto = boton.dataset.correcto === "true";
+        const esCorrecto =
+            boton.dataset.correcto === "true";
 
         if (esCorrecto) {
             guardarUtil(boton);
@@ -279,5 +367,17 @@ objetos.forEach((boton) => {
             respuestaIncorrecta(boton);
         }
     });
-
 });
+
+botonAudio.addEventListener("click", () => {
+    reproducirNarracion(ultimaNarracion);
+});
+
+window.addEventListener("pagehide", () => {
+    clearTimeout(temporizadorFinal);
+    detenerNarracion();
+});
+
+/* 11. Iniciar misión */
+
+mostrarMensaje("inicio");

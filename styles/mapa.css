@@ -1,35 +1,24 @@
-
 /* ==========================================
    ESTRELLITAS DEL SABER
    MAPA DE MISIONES
 ========================================== */
 
-
-/* ==========================================
-   1. CONTENEDOR
-========================================== */
+/* Contenedor principal */
 
 .mapa {
     position: relative;
     isolation: isolate;
-
     min-height: 100vh;
     min-height: 100dvh;
-
     overflow: hidden;
 
-    background: linear-gradient(
-        180deg,
-        #81D9F5 0%,
-        #C7F3FF 55%,
-        #E8F9E1 100%
-    );
+    background: linear-gradient(180deg,
+            #81D9F5 0%,
+            #C7F3FF 55%,
+            #E8F9E1 100%);
 }
 
-
-/* ==========================================
-   2. ENCABEZADO
-========================================== */
+/* Encabezado */
 
 .mapa-encabezado {
     position: relative;
@@ -38,9 +27,9 @@
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
-
     gap: 15px;
-    padding: 16px 28px;
+
+    padding: 14px 28px;
 }
 
 .boton-regresar,
@@ -59,7 +48,6 @@
 
 .boton-regresar {
     justify-self: start;
-
     gap: 8px;
     min-height: 44px;
     padding: 8px 16px;
@@ -101,7 +89,6 @@
 
 .mapa-controles {
     justify-self: end;
-
     display: flex;
     align-items: center;
     gap: 10px;
@@ -109,7 +96,6 @@
 
 .contador-estrellas {
     gap: 5px;
-
     min-height: 44px;
     padding: 8px 14px;
 
@@ -129,8 +115,8 @@
     height: 44px;
 
     border-radius: 50%;
-
     cursor: pointer;
+
     transition: transform 0.2s ease;
 }
 
@@ -139,10 +125,7 @@
     height: 24px;
 }
 
-
-/* ==========================================
-   3. PAISAJE
-========================================== */
+/* Paisaje */
 
 .mapa-paisaje {
     position: absolute;
@@ -155,7 +138,7 @@
 
 .sol {
     position: absolute;
-    top: 18%;
+    top: 17%;
     right: 7%;
 
     width: 90px;
@@ -172,7 +155,9 @@
 }
 
 @keyframes sol-brillar {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: scale(1);
     }
 
@@ -234,7 +219,6 @@
     height: 35%;
 
     background: #8AD6A2;
-
     clip-path: polygon(0 100%, 50% 0, 100% 100%);
 }
 
@@ -274,17 +258,19 @@
     background: #53C462;
 }
 
+/* Área del mapa */
 
-/* ==========================================
-   4. ÁREA DE AVENTURA
-========================================== */
+.mapa-desplazamiento {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+}
 
 .mapa-aventura {
     position: relative;
-    z-index: 2;
 
     width: min(100%, 1000px);
-    height: 520px;
+    height: 510px;
 
     margin: 0 auto;
 }
@@ -302,38 +288,34 @@
 
 .camino-borde {
     fill: none;
-
     stroke: #D9AD6C;
-    stroke-width: 55;
-
+    stroke-width: 48;
     stroke-linecap: round;
     stroke-linejoin: round;
 }
 
 .camino-centro {
     fill: none;
-
     stroke: #F7E0AC;
-    stroke-width: 42;
-
+    stroke-width: 36;
     stroke-linecap: round;
     stroke-linejoin: round;
 }
 
-
-/* ==========================================
-   5. ESCUELA
-========================================== */
+/* Escuela */
 
 .escuela {
     position: absolute;
-    top: 0;
-    left: 45%;
+    z-index: 3;
+
+    top: -6px;
+    left: 52%;
 
     width: 150px;
     height: 135px;
 
-    transform: translateX(-50%);
+    transform: translateX(-50%) scale(0.76);
+    transform-origin: top center;
 
     filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.12));
 }
@@ -347,7 +329,6 @@
     height: 55px;
 
     background: #F36B79;
-
     clip-path: polygon(50% 0, 100% 100%, 0 100%);
 }
 
@@ -371,13 +352,11 @@
     left: 50%;
 
     transform: translateX(-50%);
-
     white-space: nowrap;
 
     font-family: var(--fuente-titulos);
     font-size: 0.72rem;
     font-weight: 600;
-
     color: var(--color-morado);
 }
 
@@ -387,7 +366,6 @@
 
     display: flex;
     justify-content: space-around;
-
     width: 100%;
 }
 
@@ -397,7 +375,6 @@
 
     border: 3px solid #FFFFFF;
     border-radius: 6px;
-
     background: #7DDCF5;
 }
 
@@ -415,10 +392,7 @@
     background: #B985E6;
 }
 
-
-/* ==========================================
-   6. MISIONES
-========================================== */
+/* Misiones */
 
 .mision {
     position: absolute;
@@ -429,10 +403,9 @@
     align-items: center;
     justify-content: center;
 
-    width: 105px;
-    height: 105px;
-
-    padding: 10px;
+    width: 86px;
+    height: 86px;
+    padding: 8px;
 
     border: 4px solid #FFFFFF;
     border-radius: 50%;
@@ -455,7 +428,7 @@
 }
 
 .mision-icono {
-    font-size: 2.1rem;
+    font-size: 1.9rem;
     line-height: 1;
 }
 
@@ -467,8 +440,8 @@
     display: grid;
     place-items: center;
 
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
 
     border: 3px solid #FFFFFF;
     border-radius: 50%;
@@ -476,17 +449,16 @@
     background: var(--color-naranja);
     color: #FFFFFF;
 
-    font-size: 1.05rem;
+    font-size: 1rem;
 }
 
 .mision-etiqueta {
     position: absolute;
-    top: calc(100% + 10px);
+    top: calc(100% + 8px);
     left: 50%;
 
-    width: 135px;
-
-    padding: 7px 10px;
+    width: 128px;
+    padding: 6px 8px;
 
     border: 2px solid #FFFFFF;
     border-radius: 14px;
@@ -495,7 +467,7 @@
     color: #FFFFFF;
 
     font-family: var(--fuente-titulos);
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     line-height: 1.2;
 
     transform: translateX(-50%);
@@ -506,7 +478,7 @@
 .mision-estrellas {
     margin-top: 6px;
     color: var(--color-amarillo);
-    font-size: 1rem;
+    font-size: 0.9rem;
     white-space: nowrap;
 }
 
@@ -514,37 +486,44 @@
     position: absolute;
     bottom: -8px;
     right: -6px;
-
-    font-size: 1.4rem;
+    font-size: 1.3rem;
 }
 
 .mision-candado[hidden] {
     display: none;
 }
 
-
-/* Posiciones de las misiones */
+/* Posiciones compactas */
 
 .mision-1 {
-    top: 72%;
-    left: 8%;
+    top: 76%;
+    left: 13%;
 }
 
 .mision-2 {
-    top: 49%;
-    left: 38%;
+    top: 63%;
+    left: 34%;
 }
 
 .mision-3 {
-    top: 27%;
-    left: 70%;
+    top: 56%;
+    left: 72%;
 }
 
 .mision-4 {
-    top: 6%;
-    left: 45%;
+    top: 33%;
+    left: 28%;
 }
 
+.mision-5 {
+    top: 21%;
+    left: 69%;
+}
+
+.mision-6 {
+    top: 4%;
+    left: 43%;
+}
 
 /* Estados */
 
@@ -564,7 +543,9 @@
 }
 
 @keyframes mision-latido {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: scale(1);
     }
 
@@ -594,10 +575,12 @@
     background: #208C5B;
 }
 
+.mision:focus-visible {
+    outline: 4px solid var(--color-amarillo);
+    outline-offset: 5px;
+}
 
-/* ==========================================
-   7. DECORACIÓN DEL SUELO
-========================================== */
+/* Decoraciones */
 
 .decoracion-suelo {
     position: absolute;
@@ -625,44 +608,33 @@
 }
 
 .flor-1 {
-    top: 60%;
+    top: 68%;
     left: 5%;
 }
 
 .flor-2 {
-    top: 34%;
-    left: 55%;
+    top: 90%;
+    left: 53%;
 }
 
 .flor-3 {
     top: 80%;
-    right: 10%;
-}
-
-.arbol-1 {
-    top: 15%;
-    left: 8%;
-}
-
-.arbol-2 {
-    top: 48%;
-    right: 5%;
-}
-
-.arbusto-1 {
-    top: 80%;
-    left: 50%;
-}
-
-.arbusto-2 {
-    top: 38%;
     right: 8%;
 }
 
+.arbol-1 {
+    top: 76%;
+    left: 1%;
+}
 
-/* ==========================================
-   8. STARLY GUÍA
-========================================== */
+.arbol-2 {
+    top: 84%;
+    right: 3%;
+}
+
+
+
+/* Starly guía */
 
 .starly-guia {
     position: relative;
@@ -672,26 +644,25 @@
     align-items: center;
     justify-content: center;
 
-    gap: 15px;
+    gap: 12px;
 
-    width: min(95%, 680px);
-
-    margin: 10px auto 35px;
-    padding: 12px 18px;
+    width: min(92%, 680px);
+    margin: 10px auto 25px;
+    padding: 10px 16px;
 
     border: 3px solid #DCD0FF;
-    border-radius: 24px;
+    border-radius: 22px;
 
     background: #FFFFFF;
 
     box-shadow:
-        0 7px 0 rgba(73, 48, 154, 0.25),
-        0 12px 22px rgba(0, 0, 0, 0.1);
+        0 6px 0 rgba(73, 48, 154, 0.25),
+        0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .starly-mapa {
-    width: 90px;
-    height: 90px;
+    width: 65px;
+    height: 65px;
 
     flex-shrink: 0;
     object-fit: contain;
@@ -700,7 +671,9 @@
 }
 
 @keyframes starly-saludar {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: rotate(-4deg) translateY(0);
     }
 
@@ -715,20 +688,19 @@
 
 .starly-mensaje strong {
     display: block;
-
     margin-bottom: 4px;
 
     color: var(--color-morado);
 
     font-family: var(--fuente-titulos);
-    font-size: 1.3rem;
+    font-size: 1.2rem;
 }
 
 .starly-mensaje p {
     color: var(--color-espacio);
 
     font-family: var(--fuente-textos);
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 700;
     line-height: 1.4;
 }
@@ -737,9 +709,8 @@
     display: grid;
     place-items: center;
 
-    width: 48px;
-    height: 48px;
-
+    width: 46px;
+    height: 46px;
     flex-shrink: 0;
 
     border: 3px solid #FFFFFF;
@@ -768,10 +739,7 @@
     cursor: not-allowed;
 }
 
-
-/* ==========================================
-   9. MODALES
-========================================== */
+/* Ventanas modales */
 
 .modal-fondo {
     position: fixed;
@@ -809,7 +777,6 @@
     border-radius: 30px;
 
     background: #FFFFFF;
-
     text-align: center;
 
     box-shadow: 0 12px 0 rgba(73, 48, 154, 0.4);
@@ -848,11 +815,6 @@
 
     font-size: 2rem;
     cursor: pointer;
-}
-
-.modal-icono {
-    margin-bottom: 10px;
-    font-size: 4rem;
 }
 
 .modal-contenido h2 {
@@ -895,23 +857,11 @@
     transition: transform 0.2s ease;
 }
 
-.boton-comenzar:hover:not(:disabled) {
+.boton-comenzar:hover {
     transform: translateY(-3px);
 }
 
-.boton-comenzar:active:not(:disabled) {
-    transform: translateY(3px);
-}
-
-.boton-comenzar:disabled {
-    opacity: 0.65;
-    cursor: not-allowed;
-}
-
-
-/* ==========================================
-   10. CONFIGURACIÓN
-========================================== */
+/* Configuración */
 
 .configuracion-icono {
     margin-bottom: 8px;
@@ -929,7 +879,6 @@
 
     gap: 12px;
     width: 100%;
-
     margin-bottom: 28px;
 }
 
@@ -947,7 +896,6 @@
     border-radius: 18px;
 
     background: #F8F5FF;
-
     cursor: pointer;
 }
 
@@ -1006,60 +954,45 @@
     transition: transform 0.2s ease;
 }
 
-.configuracion-opcion input:checked + .interruptor {
+.configuracion-opcion input:checked+.interruptor {
     background: var(--color-acierto);
 }
 
-.configuracion-opcion input:checked + .interruptor::after {
+.configuracion-opcion input:checked+.interruptor::after {
     transform: translateX(26px);
 }
 
-.configuracion-opcion input:focus-visible + .interruptor {
+.configuracion-opcion input:focus-visible+.interruptor {
     outline: 3px solid var(--color-morado);
     outline-offset: 4px;
 }
 
-
-/* ==========================================
-   11. TABLETAS
-========================================== */
+/* Tabletas */
 
 @media (max-width: 900px) {
-
     .mapa-encabezado {
         padding: 15px 18px;
     }
 
+    .mapa-desplazamiento {
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: thin;
+        -webkit-overflow-scrolling: touch;
+    }
+
     .mapa-aventura {
-        height: 540px;
-    }
-
-    .mision {
-        width: 95px;
-        height: 95px;
-    }
-
-    .mision-etiqueta {
-        width: 120px;
-        font-size: 0.82rem;
-    }
-
-    .escuela {
-        transform: translateX(-50%) scale(0.85);
+        width: 900px;
+        height: 510px;
     }
 }
 
-
-/* ==========================================
-   12. CELULARES
-========================================== */
+/* Celulares */
 
 @media (max-width: 600px) {
-
     .mapa-encabezado {
         grid-template-columns: 1fr auto;
         gap: 15px;
-
         padding: 15px;
     }
 
@@ -1094,39 +1027,22 @@
     }
 
     .mapa-aventura {
-        height: 600px;
-        margin-top: 15px;
-    }
-
-    .camino-misiones {
-        opacity: 0.75;
-    }
-
-    .camino-borde {
-        stroke-width: 45;
-    }
-
-    .camino-centro {
-        stroke-width: 33;
-    }
-
-    .escuela {
-        top: 5%;
-        left: 50%;
-
-        transform: translateX(-50%) scale(0.7);
+        width: 800px;
+        height: 510px;
     }
 
     .mision {
         width: 82px;
         height: 82px;
-
-        padding: 8px;
-        border-width: 4px;
     }
 
     .mision-icono {
-        font-size: 1.7rem;
+        font-size: 1.8rem;
+    }
+
+    .mision-etiqueta {
+        width: 120px;
+        font-size: 0.78rem;
     }
 
     .mision-numero {
@@ -1135,63 +1051,24 @@
         font-size: 0.95rem;
     }
 
-    .mision-etiqueta {
-        top: calc(100% + 8px);
-
-        width: 105px;
-        padding: 7px;
-
-        font-size: 0.75rem;
-    }
-
-    .mision-1 {
-        top: 75%;
-        left: 8%;
-    }
-
-    .mision-2 {
-        top: 54%;
-        left: 42%;
-    }
-
-    .mision-3 {
-        top: 32%;
-        left: 65%;
-    }
-
-    .mision-4 {
-        top: 15%;
-        left: 15%;
-    }
-
-    .arbol {
-        font-size: 2.5rem;
-    }
-
-    .flor {
-        font-size: 1.5rem;
-    }
-
-    .arbusto {
-        font-size: 1.6rem;
+    .escuela {
+        transform: translateX(-50%) scale(0.68);
     }
 
     .starly-guia {
         width: calc(100% - 30px);
-
         margin: 15px auto 30px;
         padding: 12px;
-
         gap: 10px;
     }
 
     .starly-mapa {
-        width: 70px;
-        height: 70px;
+        width: 65px;
+        height: 65px;
     }
 
     .starly-mensaje strong {
-        font-size: 1.15rem;
+        font-size: 1.1rem;
     }
 
     .starly-mensaje p {
@@ -1203,37 +1080,19 @@
         height: 42px;
     }
 
-    .boton-escuchar svg {
-        width: 21px;
-        height: 21px;
-    }
-
     .modal-contenido {
         padding: 30px 20px;
-    }
-
-    .modal-contenido h2 {
-        font-size: 1.7rem;
     }
 
     .sol {
         top: 16%;
         right: 8%;
-
         width: 60px;
         height: 60px;
     }
-
-    .arbusto-2 {
-        top: 43%;
-        right: 5%;
-    }
 }
 
-
-/* ==========================================
-   13. MOVIMIENTO REDUCIDO
-========================================== */
+/* Movimiento reducido */
 
 @media (prefers-reduced-motion: reduce) {
 
@@ -1242,164 +1101,6 @@
     .mision-disponible,
     .starly-mapa,
     .modal-contenido {
-        animation: none;
-    }
-}
-
-
-/* ==========================================
-   AJUSTE FINAL DEL MAPA EN COMPUTADORAS
-========================================== */
-
-@media (min-width: 901px) {
-
-    .mapa {
-        min-height: 100vh;
-        min-height: 100dvh;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .mapa-encabezado {
-        flex-shrink: 0;
-        padding: 12px 28px;
-    }
-
-    .mapa-aventura {
-        width: min(100%, 1000px);
-
-        height: clamp(390px, 55vh, 480px);
-
-        flex-shrink: 0;
-        margin: 0 auto;
-    }
-
-    .escuela {
-        transform: translateX(-50%) scale(0.82);
-        transform-origin: top center;
-    }
-
-    .mision {
-        width: 90px;
-        height: 90px;
-    }
-
-    .mision-1 {
-        top: 67%;
-        left: 10%;
-    }
-
-    .mision-2 {
-        top: 46%;
-        left: 39%;
-    }
-
-    .mision-3 {
-        top: 25%;
-        left: 70%;
-    }
-
-    .mision-4 {
-        top: 5%;
-        left: 45%;
-    }
-
-    .mision-etiqueta {
-        top: calc(100% + 7px);
-        padding: 6px 9px;
-        font-size: 0.82rem;
-    }
-
-    .starly-guia {
-        margin: 8px auto 18px;
-        padding: 10px 15px;
-    }
-
-    .starly-mapa {
-        width: 65px;
-        height: 65px;
-    }
-
-    .sol {
-        top: 20%;
-        right: 7%;
-    }
-
-    .arbusto-2 {
-        top: 44%;
-        right: 10%;
-    }
-}
-
-/* ==========================================
-   ORIENTACIÓN DEL DISPOSITIVO
-========================================== */
-
-.aviso-orientacion {
-    display: none;
-}
-
-@media (orientation: portrait) and (pointer: coarse) {
-
-    .aviso-orientacion {
-        position: fixed;
-        inset: 0;
-        z-index: 9999;
-
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-
-        gap: 20px;
-        padding: 30px;
-
-        background: linear-gradient(
-            160deg,
-            #49309A,
-            #171044
-        );
-
-        color: #FFFFFF;
-        text-align: center;
-    }
-
-    .aviso-orientacion-icono {
-        font-size: 5rem;
-        animation: girar-dispositivo 2.5s ease-in-out infinite;
-    }
-
-    .aviso-orientacion h2 {
-        font-family: var(--fuente-titulos);
-        font-size: clamp(1.8rem, 6vw, 2.5rem);
-        color: var(--color-amarillo);
-    }
-
-    .aviso-orientacion p {
-        max-width: 320px;
-        font-family: var(--fuente-textos);
-        font-size: 1.15rem;
-        font-weight: 700;
-        line-height: 1.5;
-    }
-}
-
-@keyframes girar-dispositivo {
-    0%, 20% {
-        transform: rotate(0deg);
-    }
-
-    55%, 85% {
-        transform: rotate(90deg);
-    }
-
-    100% {
-        transform: rotate(0deg);
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .aviso-orientacion-icono {
         animation: none;
     }
 }

@@ -4,27 +4,14 @@
    MAPA DE MISIONES
 ========================================== */
 
-
-/* ==========================================
-   1. ELEMENTOS
-========================================== */
+/* Elementos */
 
 const botonesMisiones = document.querySelectorAll(".mision");
 
 const totalEstrellas = document.getElementById("total-estrellas");
 const mensajeStarly = document.getElementById("mensaje-starly");
 const tituloStarly = document.getElementById("titulo-starly");
-
 const btnEscuchar = document.getElementById("btn-escuchar");
-
-const modalMision = document.getElementById("modal-mision");
-const modalCerrar = document.getElementById("modal-cerrar");
-
-const modalIcono = document.getElementById("modal-icono");
-const modalTitulo = document.getElementById("modal-titulo");
-const modalDescripcion = document.getElementById("modal-descripcion");
-
-const btnComenzar = document.getElementById("btn-comenzar");
 
 const btnConfiguracion = document.getElementById("btn-configuracion");
 const modalConfiguracion = document.getElementById("modal-configuracion");
@@ -35,17 +22,14 @@ const configMusica = document.getElementById("config-musica");
 const configEfectos = document.getElementById("config-efectos");
 const configVoz = document.getElementById("config-voz");
 
-
-/* ==========================================
-   2. DATOS DE LAS MISIONES
-========================================== */
+/* Datos de las seis misiones */
 
 const misiones = [
     {
         id: 1,
         nombre: "¡A aprender!",
         titulo: "¡Tengo derecho a aprender!",
-        descripcion: "¡Vamos a descubrir nuestro derecho a aprender!",
+        descripcion: "Todos los niños tenemos derecho a aprender.",
         icono: "📖",
         ruta: "juegos/mision-1.html",
         audio: null
@@ -54,7 +38,7 @@ const misiones = [
         id: 2,
         nombre: "¡Para todos!",
         titulo: "¡La escuela es para todos!",
-        descripcion: "¡Todos los niños y niñas podemos aprender!",
+        descripcion: "Todos podemos estudiar, sin importar nuestras diferencias.",
         icono: "🏫",
         ruta: "juegos/mision-2.html",
         audio: null
@@ -63,26 +47,41 @@ const misiones = [
         id: 3,
         nombre: "¡A jugar!",
         titulo: "¡Aprendemos jugando!",
-        descripcion: "¡Aprender también puede ser divertido!",
+        descripcion: "Jugando también podemos descubrir cosas nuevas.",
         icono: "🎨",
         ruta: "juegos/mision-3.html",
         audio: null
     },
     {
         id: 4,
+        nombre: "¡Nos ayudamos!",
+        titulo: "¡Aprendemos juntos!",
+        descripcion: "En la escuela nos respetamos y ayudamos.",
+        icono: "🤝",
+        ruta: "juegos/mision-4.html",
+        audio: null
+    },
+    {
+        id: 5,
+        nombre: "¡A descubrir!",
+        titulo: "¡Descubrir es aprender!",
+        descripcion: "Podemos hacer preguntas y aprender cada día.",
+        icono: "✏️",
+        ruta: "juegos/mision-5.html",
+        audio: null
+    },
+    {
+        id: 6,
         nombre: "¡Mi escuela!",
         titulo: "¡Cuidemos nuestra escuela!",
-        descripcion: "¡Vamos a cuidar el lugar donde aprendemos!",
+        descripcion: "Cuidamos el lugar donde aprendemos.",
         icono: "🌟",
-        ruta: "juegos/mision-4.html",
+        ruta: "juegos/mision-6.html",
         audio: null
     }
 ];
 
-
-/* ==========================================
-   3. CONFIGURACIÓN Y AUDIO
-========================================== */
+/* Configuración */
 
 const CLAVE_CONFIGURACION = "estrellitas_del_saber_configuracion";
 
@@ -93,7 +92,6 @@ const configuracionInicial = {
 };
 
 function cargarConfiguracion() {
-
     try {
         const guardada = JSON.parse(
             localStorage.getItem(CLAVE_CONFIGURACION)
@@ -103,13 +101,14 @@ function cargarConfiguracion() {
             ...configuracionInicial,
             ...(guardada || {})
         };
-
     } catch (error) {
         return { ...configuracionInicial };
     }
 }
 
 let configuracion = cargarConfiguracion();
+
+/* Audio */
 
 const audioMapa = {
     bienvenida: null,
@@ -118,9 +117,9 @@ const audioMapa = {
 };
 
 let narracionActual = null;
+let musicaActual = null;
 
 function detenerNarracion() {
-
     if (narracionActual) {
         narracionActual.pause();
         narracionActual.currentTime = 0;
@@ -129,7 +128,6 @@ function detenerNarracion() {
 }
 
 function reproducirNarracion(ruta) {
-
     detenerNarracion();
 
     if (!configuracion.voz || !ruta) {
@@ -145,24 +143,36 @@ function reproducirNarracion(ruta) {
 }
 
 function reproducirEfecto(ruta) {
-
     if (!configuracion.efectos || !ruta) {
         return;
     }
 
     const efecto = new Audio(ruta);
     efecto.volume = 0.4;
-
     efecto.play().catch(() => {});
 }
 
+function actualizarMusica() {
+    if (!audioMapa.musica) {
+        return;
+    }
 
-/* ==========================================
-   4. GUARDAR CONFIGURACIÓN
-========================================== */
+    if (!musicaActual) {
+        musicaActual = new Audio(audioMapa.musica);
+        musicaActual.loop = true;
+        musicaActual.volume = 0.18;
+    }
+
+    if (configuracion.musica) {
+        musicaActual.play().catch(() => {});
+    } else {
+        musicaActual.pause();
+    }
+}
+
+/* Guardar configuración */
 
 function guardarConfiguracion() {
-
     configuracion = {
         musica: configMusica.checked,
         efectos: configEfectos.checked,
@@ -175,16 +185,17 @@ function guardarConfiguracion() {
             JSON.stringify(configuracion)
         );
     } catch (error) {
-        // La configuración sigue funcionando durante esta sesión.
+        // Se conserva la configuración durante esta sesión.
     }
 
     if (!configuracion.voz) {
         detenerNarracion();
     }
+
+    actualizarMusica();
 }
 
 function actualizarControlesConfiguracion() {
-
     configMusica.checked = configuracion.musica;
     configEfectos.checked = configuracion.efectos;
     configVoz.checked = configuracion.voz;
@@ -193,15 +204,11 @@ function actualizarControlesConfiguracion() {
         !configuracion.voz || !audioMapa.bienvenida;
 }
 
-
-/* ==========================================
-   5. PROGRESO
-========================================== */
+/* Progreso */
 
 const CLAVE_PROGRESO = "estrellitas_del_saber_progreso";
 
 function obtenerProgreso() {
-
     try {
         const guardado = localStorage.getItem(CLAVE_PROGRESO);
 
@@ -213,14 +220,16 @@ function obtenerProgreso() {
                 Array.isArray(progresoGuardado.completadas)
             ) {
                 return {
-                    completadas: progresoGuardado.completadas,
+                    completadas: progresoGuardado.completadas
+                        .map(Number)
+                        .filter(id => Number.isInteger(id) && id >= 1 && id <= 6),
+
                     estrellas: progresoGuardado.estrellas || {}
                 };
             }
         }
-
     } catch (error) {
-        // Si no hay datos válidos, iniciamos desde cero.
+        // Se inicia sin progreso si los datos no son válidos.
     }
 
     return {
@@ -236,7 +245,6 @@ function estaCompletada(id) {
 }
 
 function estaDesbloqueada(id) {
-
     if (id === 1) {
         return true;
     }
@@ -245,24 +253,22 @@ function estaDesbloqueada(id) {
 }
 
 function calcularEstrellas() {
+    return misiones.reduce((total, mision) => {
+        const cantidad = Number(progreso.estrellas[mision.id] || 0);
 
-    return Object.values(progreso.estrellas).reduce(
-        (total, cantidad) => total + Number(cantidad || 0),
-        0
-    );
+        return total + Math.max(
+            0,
+            Math.min(3, Number.isFinite(cantidad) ? cantidad : 0)
+        );
+    }, 0);
 }
 
-
-/* ==========================================
-   6. ACTUALIZAR MAPA
-========================================== */
+/* Actualizar mapa */
 
 function actualizarMapa() {
-
     totalEstrellas.textContent = calcularEstrellas();
 
     botonesMisiones.forEach((boton) => {
-
         const id = Number(boton.dataset.mision);
         const completada = estaCompletada(id);
         const desbloqueada = estaDesbloqueada(id);
@@ -293,43 +299,43 @@ function actualizarMapa() {
         const estrellas = boton.querySelector(".mision-estrellas");
 
         if (estrellas) {
-            const cantidad = Number(progreso.estrellas[id] || 0);
+            const cantidad = Math.max(
+                0,
+                Math.min(3, Number(progreso.estrellas[id] || 0))
+            );
 
             estrellas.textContent =
                 "★ ".repeat(cantidad) +
-                "☆ ".repeat(Math.max(0, 3 - cantidad));
+                "☆ ".repeat(3 - cantidad);
+
+            estrellas.hidden = !desbloqueada;
         }
 
-        const mision = misiones.find((item) => item.id === id);
+        const mision = misiones.find(item => item.id === id);
 
         if (mision) {
+            const estado = completada
+                ? "Misión completada"
+                : desbloqueada
+                    ? "Misión disponible"
+                    : "Misión bloqueada";
+
             boton.setAttribute(
                 "aria-label",
-                `${mision.titulo}. ${
-                    completada
-                        ? "Misión completada"
-                        : desbloqueada
-                            ? "Misión disponible"
-                            : "Misión bloqueada"
-                }`
+                `${mision.titulo}. ${estado}`
             );
         }
     });
 }
 
-
-/* ==========================================
-   7. MENSAJES DE STARLY
-========================================== */
+/* Mensajes de Starly */
 
 function actualizarMensajeStarly(titulo, mensaje) {
-
     tituloStarly.textContent = titulo;
     mensajeStarly.textContent = mensaje;
 }
 
 function escucharStarly() {
-
     if (!configuracion.voz) {
         return;
     }
@@ -337,60 +343,14 @@ function escucharStarly() {
     reproducirNarracion(audioMapa.bienvenida);
 }
 
-
-/* ==========================================
-   8. ABRIR Y CERRAR MODALES
-========================================== */
-
-let modalActivo = null;
-let elementoAnterior = null;
-
-function abrirModal(modal) {
-
-    elementoAnterior = document.activeElement;
-    modalActivo = modal;
-
-    modal.hidden = false;
-    document.body.style.overflow = "hidden";
-
-    const cerrar = modal.querySelector(".modal-cerrar");
-
-    if (cerrar) {
-        cerrar.focus();
-    }
-}
-
-function cerrarModal() {
-
-    if (!modalActivo) {
-        return;
-    }
-
-    modalActivo.hidden = true;
-    modalActivo = null;
-
-    document.body.style.overflow = "";
-
-    if (elementoAnterior) {
-        elementoAnterior.focus();
-    }
-}
-
-
-/* ==========================================
-   9. SELECCIONAR MISIÓN
-========================================== */
-
-let misionSeleccionada = null;
-
+/* Entrar a las misiones */
 
 function abrirMision(id) {
-
     if (!estaDesbloqueada(id)) {
         return;
     }
 
-    const mision = misiones.find((item) => item.id === id);
+    const mision = misiones.find(item => item.id === id);
 
     if (!mision) {
         return;
@@ -398,99 +358,96 @@ function abrirMision(id) {
 
     reproducirEfecto(audioMapa.efectoSeleccion);
 
-    // Entrar directamente al juego seleccionado.
     window.location.href = mision.ruta;
 }
 
+/* Modal de configuración */
 
-
-/* ==========================================
-   10. COMENZAR MISIÓN
-========================================== */
-
-function comenzarMision() {
-
-    if (!misionSeleccionada) {
-        return;
-    }
-
-    // Los minijuegos todavía no están creados.
-    modalDescripcion.textContent =
-        "¡Pronto jugaremos esta misión!";
-
-    btnComenzar.textContent = "¡Próximamente!";
-    btnComenzar.disabled = true;
-}
-
-
-/* ==========================================
-   11. CONFIGURACIÓN
-========================================== */
+let elementoAnterior = null;
 
 function abrirConfiguracion() {
+    elementoAnterior = document.activeElement;
 
     actualizarControlesConfiguracion();
-    abrirModal(modalConfiguracion);
+
+    modalConfiguracion.hidden = false;
+    document.body.style.overflow = "hidden";
+
+    configuracionCerrar.focus();
 }
 
 function cerrarConfiguracion() {
-
     guardarConfiguracion();
     actualizarControlesConfiguracion();
-    cerrarModal();
+
+    modalConfiguracion.hidden = true;
+    document.body.style.overflow = "";
+
+    if (elementoAnterior) {
+        elementoAnterior.focus();
+    }
 }
 
-
-/* ==========================================
-   12. EVENTOS
-========================================== */
+/* Eventos */
 
 botonesMisiones.forEach((boton) => {
-
     boton.addEventListener("click", () => {
         abrirMision(Number(boton.dataset.mision));
     });
 });
 
-modalCerrar.addEventListener("click", cerrarModal);
+btnConfiguracion.addEventListener(
+    "click",
+    abrirConfiguracion
+);
 
-btnComenzar.addEventListener("click", comenzarMision);
+configuracionCerrar.addEventListener(
+    "click",
+    cerrarConfiguracion
+);
 
-btnConfiguracion.addEventListener("click", abrirConfiguracion);
+configuracionListo.addEventListener(
+    "click",
+    cerrarConfiguracion
+);
 
-configuracionCerrar.addEventListener("click", cerrarConfiguracion);
-configuracionListo.addEventListener("click", cerrarConfiguracion);
+configMusica.addEventListener(
+    "change",
+    guardarConfiguracion
+);
 
-configMusica.addEventListener("change", guardarConfiguracion);
-configEfectos.addEventListener("change", guardarConfiguracion);
+configEfectos.addEventListener(
+    "change",
+    guardarConfiguracion
+);
+
 configVoz.addEventListener("change", () => {
     guardarConfiguracion();
     actualizarControlesConfiguracion();
 });
 
-btnEscuchar.addEventListener("click", escucharStarly);
+btnEscuchar.addEventListener(
+    "click",
+    escucharStarly
+);
 
-[modalMision, modalConfiguracion].forEach((modal) => {
-
-    modal.addEventListener("click", (evento) => {
-
-        if (evento.target === modal) {
-            cerrarModal();
-        }
-    });
-});
-
-document.addEventListener("keydown", (evento) => {
-
-    if (evento.key === "Escape" && modalActivo) {
-        cerrarModal();
+modalConfiguracion.addEventListener("click", (evento) => {
+    if (evento.target === modalConfiguracion) {
+        cerrarConfiguracion();
     }
 });
 
+document.addEventListener("keydown", (evento) => {
+    if (
+        evento.key === "Escape" &&
+        !modalConfiguracion.hidden
+    ) {
+        cerrarConfiguracion();
+    }
+});
 
-/* ==========================================
-   13. INICIAR MAPA
-========================================== */
+/* Iniciar mapa */
 
 actualizarMapa();
 actualizarControlesConfiguracion();
+actualizarMusica();

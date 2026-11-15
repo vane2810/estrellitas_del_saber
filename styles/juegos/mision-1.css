@@ -624,3 +624,176 @@ body {
         animation: none;
     }
 }
+
+
+
+/* ==========================================
+   MISIÓN 1 - MEJORAS DE AUDIO Y CELEBRACIÓN
+========================================== */
+
+/* Botón para escuchar a Starly */
+
+.mensaje-encabezado {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 4px;
+}
+
+.mensaje-encabezado strong {
+    margin-bottom: 0;
+}
+
+.boton-audio {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+
+    width: 44px;
+    height: 44px;
+
+    border: 2px solid white;
+    border-radius: 50%;
+
+    background: var(--color-morado);
+    color: white;
+
+    font-size: 1.3rem;
+    cursor: pointer;
+
+    box-shadow: 0 4px 0 #30206B;
+
+    transition: transform 0.2s ease;
+}
+
+.boton-audio:hover {
+    transform: translateY(-2px);
+}
+
+.boton-audio:active {
+    transform: translateY(2px);
+}
+
+.boton-audio.reproduciendo {
+    animation: audio-pulso 1s ease-in-out infinite;
+}
+
+@keyframes audio-pulso {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(132, 103, 215, 0.45);
+    }
+
+    50% {
+        box-shadow: 0 0 0 8px rgba(132, 103, 215, 0);
+    }
+}
+
+/* Respuesta amable cuando un objeto no corresponde */
+
+.objeto.incorrecto {
+    border-color: #B9A4F1;
+    background: #F0E9FF;
+    animation: objeto-suave 0.4s ease;
+}
+
+@keyframes objeto-suave {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Mensaje sobre el derecho a la educación */
+
+.mensaje-derecho {
+    margin: 0 0 24px;
+    color: var(--color-morado);
+    font-weight: 800;
+}
+
+/* Confeti de celebración */
+
+.confeti {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.pieza-confeti {
+    position: absolute;
+    top: -20px;
+
+    width: 12px;
+    height: 18px;
+
+    border-radius: 3px;
+
+    animation: confeti-caer 3s linear forwards;
+}
+
+@keyframes confeti-caer {
+    0% {
+        opacity: 1;
+        transform:
+            translate3d(0, -20px, 0)
+            rotate(0deg);
+    }
+
+    100% {
+        opacity: 0;
+        transform:
+            translate3d(var(--desplazamiento), 110vh, 0)
+            rotate(720deg);
+    }
+}
+
+/* Starly celebra al terminar */
+
+.starly-premio {
+    animation: starly-celebrar 1.2s ease-in-out infinite;
+}
+
+@keyframes starly-celebrar {
+    0%, 100% {
+        transform: translateY(0) rotate(-5deg);
+    }
+
+    50% {
+        transform: translateY(-12px) rotate(5deg);
+    }
+}
+
+/* Accesibilidad */
+
+.boton-audio:focus-visible,
+.objeto:focus-visible,
+.boton-continuar:focus-visible {
+    outline: 4px solid var(--color-amarillo);
+    outline-offset: 4px;
+}
+
+@media (max-width: 520px) {
+    .boton-audio {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+    }
+
+    .mensaje-encabezado {
+        gap: 8px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .boton-audio.reproduciendo,
+    .objeto.incorrecto,
+    .pieza-confeti,
+    .starly-premio {
+        animation: none;
+    }
+}
