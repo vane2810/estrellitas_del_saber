@@ -1,0 +1,272 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#87DDF5">
+
+    <title>La Escuela de las Estrellas | Estrellitas del Saber</title>
+
+    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/mapa.css">
+
+    <script src="../js/mapa.js" defer></script>
+</head>
+
+<body>
+
+    <main class="mapa">
+
+        <!-- Encabezado -->
+        <header class="mapa-encabezado">
+
+            <a href="../index.html"
+               class="boton-regresar"
+               aria-label="Regresar al inicio">
+                <span aria-hidden="true">←</span>
+                <span>Inicio</span>
+            </a>
+
+            <div class="mapa-titulo">
+                <span class="titulo-superior">ESTRELLITAS DEL SABER</span>
+                <h1>La Escuela de las Estrellas</h1>
+                <p>¡Una aventura para aprender nuestros derechos!</p>
+            </div>
+
+            <div class="contador-estrellas"
+                 aria-label="Estrellas conseguidas">
+                <span aria-hidden="true">⭐</span>
+                <span id="total-estrellas">0</span>
+                <span class="contador-maximo">/ 12</span>
+            </div>
+
+        </header>
+
+
+        <!-- Paisaje -->
+        <div class="mapa-paisaje" aria-hidden="true">
+
+            <div class="sol"></div>
+
+            <div class="nube nube-1"></div>
+            <div class="nube nube-2"></div>
+            <div class="nube nube-3"></div>
+
+            <div class="montana montana-1"></div>
+            <div class="montana montana-2"></div>
+            <div class="montana montana-3"></div>
+
+            <div class="colina colina-1"></div>
+            <div class="colina colina-2"></div>
+
+        </div>
+
+
+        <!-- Zona principal del mapa -->
+        <section class="mapa-aventura"
+                 aria-label="Mapa de misiones">
+
+            <!-- Escuela decorativa -->
+            <div class="escuela" aria-hidden="true">
+
+                <div class="escuela-techo"></div>
+
+                <div class="escuela-edificio">
+
+                    <div class="escuela-letrero">
+                        MI ESCUELA
+                    </div>
+
+                    <div class="escuela-ventanas">
+                        <span></span>
+                        <span></span>
+                    </div>
+
+                    <div class="escuela-puerta"></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Camino entre misiones -->
+            <svg class="camino-misiones"
+                 viewBox="0 0 1000 650"
+                 preserveAspectRatio="none"
+                 aria-hidden="true">
+
+                <path class="camino-borde"
+                      d="M 150 540
+                         C 220 470, 390 590, 450 420
+                         S 780 460, 790 270
+                         S 500 260, 520 120"/>
+
+                <path class="camino-centro"
+                      d="M 150 540
+                         C 220 470, 390 590, 450 420
+                         S 780 460, 790 270
+                         S 500 260, 520 120"/>
+
+            </svg>
+
+
+            <!-- Misión 1 -->
+            <button class="mision mision-1 mision-disponible"
+                    type="button"
+                    data-mision="1"
+                    aria-label="Misión 1: Tengo derecho a aprender">
+
+                <span class="mision-icono" aria-hidden="true">📖</span>
+                <span class="mision-numero">1</span>
+
+                <span class="mision-etiqueta">
+                    ¡Tengo derecho a aprender!
+                </span>
+
+                <span class="mision-estrellas" aria-hidden="true">
+                    ☆ ☆ ☆
+                </span>
+
+            </button>
+
+
+            <!-- Misión 2 -->
+            <button class="mision mision-2 mision-bloqueada"
+                    type="button"
+                    data-mision="2"
+                    disabled
+                    aria-label="Misión 2 bloqueada: La escuela es para todos">
+
+                <span class="mision-icono" aria-hidden="true">🏫</span>
+                <span class="mision-numero">2</span>
+
+                <span class="mision-etiqueta">
+                    ¡La escuela es para todos!
+                </span>
+
+                <span class="mision-candado" aria-hidden="true">🔒</span>
+
+            </button>
+
+
+            <!-- Misión 3 -->
+            <button class="mision mision-3 mision-bloqueada"
+                    type="button"
+                    data-mision="3"
+                    disabled
+                    aria-label="Misión 3 bloqueada: Aprendemos jugando">
+
+                <span class="mision-icono" aria-hidden="true">🎨</span>
+                <span class="mision-numero">3</span>
+
+                <span class="mision-etiqueta">
+                    ¡Aprendemos jugando!
+                </span>
+
+                <span class="mision-candado" aria-hidden="true">🔒</span>
+
+            </button>
+
+
+            <!-- Misión 4 -->
+            <button class="mision mision-4 mision-bloqueada"
+                    type="button"
+                    data-mision="4"
+                    disabled
+                    aria-label="Misión 4 bloqueada: Cuidemos nuestra escuela">
+
+                <span class="mision-icono" aria-hidden="true">🌟</span>
+                <span class="mision-numero">4</span>
+
+                <span class="mision-etiqueta">
+                    ¡Cuidemos nuestra escuela!
+                </span>
+
+                <span class="mision-candado" aria-hidden="true">🔒</span>
+
+            </button>
+
+
+            <!-- Decoraciones del suelo -->
+            <div class="decoracion-suelo" aria-hidden="true">
+
+                <span class="flor flor-1">🌼</span>
+                <span class="flor flor-2">🌸</span>
+                <span class="flor flor-3">🌼</span>
+
+                <span class="arbol arbol-1">🌳</span>
+                <span class="arbol arbol-2">🌳</span>
+
+                <span class="arbusto arbusto-1">🌿</span>
+                <span class="arbusto arbusto-2">🌿</span>
+
+            </div>
+
+        </section>
+
+
+        <!-- Guía de Starly -->
+        <aside class="starly-guia">
+
+            <img src="../img/personajes/starly/starly_explorador.webp"
+                 alt="Starly, nuestra estrella exploradora"
+                 class="starly-mapa">
+
+            <div class="starly-mensaje">
+                <strong>¡Hola, tripulante!</strong>
+
+                <p id="mensaje-starly">
+                    ¡Aquí descubriremos que todos tenemos derecho a aprender!
+                    Presiona la primera misión para comenzar.
+                </p>
+            </div>
+
+        </aside>
+
+
+        <!-- Mensaje al seleccionar una misión -->
+        <div class="modal-fondo"
+             id="modal-mision"
+             hidden>
+
+            <section class="modal-contenido"
+                     role="dialog"
+                     aria-modal="true"
+                     aria-labelledby="modal-titulo">
+
+                <button class="modal-cerrar"
+                        type="button"
+                        id="modal-cerrar"
+                        aria-label="Cerrar">
+                    ×
+                </button>
+
+                <span class="modal-icono" id="modal-icono" aria-hidden="true">
+                    📖
+                </span>
+
+                <h2 id="modal-titulo">
+                    ¡Tengo derecho a aprender!
+                </h2>
+
+                <p id="modal-descripcion">
+                    Descubriremos por qué aprender es tan importante.
+                </p>
+
+                <button class="boton-comenzar"
+                        id="btn-comenzar"
+                        type="button">
+                    ¡Comenzar! 🚀
+                </button>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</body>
+</html>

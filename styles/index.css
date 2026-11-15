@@ -314,7 +314,7 @@
 
     padding: 18px 45px;
 
-    border: none;
+    border: 2px solid #FFD84D;
     border-radius: 50px;
 
     font-family: var(--fuente-titulos);
@@ -329,8 +329,9 @@
             var(--color-naranja));
 
     box-shadow:
-        0 7px 0 #B84B20,
-        0 12px 25px rgba(0, 0, 0, 0.3);
+        0 6px 0 #B84B20,
+        0 0 14px rgba(255, 216, 77, 0.35),
+        0 10px 20px rgba(0, 0, 0, 0.20);
 
     cursor: pointer;
     touch-action: manipulation;
@@ -339,6 +340,12 @@
     animation: boton-pulso 1.8s ease-in-out infinite;
 }
 
+.boton-despegar:hover {
+    box-shadow:
+        0 6px 0 #B84B20,
+        0 0 25px rgba(255, 216, 77, 0.75),
+        0 10px 20px rgba(0, 0, 0, 0.2);
+}
 
 /* ==========================================
    10. ANIMACIÓN DEL BOTÓN

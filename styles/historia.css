@@ -1,4 +1,3 @@
-
 /* ==========================================
    ESTRELLAS DEL SABER
    HISTORIA ANIMADA
@@ -21,16 +20,12 @@
     overflow: hidden;
 
     background:
-        radial-gradient(
-            ellipse at 50% 35%,
+        radial-gradient(ellipse at 50% 35%,
             rgba(132, 103, 215, 0.4),
-            transparent 55%
-        ),
-        linear-gradient(
-            180deg,
+            transparent 55%),
+        linear-gradient(180deg,
             #241653,
-            var(--color-espacio)
-        );
+            var(--color-espacio));
 }
 
 
@@ -85,7 +80,7 @@
     position: absolute;
     border-radius: 50%;
 
-    opacity: 0.65;
+    opacity: 0.6;
 
     box-shadow:
         inset -12px -12px 18px rgba(0, 0, 0, 0.15),
@@ -101,12 +96,11 @@
     width: 90px;
     height: 90px;
 
-    background: radial-gradient(
-        circle at 30% 30%,
-        #C6A8FF,
-        #8467D7 55%,
-        #49309A
-    );
+    background:
+        radial-gradient(circle at 30% 30%,
+            #C6A8FF,
+            #8467D7 55%,
+            #49309A);
 }
 
 .planeta-morado::after {
@@ -132,18 +126,19 @@
     width: 65px;
     height: 65px;
 
-    background: radial-gradient(
-        circle at 30% 30%,
-        #D7F8FF,
-        #55D6F5 55%,
-        #258ECA
-    );
+    background:
+        radial-gradient(circle at 30% 30%,
+            #D7F8FF,
+            #55D6F5 55%,
+            #258ECA);
 
     animation-delay: -3s;
 }
 
 @keyframes planeta-flotar {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translateY(0);
     }
 
@@ -196,12 +191,11 @@
 
     border-radius: 50%;
 
-    background: linear-gradient(
-        90deg,
-        transparent,
-        var(--color-celeste),
-        #FFFFFF
-    );
+    background:
+        linear-gradient(90deg,
+            transparent,
+            var(--color-celeste),
+            #FFFFFF);
 
     transform: translateY(-50%);
 }
@@ -231,7 +225,9 @@
 }
 
 @keyframes fugaz-historia {
-    0%, 5% {
+
+    0%,
+    5% {
         opacity: 0;
         transform: translate(0, 0) rotate(-25deg);
     }
@@ -266,9 +262,7 @@
     align-items: center;
 
     padding:
-        max(75px, env(safe-area-inset-top))
-        20px
-        max(65px, env(safe-area-inset-bottom));
+        max(75px, env(safe-area-inset-top)) 20px max(65px, env(safe-area-inset-bottom));
 
     opacity: 0;
     visibility: hidden;
@@ -316,9 +310,8 @@
 
     object-fit: contain;
 
-    filter: drop-shadow(
-        0 15px 20px rgba(0, 0, 0, 0.25)
-    );
+    filter:
+        drop-shadow(0 15px 20px rgba(0, 0, 0, 0.25));
 }
 
 
@@ -357,7 +350,8 @@
 @keyframes starly-entrar {
     0% {
         opacity: 0;
-        transform: translateX(-110vw) rotate(-15deg) scale(0.8);
+        transform:
+            translateX(-110vw) rotate(-15deg) scale(0.8);
     }
 
     25% {
@@ -365,17 +359,21 @@
     }
 
     75% {
-        transform: translateX(25px) rotate(6deg) scale(1.05);
+        transform:
+            translateX(25px) rotate(6deg) scale(1.05);
     }
 
     100% {
         opacity: 1;
-        transform: translateX(0) rotate(0) scale(1);
+        transform:
+            translateX(0) rotate(0) scale(1);
     }
 }
 
 @keyframes starly-flotar {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translateY(0) rotate(-3deg);
     }
 
@@ -399,6 +397,7 @@
     align-items: center;
 
     width: min(100%, 580px);
+    min-height: 160px;
 
     padding: 22px 30px;
 
@@ -412,6 +411,8 @@
         0 15px 30px rgba(0, 0, 0, 0.2);
 
     text-align: center;
+
+    pointer-events: none;
 }
 
 .burbuja-dialogo::before {
@@ -443,11 +444,19 @@
     line-height: 1.15;
 
     color: var(--color-morado);
+
+    transition: opacity 0.4s ease;
 }
 
 .burbuja-dialogo p {
     position: relative;
     z-index: 1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 58px;
 
     margin-top: 8px;
 
@@ -457,10 +466,31 @@
     line-height: 1.4;
 
     color: var(--color-espacio);
+
+    transition: opacity 0.35s ease;
 }
 
 
-/* Aparición del diálogo de bienvenida */
+/* Animación de cada frase de Starly */
+
+.texto-apareciendo {
+    animation: frase-aparecer 0.35s ease-out both;
+}
+
+@keyframes frase-aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Aparición de la burbuja de bienvenida */
 
 .escena-bienvenida .burbuja-dialogo {
     opacity: 0;
@@ -468,18 +498,21 @@
 }
 
 .escena-activa .escena-bienvenida .burbuja-dialogo {
-    animation: burbuja-aparecer 0.7s ease-out 2.5s forwards;
+    animation:
+        burbuja-aparecer 0.7s ease-out 2.5s forwards;
 }
 
 @keyframes burbuja-aparecer {
     from {
         opacity: 0;
-        transform: translateY(20px) scale(0.95);
+        transform:
+            translateY(20px) scale(0.95);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        transform:
+            translateY(0) scale(1);
     }
 }
 
@@ -512,19 +545,20 @@
     opacity: 0;
     transform: translateX(-50%) scale(0.4);
 
-    filter: drop-shadow(
-        0 0 20px rgba(85, 214, 245, 0.25)
-    );
+    filter:
+        drop-shadow(0 0 20px rgba(85, 214, 245, 0.25));
 }
 
 .escena-activa .planeta-tierra {
-    animation: tierra-acercarse 8s ease-out forwards;
+    animation:
+        tierra-acercarse 10s ease-out forwards;
 }
 
 @keyframes tierra-acercarse {
     0% {
         opacity: 0;
-        transform: translateX(-50%) scale(0.4);
+        transform:
+            translateX(-50%) scale(0.4);
     }
 
     20% {
@@ -533,7 +567,8 @@
 
     100% {
         opacity: 1;
-        transform: translateX(-50%) scale(1.25);
+        transform:
+            translateX(-50%) scale(1.25);
     }
 }
 
@@ -547,20 +582,24 @@
 }
 
 .escena-activa .starly-viajando {
-    animation: nave-viajar 8s ease-in-out forwards;
+    animation:
+        nave-viajar 10s ease-in-out forwards;
 }
 
 @keyframes nave-viajar {
     0% {
-        transform: translate(-40px, 30px) rotate(-10deg);
+        transform:
+            translate(-40px, 30px) rotate(-10deg);
     }
 
     50% {
-        transform: translate(80px, -25px) rotate(5deg);
+        transform:
+            translate(80px, -25px) rotate(5deg);
     }
 
     100% {
-        transform: translate(150px, 20px) scale(0.7);
+        transform:
+            translate(150px, 20px) scale(0.7);
     }
 }
 
@@ -572,7 +611,8 @@
 }
 
 .escena-activa .escena-viaje .burbuja-dialogo {
-    animation: burbuja-aparecer 0.7s ease-out 1s forwards;
+    animation:
+        burbuja-aparecer 0.7s ease-out 1s forwards;
 }
 
 
@@ -581,12 +621,11 @@
 ========================================== */
 
 #escena-3 {
-    background: linear-gradient(
-        180deg,
-        #80D8F5 0%,
-        #C5F2FF 65%,
-        #DDF8D5 100%
-    );
+    background:
+        linear-gradient(180deg,
+            #80D8F5 0%,
+            #C5F2FF 65%,
+            #DDF8D5 100%);
 }
 
 .escena-aterrizaje {
@@ -604,11 +643,12 @@
 
     border-radius: 50% 50% 0 0;
 
-    background: linear-gradient(
-        180deg,
-        #80D86C,
-        #43B95C
-    );
+    background:
+        linear-gradient(180deg,
+            #80D86C,
+            #43B95C);
+
+    pointer-events: none;
 }
 
 .zona-aterrizaje {
@@ -636,18 +676,21 @@
 }
 
 .escena-activa .starly-aterrizando {
-    animation: nave-aterrizar 4.5s ease-in forwards;
+    animation:
+        nave-aterrizar 4.5s ease-in forwards;
 }
 
 @keyframes nave-aterrizar {
     0% {
         opacity: 1;
-        transform: translate(-50%, -220px) scale(0.8);
+        transform:
+            translate(-50%, -220px) scale(0.8);
     }
 
     65% {
         opacity: 1;
-        transform: translate(-50%, 0) scale(1);
+        transform:
+            translate(-50%, 0) scale(1);
     }
 
     85% {
@@ -656,7 +699,8 @@
 
     100% {
         opacity: 0;
-        transform: translate(-50%, 0) scale(1);
+        transform:
+            translate(-50%, 0) scale(1);
     }
 }
 
@@ -724,18 +768,21 @@
 }
 
 .escena-activa .polvo {
-    animation: polvo-aparecer 3s ease-out 3s forwards;
+    animation:
+        polvo-aparecer 3s ease-out 3s forwards;
 }
 
 @keyframes polvo-aparecer {
     0% {
         opacity: 0;
-        transform: translateX(-50%) scale(0.4);
+        transform:
+            translateX(-50%) scale(0.4);
     }
 
     25% {
         opacity: 1;
-        transform: translateX(-50%) scale(1.2);
+        transform:
+            translateX(-50%) scale(1.2);
     }
 
     60% {
@@ -744,7 +791,8 @@
 
     100% {
         opacity: 0;
-        transform: translateX(-50%) scale(1.8);
+        transform:
+            translateX(-50%) scale(1.8);
     }
 }
 
@@ -762,32 +810,60 @@
     height: auto;
 
     opacity: 0;
-    transform: translateX(-50%) scale(0.5);
+    transform:
+        translateX(-50%) scale(0.5);
 
-    filter: drop-shadow(
-        0 10px 12px rgba(0, 0, 0, 0.2)
-    );
+    filter:
+        drop-shadow(0 10px 12px rgba(0, 0, 0, 0.2));
 }
 
+/* Starly aparece y después se balancea suavemente */
+
 .escena-activa .starly-explorador {
-    animation: explorador-aparecer 1s ease-out 5.5s forwards;
+    animation:
+        explorador-aparecer 1s ease-out 5.5s forwards,
+        explorador-flotar 3s ease-in-out 6.5s infinite;
+}
+
+/* Movimiento suave de Starly */
+
+@keyframes explorador-flotar {
+
+    0%,
+    100% {
+        transform: translateX(-50%) translateY(0) rotate(-2deg);
+    }
+
+    50% {
+        transform: translateX(-50%) translateY(-8px) rotate(2deg);
+    }
 }
 
 @keyframes explorador-aparecer {
     0% {
         opacity: 0;
-        transform: translateX(-50%) scale(0.5);
+        transform:
+            translateX(-50%) scale(0.5);
     }
 
     70% {
         opacity: 1;
-        transform: translateX(-50%) scale(1.12);
+        transform:
+            translateX(-50%) scale(1.12);
     }
 
     100% {
         opacity: 1;
-        transform: translateX(-50%) scale(1);
+        transform:
+            translateX(-50%) scale(1);
     }
+}
+
+
+/* Movimiento suave después de aterrizar */
+
+.escena-activa .starly-explorador::after {
+    animation: none;
 }
 
 
@@ -800,10 +876,13 @@
 
     opacity: 0;
     transform: translateY(15px);
+
+    pointer-events: none;
 }
 
 .escena-activa .dialogo-final {
-    animation: burbuja-aparecer 0.8s ease 6s forwards;
+    animation:
+        burbuja-aparecer 0.8s ease 6s forwards;
 }
 
 
@@ -817,7 +896,7 @@
     margin-top: 15px;
     padding: 12px 35px;
 
-    border: none;
+    border: 3px solid var(--color-amarillo);
     border-radius: 50px;
 
     font-family: var(--fuente-titulos);
@@ -829,19 +908,78 @@
 
     box-shadow:
         0 6px 0 #B84B20,
+        0 0 16px rgba(255, 216, 77, 0.45),
         0 10px 20px rgba(0, 0, 0, 0.2);
 
     cursor: pointer;
     touch-action: manipulation;
+
+    transition:
+        opacity 0.4s ease,
+        visibility 0.4s ease,
+        box-shadow 0.2s ease;
 }
 
 .boton-explorar:disabled {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
     cursor: default;
 }
 
+.boton-explorar:not(:disabled) {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+
+    animation:
+        boton-invitar 2.2s ease-in-out infinite;
+}
+
+/* Brillo suave al pasar el cursor */
+
+.boton-explorar:not(:disabled):hover {
+    box-shadow:
+        0 6px 0 #B84B20,
+        0 0 25px rgba(255, 216, 77, 0.75),
+        0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes boton-invitar {
+
+    0%,
+    100% {
+        transform:
+            translateY(0) scale(1);
+    }
+
+    50% {
+        transform:
+            translateY(-5px) scale(1.04);
+    }
+}
+
+.boton-explorar:not(:disabled):hover {
+    animation-play-state: paused;
+
+    transform:
+        translateY(-4px) scale(1.06);
+}
+
 .boton-explorar:not(:disabled):active {
-    transform: translateY(4px);
-    box-shadow: 0 2px 0 #B84B20;
+    animation: none;
+
+    transform:
+        translateY(4px) scale(0.98);
+
+    box-shadow:
+        0 2px 0 #B84B20;
+}
+
+.boton-explorar:focus-visible,
+.boton-saltar:focus-visible {
+    outline: 4px solid var(--color-amarillo);
+    outline-offset: 4px;
 }
 
 
@@ -857,18 +995,20 @@
     z-index: 10;
 
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
 }
 
-.boton-control,
 .boton-saltar {
     min-height: 48px;
+
+    padding: 10px 20px;
 
     border: 2px solid rgba(255, 255, 255, 0.5);
     border-radius: 30px;
 
     font-family: var(--fuente-titulos);
+    font-size: 1.1rem;
     font-weight: 600;
 
     color: var(--color-blanco);
@@ -876,16 +1016,19 @@
 
     cursor: pointer;
     touch-action: manipulation;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
 }
 
-.boton-control {
-    width: 52px;
-    font-size: 1.5rem;
+.boton-saltar:hover {
+    background: rgba(73, 48, 154, 0.9);
+    transform: translateY(-2px);
 }
 
-.boton-saltar {
-    padding: 10px 20px;
-    font-size: 1.1rem;
+.boton-saltar:active {
+    transform: translateY(1px);
 }
 
 
@@ -903,6 +1046,8 @@
     gap: 10px;
 
     transform: translateX(-50%);
+
+    pointer-events: none;
 }
 
 .punto {
@@ -911,6 +1056,10 @@
 
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.4);
+
+    transition:
+        width 0.3s ease,
+        background 0.3s ease;
 }
 
 .punto-activo {
@@ -921,16 +1070,39 @@
 
 
 /* ==========================================
-   17. CELULARES
+   17. HISTORIA SALTADA
+========================================== */
+
+.historia-saltada .starly-aterrizando,
+.historia-saltada .polvo {
+    display: none;
+}
+
+.historia-saltada .starly-explorador {
+    opacity: 1;
+    transform:
+        translateX(-50%) scale(1);
+
+    animation: none;
+}
+
+.historia-saltada .dialogo-final {
+    opacity: 1;
+    transform: translateY(0);
+
+    animation: none;
+}
+
+
+/* ==========================================
+   18. CELULARES
 ========================================== */
 
 @media (max-width: 600px) {
 
     .escena {
         padding:
-            max(85px, env(safe-area-inset-top))
-            15px
-            max(65px, env(safe-area-inset-bottom));
+            max(85px, env(safe-area-inset-top)) 15px max(65px, env(safe-area-inset-bottom));
     }
 
     .escena-contenido {
@@ -947,6 +1119,8 @@
 
     .burbuja-dialogo {
         width: min(100%, 360px);
+        min-height: 150px;
+
         padding: 18px 20px;
         border-radius: 22px;
     }
@@ -957,6 +1131,7 @@
     }
 
     .burbuja-dialogo p {
+        min-height: 65px;
         font-size: 1.05rem;
     }
 
@@ -1016,7 +1191,7 @@
 
 
 /* ==========================================
-   18. CELULARES PEQUEÑOS
+   19. CELULARES PEQUEÑOS
 ========================================== */
 
 @media (max-width: 380px) {
@@ -1030,6 +1205,7 @@
     }
 
     .burbuja-dialogo {
+        min-height: 135px;
         padding: 15px;
     }
 
@@ -1051,7 +1227,7 @@
 
 
 /* ==========================================
-   19. CELULARES EN HORIZONTAL
+   20. CELULARES EN HORIZONTAL
 ========================================== */
 
 @media (max-height: 500px) and (orientation: landscape) {
@@ -1073,6 +1249,8 @@
     }
 
     .burbuja-dialogo {
+        min-height: 95px;
+
         padding: 10px 18px;
         border-radius: 18px;
     }
@@ -1083,6 +1261,7 @@
     }
 
     .burbuja-dialogo p {
+        min-height: 35px;
         margin-top: 4px;
         font-size: 0.9rem;
     }
@@ -1109,6 +1288,7 @@
     .boton-explorar {
         min-height: 42px;
         margin-top: 5px;
+
         padding: 8px 20px;
         font-size: 1.05rem;
     }
@@ -1124,7 +1304,7 @@
 
 
 /* ==========================================
-   20. ACCESIBILIDAD
+   21. ACCESIBILIDAD
 ========================================== */
 
 @media (prefers-reduced-motion: reduce) {
@@ -1140,16 +1320,45 @@
     }
 
     .escena-activa .starly-bienvenida,
-    .escena-activa .escena-bienvenida .burbuja-dialogo,
     .escena-activa .planeta-tierra,
     .escena-activa .starly-viajando,
-    .escena-activa .escena-viaje .burbuja-dialogo,
+    .escena-activa .starly-explorador {
+        animation: none;
+        opacity: 1;
+    }
+
+    .escena-activa .starly-bienvenida,
+    .escena-activa .starly-viajando {
+        transform: none;
+    }
+
+    .escena-activa .planeta-tierra {
+        transform:
+            translateX(-50%) scale(1.1);
+    }
+
+    .escena-activa .starly-explorador {
+        transform:
+            translateX(-50%) scale(1);
+    }
+
     .escena-activa .starly-aterrizando,
-    .escena-activa .polvo,
-    .escena-activa .starly-explorador,
-    .escena-activa .dialogo-final {
-        animation-duration: 0.01ms !important;
-        animation-delay: 0ms !important;
-        animation-iteration-count: 1 !important;
+    .escena-activa .polvo {
+        animation: none;
+        opacity: 0;
+    }
+
+    .escena-activa .burbuja-dialogo {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+
+    .texto-apareciendo {
+        animation: none;
+    }
+
+    .boton-explorar:not(:disabled) {
+        animation: none;
     }
 }
