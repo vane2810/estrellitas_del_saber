@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Misión 6 | Estrellitas del Saber</title>
+    <link rel="icon" type="image/png" href="../../img/personajes/starly/starly2.webp">
+    <link rel="stylesheet" href="../../styles/global.css">
+    <link rel="stylesheet" href="../../styles/juegos/mision-6.css">
+    <script src="../../js/celebracion.js" defer></script>
+    <script src="../../js/juegos/mision-6.js" defer></script>
+</head>
+<body>
+    <main class="final-juego">
+        <header class="final-header">
+            <a href="../mapa.html" class="final-volver">← Mapa</a>
+
+            <div class="final-titulo">
+                <span>MISIÓN 6</span>
+                <h1>¡Mi escuela!</h1>
+            </div>
+
+            <div class="final-estrellas">⭐ <span id="contador">0/3</span></div>
+        </header>
+
+        <section class="final-panel">
+            <div class="final-superior">
+                <div class="final-guia">
+                    <img
+                        src="../../img/personajes/starly/starly_explorador.webp"
+                        alt="Starly"
+                    >
+                    <div class="final-dialogo">
+                        <p id="dialogo" aria-live="polite">
+                            ¡Vamos a iluminar la escuela!
+                        </p>
+                        <button
+                            id="boton-audio"
+                            class="final-audio"
+                            type="button"
+                            aria-label="Escuchar a Starly"
+                        >🔊</button>
+                    </div>
+                </div>
+
+                <div class="final-progreso">
+                    <span id="estrella-1">☆</span>
+                    <span id="estrella-2">☆</span>
+                    <span id="estrella-3">☆</span>
+                </div>
+            </div>
+
+            <div class="final-escenario" id="escenario">
+                <div class="final-cielo">
+                    <div class="final-sol"></div>
+                    <div class="final-nube nube-a"></div>
+                    <div class="final-nube nube-b"></div>
+                </div>
+
+                <div class="final-escuela" id="escuela">
+                    <div class="escuela-techo"></div>
+                    <div class="escuela-cuerpo">
+                        <div class="escuela-letrero">ESCUELA</div>
+                        <div class="escuela-ventanas">
+                            <div class="escuela-ventana"></div>
+                            <div class="escuela-ventana"></div>
+                        </div>
+                        <div class="escuela-puerta"></div>
+                    </div>
+                    <div class="escuela-resplandor"></div>
+                </div>
+
+                <div class="final-camino"></div>
+
+                <div class="final-plataformas">
+                    <button class="final-plataforma" data-paso="1" type="button" aria-label="Primera plataforma">
+                        <span class="plataforma-estrella">⭐</span>
+                        <span class="plataforma-base"></span>
+                    </button>
+
+                    <button class="final-plataforma" data-paso="2" type="button" aria-label="Segunda plataforma">
+                        <span class="plataforma-estrella">⭐</span>
+                        <span class="plataforma-base"></span>
+                    </button>
+
+                    <button class="final-plataforma" data-paso="3" type="button" aria-label="Tercera plataforma">
+                        <span class="plataforma-estrella">⭐</span>
+                        <span class="plataforma-base"></span>
+                    </button>
+                </div>
+
+                <img
+                    id="starly-jugador"
+                    class="final-starly-jugador"
+                    src="../../img/personajes/starly/starly_explorador.webp"
+                    alt=""
+                >
+
+                <div id="particulas" class="final-particulas" aria-hidden="true"></div>
+
+                <div id="demostracion-mano" class="final-mano" aria-hidden="true">👆</div>
+            </div>
+
+            <div class="final-indicacion">
+                <div class="final-indicadores">
+                    <span id="paso-1" class="final-punto"></span>
+                    <span id="paso-2" class="final-punto"></span>
+                    <span id="paso-3" class="final-punto"></span>
+                </div>
+            </div>
+        </section>
+
+        <div id="gran-final" class="gran-final" hidden>
+            <div class="gran-final-contenido">
+                <div class="gran-final-brillos" aria-hidden="true">✦ ⭐ ✦</div>
+                <img
+                    src="../../img/personajes/starly/starly_explorador.webp"
+                    alt="Starly"
+                >
+                <span class="gran-final-etiqueta">AVENTURA COMPLETADA</span>
+                <h2>¡Lo lograste, Tripulante!</h2>
+                <div class="gran-final-estrellas">⭐⭐⭐⭐⭐⭐</div>
+                <div class="gran-final-total" id="total-estrellas">18/18 ⭐</div>
+                <p>
+                    ¡La Escuela de las Estrellas está brillando gracias a ti!
+                </p>
+                <div class="gran-final-mensaje">
+                    Aprender, jugar y descubrir es para todos.
+                    <strong>¡La educación es nuestro derecho!</strong>
+                </div>
+                <div class="gran-final-insignia">🏅 Gran Tripulante</div>
+                <a href="../mapa.html" class="gran-final-boton">Volver al mapa</a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

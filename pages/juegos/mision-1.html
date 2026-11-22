@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -6,16 +7,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Misión 1 | Estrellitas del Saber</title>
+    <link rel="icon" type="image/png" href="../../img/personajes/starly/starly2.webp">
 
     <link rel="stylesheet" href="../../styles/global.css">
+    <link rel="stylesheet" href="../../styles/celebracion.css">
     <link rel="stylesheet" href="../../styles/juegos/mision-1.css">
+
+    <script src="../../js/celebracion.js" defer></script>
+    <script src="../../js/juegos/mision-1.js" defer></script>
 </head>
 
 <body>
 
     <main class="juego">
 
-        <!-- Encabezado -->
+        <!-- ENCABEZADO -->
         <header class="juego-encabezado">
 
             <a href="../mapa.html" class="boton-volver">
@@ -24,145 +30,232 @@
 
             <div class="juego-titulo">
                 <span>MISIÓN 1</span>
-                <h1>¡Preparemos la mochila!</h1>
+                <h1>¡Rescatemos los colores!</h1>
             </div>
 
-            <div class="contador" aria-live="polite">
-                ⭐ <span id="contador-utiles">0</span>/3
+            <div class="contador" id="contador" aria-live="polite" hidden>
+                <span aria-hidden="true">⭐</span>
+                <span id="contador-estrellas">0</span>/3
             </div>
 
         </header>
 
-        <!-- Mensaje de Starly -->
-        <section class="guia-starly">
+        <!-- JUEGO -->
+        <section class="zona-juego historia-activa" id="zona-juego">
 
-            <img src="../../img/personajes/starly/starly_explorador.webp" alt="Starly" class="starly">
+            <!-- ESCENARIO -->
+            <div class="escenario" id="escenario">
 
-            <div class="mensaje-starly">
+                <div class="paisaje" id="paisaje">
 
-                <div class="mensaje-encabezado">
-                    <strong id="mensaje-titulo">
-                        ¡Hola, tripulante!
-                    </strong>
+                    <div class="cielo"></div>
+                    <div class="sol"></div>
 
-                    <button type="button" class="boton-audio" id="btn-audio" aria-label="Escuchar instrucciones"
-                        title="Escuchar a Starly">
-                        🔊
-                    </button>
+                    <div class="nube nube-1"></div>
+                    <div class="nube nube-2"></div>
+
+                    <div class="suelo"></div>
+
+                    <!-- ESCUELA -->
+                    <div
+                        class="escuela techo-pintado paredes-pintadas puerta-pintada"
+                        id="escuela"
+                    >
+
+                        <div class="techo"></div>
+
+                        <div class="edificio">
+
+                            <div class="letrero">MI ESCUELA</div>
+
+                            <div class="ventanas">
+                                <div class="ventana"></div>
+                                <div class="ventana"></div>
+                            </div>
+
+                            <div class="puerta"></div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="camino"></div>
+
+                    <!-- NATURALEZA -->
+                    <div class="naturaleza">
+
+                        <div class="arbol arbol-izquierdo">🌳</div>
+                        <div class="arbol arbol-derecho">🌳</div>
+
+                        <div class="flor flor-1">🌼</div>
+                        <div class="flor flor-2">🌸</div>
+                        <div class="flor flor-3">🌺</div>
+
+                    </div>
+
                 </div>
 
-                <p id="mensaje-texto" aria-live="polite">
-                    ¡Elige 3 útiles para mi mochila!
-                </p>
+                <!-- DON GRIS -->
+                <div class="villano" id="villano" aria-hidden="true">
+
+                    <img
+                        src="../../img/personajes/otros/don-gris.png"
+                        alt=""
+                        class="villano-imagen"
+                    >
+
+                </div>
+
+                <!-- EFECTO DE ROBO -->
+                <div class="efecto-robo" id="efecto-robo" aria-hidden="true">
+                    <span>★</span>
+                    <span>●</span>
+                    <span>▲</span>
+                    <span>◆</span>
+                    <span>♥</span>
+                </div>
+
+                <!-- STARLY -->
+                <div class="guia-starly" id="guia-starly">
+
+                    <img
+                        src="../../img/personajes/starly/starly_explorador.webp"
+                        alt="Starly, guía del juego"
+                        class="starly"
+                        id="starly"
+                    >
+
+                    <div class="mensaje-starly" id="mensaje-starly">
+
+                        <div class="mensaje-encabezado">
+
+                            <p id="mensaje-texto" aria-live="polite">
+                                ¡Mira, tripulante! ¡Esta es nuestra escuela!
+                            </p>
+
+                            <button
+                                type="button"
+                                class="boton-audio"
+                                id="btn-audio"
+                                aria-label="Escuchar a Starly"
+                                title="Escuchar a Starly"
+                            >
+                                <span aria-hidden="true">🔊</span>
+                            </button>
+
+                        </div>
+
+                        <!-- GOTA SOLICITADA -->
+                        <div class="mensaje-muestra" id="mensaje-muestra" hidden>
+
+                            <span class="muestra-etiqueta">
+                                Busca esta:
+                            </span>
+
+                            <span class="muestra-gota" id="mensaje-gota">
+                                <span class="gota">
+                                    <span
+                                        class="simbolo-color"
+                                        id="simbolo-muestra"
+                                    ></span>
+                                </span>
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- DESTELLOS -->
+                <div class="destellos" id="destellos" aria-hidden="true"></div>
+
+            </div>
+
+            <!-- CONTROLES DEL JUEGO -->
+            <div class="controles-juego" id="controles-juego" hidden>
+
+                <div
+                    class="colores"
+                    id="colores"
+                    role="group"
+                    aria-label="Colores mágicos"
+                >
+
+                    <button
+                        type="button"
+                        class="color-magico rojo"
+                        data-color="rojo"
+                        aria-label="Gota roja con estrella"
+                        disabled
+                    >
+                        <span class="gota">
+                            <span class="simbolo-color">★</span>
+                        </span>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="color-magico amarillo"
+                        data-color="amarillo"
+                        aria-label="Gota amarilla con círculo"
+                        disabled
+                    >
+                        <span class="gota">
+                            <span class="simbolo-color">●</span>
+                        </span>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="color-magico azul"
+                        data-color="azul"
+                        aria-label="Gota azul con triángulo"
+                        disabled
+                    >
+                        <span class="gota">
+                            <span class="simbolo-color">▲</span>
+                        </span>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="color-magico verde"
+                        data-color="verde"
+                        aria-label="Gota verde con rombo"
+                        disabled
+                    >
+                        <span class="gota">
+                            <span class="simbolo-color">◆</span>
+                        </span>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="color-magico morado"
+                        data-color="morado"
+                        aria-label="Gota morada con corazón"
+                        disabled
+                    >
+                        <span class="gota">
+                            <span class="simbolo-color">♥</span>
+                        </span>
+                    </button>
+
+                </div>
+
+                <!-- ESTRELLAS -->
+                <div class="progreso-estrellas" aria-label="Estrellas obtenidas">
+                    <span class="estrella-progreso">☆</span>
+                    <span class="estrella-progreso">☆</span>
+                    <span class="estrella-progreso">☆</span>
+                </div>
 
             </div>
 
         </section>
-
-        <!-- Área del juego -->
-        <section class="zona-juego">
-
-            <div class="zona-mochila">
-
-                <h2>Mi mochila</h2>
-
-                <div class="mochila" id="mochila">
-
-                    <span class="mochila-dibujo">🎒</span>
-
-                    <div class="mochila-contenido" id="mochila-contenido" aria-live="polite"></div>
-
-                </div>
-
-                <div class="progreso-utiles" aria-label="Progreso">
-                    <span class="estrella-progreso">☆</span>
-                    <span class="estrella-progreso">☆</span>
-                    <span class="estrella-progreso">☆</span>
-                </div>
-
-            </div>
-
-            <div class="zona-objetos">
-
-                <h2>¡Elige los útiles!</h2>
-
-                <div class="objetos" id="objetos">
-
-                    <button class="objeto" data-id="libro" data-correcto="true" aria-label="Libros">
-                        <span>📚</span>
-                        <small>Libros</small>
-                    </button>
-
-
-
-                    <button class="objeto" data-id="helado" data-correcto="false" aria-label="Helado">
-                        <span>🍦</span>
-                        <small>Helado</small>
-                    </button>
-
-                    <button class="objeto" data-id="cuaderno" data-correcto="true" aria-label="Cuaderno">
-                        <span>📓</span>
-                        <small>Cuaderno</small>
-                    </button>
-                    
-
-                    <button class="objeto" data-id="dulce" data-correcto="false" aria-label="Dulce">
-                        <span>🍭</span>
-                        <small>Dulce</small>
-                    </button>
-                    <button class="objeto" data-id="lapiz" data-correcto="true" aria-label="Lápiz">
-                        <span>✏️</span>
-                        <small>Lápiz</small>
-                    </button>
-
-                    <button class="objeto" data-id="pelota" data-correcto="false" aria-label="Pelota">
-                        <span>⚽</span>
-                        <small>Pelota</small>
-                    </button>
-
-                </div>
-
-            </div>
-
-        </section>
-
-        <!-- Celebración -->
-        <div class="recompensa-fondo" id="recompensa" hidden>
-
-            <div class="confeti" id="confeti" aria-hidden="true"></div>
-
-            <section class="recompensa" role="dialog" aria-modal="true" aria-labelledby="recompensa-titulo">
-
-                <img src="../../img/personajes/starly/starly_globos.webp" alt="Starly celebrando"
-                    class="starly-premio" id="starly-premio">
-
-                <h2 id="recompensa-titulo">
-                    ¡Lo lograste!
-                </h2>
-
-                <p>¡Tu mochila está lista!</p>
-
-                <div class="estrellas-premio" aria-label="Tres estrellas">
-                    <span>⭐</span>
-                    <span>⭐</span>
-                    <span>⭐</span>
-                </div>
-
-                <p class="mensaje-derecho">
-                    ¡Todos tenemos derecho a aprender!
-                </p>
-
-                <a href="../mapa.html" class="boton-continuar">
-                    🗺️ Volver al mapa
-                </a>
-
-            </section>
-
-        </div>
 
     </main>
-
-    <script src="../../js/juegos/mision-1.js"></script>
 
 </body>
 

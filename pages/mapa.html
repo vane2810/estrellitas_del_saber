@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -7,6 +8,17 @@
     <meta name="theme-color" content="#87DDF5">
 
     <title>Estrellitas del Saber | Misiones</title>
+    <link rel="icon" type="image/png" href="../img/personajes/starly/starly2.webp">
+
+    <script>
+        try {
+            if (sessionStorage.getItem("estrellitas_transicion_mapa") === "1") {
+                document.documentElement.classList.add("entrada-polvo");
+            }
+        } catch (error) {
+            // La entrada continúa normalmente.
+        }
+    </script>
 
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/mapa.css">
@@ -17,7 +29,7 @@
 <body>
     <main class="mapa">
 
-        <!-- Encabezado -->
+        <!-- ENCABEZADO -->
         <header class="mapa-encabezado">
 
             <a href="../index.html" class="boton-regresar" aria-label="Regresar al inicio">
@@ -37,19 +49,37 @@
                     <span class="contador-maximo">/ 18</span>
                 </div>
 
-                <button class="boton-configuracion" id="btn-configuracion" type="button"
-                    aria-label="Abrir configuración" aria-haspopup="dialog" aria-controls="modal-configuracion">
+                <button
+                    class="boton-configuracion"
+                    id="btn-configuracion"
+                    type="button"
+                    aria-label="Abrir configuración"
+                    aria-haspopup="dialog"
+                    aria-controls="modal-configuracion"
+                >
                     <svg viewBox="0 0 24 24" aria-hidden="true">
                         <path
-                            d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-1.86 1.86-.06-.06A1.7 1.7 0 0 0 16 18.4a1.7 1.7 0 0 0-1 .4 1.7 1.7 0 0 0-.6 1.3V21h-2.8v-.9a1.7 1.7 0 0 0-1.6-1.7 1.7 1.7 0 0 0-1 .4l-.06.06-1.86-1.86.06-.06A1.7 1.7 0 0 0 11 5.6a1.7 1.7 0 0 0 .6-1.3V3h2.8v1.3A1.7 1.7 0 0 0 16 5.6a1.7 1.7 0 0 0 1-.4l.06-.06 1.86 1.86-.06.06A1.7 1.7 0 0 0 18.4 9a1.7 1.7 0 0 0 1.7 1.6h.9v2.8h-.9A1.7 1.7 0 0 0 19.4 15Z"
-                            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
-                        <circle cx="13" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.8" />
+                            d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-1.86 1.86-.06-.06A1.7 1.7 0 0 0 16 18.4a1.7 1.7 0 0 0-1 .4 1.7 1.7 0 0 0-1 .4l-.06.06-1.86-1.86.06-.06A1.7 1.7 0 0 0 11 5.6a1.7 1.7 0 0 0 .6-1.3V3h2.8v1.3A1.7 1.7 0 0 0 16 5.6a1.7 1.7 0 0 0 1-.4l.06-.06 1.86 1.86-.06.06A1.7 1.7 0 0 0 18.4 9a1.7 1.7 0 0 0 1.7 1.6h.9v2.8h-.9A1.7 1.7 0 0 0 19.4 15Z"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linejoin="round"
+                        />
+                        <circle
+                            cx="13"
+                            cy="12"
+                            r="3"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                        />
                     </svg>
                 </button>
+
             </div>
         </header>
 
-        <!-- Paisaje -->
+        <!-- PAISAJE -->
         <div class="mapa-paisaje" aria-hidden="true">
             <div class="sol"></div>
 
@@ -65,11 +95,16 @@
             <div class="colina colina-2"></div>
         </div>
 
-        <!-- Área desplazable del mapa -->
-        <div class="mapa-desplazamiento">
-            <section class="mapa-aventura" aria-label="Mapa de misiones">
+        <!-- MAPA DE MISIONES -->
+        <div class="mapa-desplazamiento" id="mapa-desplazamiento">
 
-                <!-- Escuela -->
+            <section
+                class="mapa-aventura"
+                id="mapa-aventura"
+                aria-label="Mapa de misiones"
+            >
+
+                <!-- ESCUELA -->
                 <div class="escuela" aria-hidden="true">
                     <div class="escuela-techo"></div>
 
@@ -85,92 +120,139 @@
                     </div>
                 </div>
 
+                <!-- CAMINO -->
+                <svg
+                    class="camino-misiones"
+                    viewBox="0 0 1000 510"
+                    preserveAspectRatio="none"
+                    aria-hidden="true"
+                >
+                    <path
+                        class="camino-borde"
+                        d="M 173 398
+                           C 245 398, 280 332, 383 332
+                           S 770 357, 763 296
+                           S 365 297, 323 179
+                           S 770 212, 733 117
+                           S 580 72, 473 45"
+                    />
 
-                <!-- Camino compacto de las seis misiones -->
-                <svg class="camino-misiones" viewBox="0 0 1000 510" preserveAspectRatio="none" aria-hidden="true">
-
-                    <path class="camino-borde" d="M 173 431
-             C 245 431, 280 365, 383 365
-             S 770 390, 763 329
-             S 365 330, 323 212
-             S 770 245, 733 150
-             S 580 105, 473 63" />
-
-                    <path class="camino-centro" d="M 173 431
-             C 245 431, 280 365, 383 365
-             S 770 390, 763 329
-             S 365 330, 323 212
-             S 770 245, 733 150
-             S 580 105, 473 63" />
+                    <path
+                        class="camino-centro"
+                        d="M 173 398
+                           C 245 398, 280 332, 383 332
+                           S 770 357, 763 296
+                           S 365 297, 323 179
+                           S 770 212, 733 117
+                           S 580 72, 473 45"
+                    />
                 </svg>
 
-
-                <!-- Misión 1 -->
-                <button class="mision mision-1 mision-disponible" type="button" data-mision="1"
-                    aria-label="Misión 1: Tengo derecho a aprender">
-
-                    <span class="mision-icono" aria-hidden="true">📖</span>
+                <!-- MISIÓN 1 -->
+                <button
+                    class="mision mision-1 mision-disponible"
+                    type="button"
+                    data-mision="1"
+                    aria-label="Misión 1"
+                >
+                    <span class="mision-icono" aria-hidden="true"></span>
                     <span class="mision-numero">1</span>
-                    <span class="mision-etiqueta">¡A aprender!</span>
+                    <span class="mision-etiqueta"></span>
                     <span class="mision-estrellas" aria-hidden="true">☆ ☆ ☆</span>
+                    <span class="mision-candado" aria-hidden="true" hidden>🔒</span>
                 </button>
 
-                <!-- Misión 2 -->
-                <button class="mision mision-2 mision-bloqueada" type="button" data-mision="2" disabled
-                    aria-label="Misión 2 bloqueada">
-
-                    <span class="mision-icono" aria-hidden="true">🏫</span>
+                <!-- MISIÓN 2 -->
+                <button
+                    class="mision mision-2 mision-bloqueada"
+                    type="button"
+                    data-mision="2"
+                    disabled
+                    aria-label="Misión 2 bloqueada"
+                >
+                    <span class="mision-icono" aria-hidden="true"></span>
                     <span class="mision-numero">2</span>
-                    <span class="mision-etiqueta">¡Para todos!</span>
+                    <span class="mision-etiqueta"></span>
                     <span class="mision-estrellas" aria-hidden="true">☆ ☆ ☆</span>
                     <span class="mision-candado" aria-hidden="true">🔒</span>
                 </button>
 
-                <!-- Misión 3 -->
-                <button class="mision mision-3 mision-bloqueada" type="button" data-mision="3" disabled
-                    aria-label="Misión 3 bloqueada">
-
-                    <span class="mision-icono" aria-hidden="true">🎨</span>
+                <!-- MISIÓN 3 -->
+                <button
+                    class="mision mision-3 mision-bloqueada"
+                    type="button"
+                    data-mision="3"
+                    disabled
+                    aria-label="Misión 3 bloqueada"
+                >
+                    <span class="mision-icono" aria-hidden="true"></span>
                     <span class="mision-numero">3</span>
-                    <span class="mision-etiqueta">¡A jugar!</span>
+                    <span class="mision-etiqueta"></span>
                     <span class="mision-estrellas" aria-hidden="true">☆ ☆ ☆</span>
                     <span class="mision-candado" aria-hidden="true">🔒</span>
                 </button>
 
-                <!-- Misión 4 -->
-                <button class="mision mision-4 mision-bloqueada" type="button" data-mision="4" disabled
-                    aria-label="Misión 4 bloqueada">
-
-                    <span class="mision-icono" aria-hidden="true">🤝</span>
+                <!-- MISIÓN 4 -->
+                <button
+                    class="mision mision-4 mision-bloqueada"
+                    type="button"
+                    data-mision="4"
+                    disabled
+                    aria-label="Misión 4 bloqueada"
+                >
+                    <span class="mision-icono" aria-hidden="true"></span>
                     <span class="mision-numero">4</span>
-                    <span class="mision-etiqueta">¡Nos ayudamos!</span>
+                    <span class="mision-etiqueta"></span>
                     <span class="mision-estrellas" aria-hidden="true">☆ ☆ ☆</span>
                     <span class="mision-candado" aria-hidden="true">🔒</span>
                 </button>
 
-                <!-- Misión 5 -->
-                <button class="mision mision-5 mision-bloqueada" type="button" data-mision="5" disabled
-                    aria-label="Misión 5 bloqueada">
-
-                    <span class="mision-icono" aria-hidden="true">✏️</span>
+                <!-- MISIÓN 5 -->
+                <button
+                    class="mision mision-5 mision-bloqueada"
+                    type="button"
+                    data-mision="5"
+                    disabled
+                    aria-label="Misión 5 bloqueada"
+                >
+                    <span class="mision-icono" aria-hidden="true"></span>
                     <span class="mision-numero">5</span>
-                    <span class="mision-etiqueta">¡A descubrir!</span>
+                    <span class="mision-etiqueta"></span>
                     <span class="mision-estrellas" aria-hidden="true">☆ ☆ ☆</span>
                     <span class="mision-candado" aria-hidden="true">🔒</span>
                 </button>
 
-                <!-- Misión 6 -->
-                <button class="mision mision-6 mision-bloqueada" type="button" data-mision="6" disabled
-                    aria-label="Misión 6 bloqueada">
-
-                    <span class="mision-icono" aria-hidden="true">🌟</span>
+                <!-- MISIÓN 6 -->
+                <button
+                    class="mision mision-6 mision-bloqueada"
+                    type="button"
+                    data-mision="6"
+                    disabled
+                    aria-label="Misión 6 bloqueada"
+                >
+                    <span class="mision-icono" aria-hidden="true"></span>
                     <span class="mision-numero">6</span>
-                    <span class="mision-etiqueta">¡Mi escuela!</span>
+                    <span class="mision-etiqueta"></span>
                     <span class="mision-estrellas" aria-hidden="true">☆ ☆ ☆</span>
                     <span class="mision-candado" aria-hidden="true">🔒</span>
                 </button>
 
-                <!-- Decoraciones -->
+                <!-- STARLY -->
+                <div
+                    class="starly-posicion"
+                    id="starly-posicion"
+                    aria-hidden="true"
+                >
+                    <img
+                        src="../img/personajes/starly/starly_explorador.webp"
+                        alt=""
+                        class="starly-personaje"
+                    >
+
+                    <span class="starly-flecha">➜</span>
+                </div>
+
+                <!-- DECORACIONES -->
                 <div class="decoracion-suelo" aria-hidden="true">
                     <span class="flor flor-1">🌼</span>
                     <span class="flor flor-2">🌸</span>
@@ -183,36 +265,23 @@
             </section>
         </div>
 
-        <!-- Starly como guía -->
-        <aside class="starly-guia">
-
-            <img src="../img/personajes/starly/starly_explorador.webp" alt="Starly, nuestra estrella exploradora"
-                class="starly-mapa">
-
-            <div class="starly-mensaje">
-                <strong id="titulo-starly">¡Hola, tripulante!</strong>
-                <p id="mensaje-starly">¡Elige la primera misión!</p>
-            </div>
-
-            <button class="boton-escuchar" id="btn-escuchar" type="button" aria-label="Escuchar a Starly"
-                title="Escuchar a Starly">
-
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M4 9v6h4l5 4V5L8 9H4Z" fill="currentColor" />
-                    <path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11" fill="none" stroke="currentColor"
-                        stroke-width="2" stroke-linecap="round" />
-                </svg>
-            </button>
-        </aside>
-
-        <!-- Configuración -->
+        <!-- CONFIGURACIÓN -->
         <div class="modal-fondo" id="modal-configuracion" hidden>
 
-            <section class="modal-contenido modal-configuracion" role="dialog" aria-modal="true"
-                aria-labelledby="configuracion-titulo" tabindex="-1">
+            <section
+                class="modal-contenido modal-configuracion"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="configuracion-titulo"
+                tabindex="-1"
+            >
 
-                <button class="modal-cerrar" id="configuracion-cerrar" type="button"
-                    aria-label="Cerrar configuración">×</button>
+                <button
+                    class="modal-cerrar"
+                    id="configuracion-cerrar"
+                    type="button"
+                    aria-label="Cerrar configuración"
+                >×</button>
 
                 <div class="configuracion-icono" aria-hidden="true">⚙️</div>
 
@@ -229,6 +298,7 @@
                             <span aria-hidden="true">🎵</span>
                             Música
                         </span>
+
                         <input type="checkbox" id="config-musica" checked>
                         <span class="interruptor" aria-hidden="true"></span>
                     </label>
@@ -238,6 +308,7 @@
                             <span aria-hidden="true">✨</span>
                             Efectos
                         </span>
+
                         <input type="checkbox" id="config-efectos" checked>
                         <span class="interruptor" aria-hidden="true"></span>
                     </label>
@@ -247,15 +318,75 @@
                             <span aria-hidden="true">🔊</span>
                             Voz de Starly
                         </span>
+
                         <input type="checkbox" id="config-voz" checked>
                         <span class="interruptor" aria-hidden="true"></span>
                     </label>
+
                 </div>
 
-                <button class="boton-comenzar" id="configuracion-listo" type="button">
+                <button
+                    class="boton-comenzar"
+                    id="configuracion-listo"
+                    type="button"
+                >
                     ¡Listo! ⭐
                 </button>
+
             </section>
+        </div>
+
+        <!-- RECONOCIMIENTO -->
+        <div class="modal-fondo" id="modal-premio" hidden>
+
+            <section
+                class="modal-contenido"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="premio-titulo"
+                aria-describedby="premio-descripcion"
+                style="text-align:center;max-width:430px;padding:30px 24px"
+            >
+                <div aria-hidden="true" style="font-size:30px">
+                    ✨ ⭐ ✨
+                </div>
+
+                <p style="font-weight:800;color:#155eef">
+                    ¡Nuevo título desbloqueado!
+                </p>
+
+                <div
+                    id="premio-medalla"
+                    aria-hidden="true"
+                    style="font-size:100px;margin:12px 0"
+                >🏅</div>
+
+                <h2 id="premio-titulo"></h2>
+
+                <p id="premio-descripcion"></p>
+
+                <button
+                    class="boton-comenzar"
+                    id="premio-continuar"
+                    type="button"
+                >
+                    ¡Genial!
+                </button>
+            </section>
+        </div>
+
+        <!-- TRANSICIÓN -->
+        <div
+            class="transicion-polvo"
+            id="transicion-polvo"
+            aria-hidden="true"
+        >
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
 
     </main>

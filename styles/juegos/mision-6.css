@@ -1,0 +1,689 @@
+
+/* ESTRELLITAS DEL SABER - MISIÓN 6 */
+
+.final-juego {
+    min-height: 100dvh;
+    padding-bottom: 22px;
+    background: linear-gradient(180deg, #DDF6FF, #EAF8ED);
+}
+
+.final-juego *,
+.final-juego *::before,
+.final-juego *::after {
+    box-sizing: border-box;
+}
+
+.final-juego [hidden] {
+    display: none !important;
+}
+
+.final-header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 28px;
+}
+
+.final-titulo {
+    text-align: center;
+}
+
+.final-titulo span {
+    color: #8467D7;
+    font-size: 0.8rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+}
+
+.final-titulo h1 {
+    margin: 0;
+    color: #49309A;
+    font-size: clamp(1.3rem, 2.5vw, 1.9rem);
+}
+
+.final-volver,
+.final-estrellas,
+.gran-final-boton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 9px 18px;
+    border: 2px solid #FFFFFF;
+    border-radius: 28px;
+    background: #49309A;
+    box-shadow: 0 4px 0 #30206B;
+    color: #FFFFFF;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.final-volver {
+    justify-self: start;
+}
+
+.final-estrellas {
+    justify-self: end;
+}
+
+.final-panel {
+    width: min(95%, 1200px);
+    margin: 10px auto;
+    padding: 16px 18px 20px;
+    border: 4px solid #DCCFFF;
+    border-radius: 28px;
+    background: #FFFFFF;
+    box-shadow: 0 7px 0 rgba(73, 48, 154, 0.13);
+}
+
+.final-superior {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.final-guia {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.final-guia img {
+    width: 82px;
+    height: 88px;
+    object-fit: contain;
+    animation: final-flotar 3s ease-in-out infinite;
+}
+
+.final-dialogo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border: 3px solid #DCCFFF;
+    border-radius: 20px;
+    background: #FFFFFF;
+    box-shadow: 0 4px 0 #E5D9FF;
+}
+
+.final-dialogo p {
+    margin: 0;
+    color: #49309A;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.final-audio {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    padding: 0;
+    border: 3px solid #FFFFFF;
+    border-radius: 50%;
+    background: #49309A;
+    box-shadow: 0 4px 0 #30206B;
+    cursor: pointer;
+}
+
+.final-progreso {
+    display: flex;
+    gap: 7px;
+    padding: 8px 14px;
+    border: 3px solid #DCCFFF;
+    border-radius: 25px;
+    background: #F5F0FF;
+    color: #BDA9F2;
+    font-size: 1.8rem;
+    font-weight: 900;
+}
+
+.final-progreso span.conseguida {
+    color: #F1B93D;
+    animation: final-estrella 0.5s ease-out;
+}
+
+.final-escenario {
+    position: relative;
+    height: clamp(350px, 43vw, 490px);
+    overflow: hidden;
+    border: 6px solid #8467D7;
+    border-radius: 24px;
+    background: linear-gradient(180deg, #A9E9FF, #EAFBFF 70%);
+    isolation: isolate;
+}
+
+.final-cielo {
+    position: absolute;
+    inset: 0;
+}
+
+.final-sol {
+    position: absolute;
+    top: 35px;
+    right: 12%;
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    background: #FFE184;
+    box-shadow: 0 0 0 14px rgba(255, 225, 132, 0.3);
+}
+
+.final-nube {
+    position: absolute;
+    width: 125px;
+    height: 36px;
+    border-radius: 50px;
+    background: #FFFFFF;
+}
+
+.final-nube::before,
+.final-nube::after {
+    content: "";
+    position: absolute;
+    bottom: 8px;
+    border-radius: 50%;
+    background: #FFFFFF;
+}
+
+.final-nube::before {
+    left: 16px;
+    width: 55px;
+    height: 55px;
+}
+
+.final-nube::after {
+    right: 14px;
+    width: 63px;
+    height: 63px;
+}
+
+.nube-a {
+    top: 65px;
+    left: 8%;
+}
+
+.nube-b {
+    top: 125px;
+    right: 26%;
+    transform: scale(0.75);
+}
+
+.final-escenario::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    right: -10%;
+    bottom: 0;
+    left: -10%;
+    height: 38%;
+    border-radius: 50% 50% 0 0;
+    background: #9AD98F;
+}
+
+.final-camino {
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 26%;
+    background: #E9C49B;
+    clip-path: polygon(0 100%, 0 60%, 100% 40%, 100% 100%);
+}
+
+.final-escuela {
+    position: absolute;
+    z-index: 2;
+    top: 19%;
+    right: 7%;
+    width: 30%;
+    height: 53%;
+    filter: brightness(0.7);
+    transition: filter 1.2s ease, transform 1.2s ease;
+}
+
+.final-escuela.iluminada {
+    filter: brightness(1.15) drop-shadow(0 0 25px #FFE184);
+    transform: scale(1.04);
+}
+
+.escuela-techo {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: -8%;
+    width: 116%;
+    height: 30%;
+    background: #D98E9E;
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.escuela-cuerpo {
+    position: absolute;
+    top: 27%;
+    left: 0;
+    width: 100%;
+    height: 73%;
+    border: 5px solid #C78B65;
+    border-radius: 8px;
+    background: #FFE0A8;
+}
+
+.escuela-letrero {
+    position: absolute;
+    top: 7%;
+    left: 50%;
+    padding: 3px 12px;
+    border-radius: 10px;
+    background: #FFFFFF;
+    color: #49309A;
+    font-size: clamp(0.65rem, 1.5vw, 1.1rem);
+    font-weight: 900;
+    transform: translateX(-50%);
+}
+
+.escuela-ventanas {
+    position: absolute;
+    top: 37%;
+    left: 8%;
+    display: flex;
+    justify-content: space-between;
+    width: 84%;
+}
+
+.escuela-ventana {
+    width: 25%;
+    aspect-ratio: 1;
+    border: 5px solid #C78B65;
+    border-radius: 6px;
+    background: #A7D4F5;
+    transition: background 0.8s, box-shadow 0.8s;
+}
+
+.final-escuela.iluminada .escuela-ventana {
+    background: #FFE184;
+    box-shadow: 0 0 20px #FFE184;
+}
+
+.escuela-puerta {
+    position: absolute;
+    bottom: 0;
+    left: 38%;
+    width: 24%;
+    height: 46%;
+    border: 4px solid #825C9D;
+    border-radius: 9px 9px 0 0;
+    background: #A787D7;
+}
+
+.final-plataformas {
+    position: absolute;
+    z-index: 5;
+    inset: 0;
+    pointer-events: none;
+}
+
+.final-plataforma {
+    position: absolute;
+    bottom: 15%;
+    width: 14%;
+    height: 24%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    pointer-events: auto;
+    transition: transform 0.2s, opacity 0.3s;
+}
+
+.final-plataforma[data-paso="1"] {
+    left: 24%;
+}
+
+.final-plataforma[data-paso="2"] {
+    left: 44%;
+    bottom: 22%;
+}
+
+.final-plataforma[data-paso="3"] {
+    left: 64%;
+    bottom: 30%;
+}
+
+.final-plataforma:disabled {
+    cursor: default;
+}
+
+.final-plataforma.disponible {
+    animation: final-pulso 1.2s infinite;
+}
+
+.plataforma-estrella {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 50%;
+    font-size: clamp(1.8rem, 4vw, 3.5rem);
+    transform: translateX(-50%);
+    filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.18));
+}
+
+.plataforma-base {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 26%;
+    border: 4px solid #6E52BA;
+    border-radius: 50%;
+    background: #BDA9F2;
+    box-shadow: 0 6px 0 #49309A;
+}
+
+.final-plataforma.recogida .plataforma-estrella {
+    opacity: 0;
+}
+
+.final-plataforma.recogida .plataforma-base {
+    background: #FFD454;
+}
+
+.final-starly-jugador {
+    position: absolute;
+    z-index: 7;
+    bottom: 15%;
+    left: 7%;
+    width: 11%;
+    max-width: 120px;
+    height: 27%;
+    object-fit: contain;
+    transition: left 0.9s ease-in-out, bottom 0.9s ease-in-out;
+    pointer-events: none;
+}
+
+.final-starly-jugador.saltando {
+    animation: final-salto 0.9s ease-in-out;
+}
+
+.final-mano {
+    position: absolute;
+    z-index: 10;
+    bottom: 15%;
+    left: 27%;
+    font-size: 40px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.final-mano.demostrando {
+    animation: final-mano-demo 2.2s ease-in-out forwards;
+}
+
+.final-particulas {
+    position: absolute;
+    z-index: 9;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.final-particula {
+    position: absolute;
+    font-size: 26px;
+    animation: final-particula 1.3s ease-out forwards;
+}
+
+.final-indicacion {
+    display: flex;
+    justify-content: center;
+    padding-top: 22px;
+}
+
+.final-indicadores {
+    display: flex;
+    gap: 14px;
+}
+
+.final-punto {
+    width: 20px;
+    height: 20px;
+    border: 3px solid #BDA9F2;
+    border-radius: 50%;
+    background: #F5F0FF;
+}
+
+.final-punto.completo {
+    border-color: #E5B13C;
+    background: #FFD454;
+}
+
+.gran-final {
+    position: fixed;
+    z-index: 1000;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 18px;
+    overflow-y: auto;
+    background: rgba(36, 20, 86, 0.85);
+}
+
+.gran-final-contenido {
+    width: min(100%, 550px);
+    padding: 24px 28px;
+    border: 6px solid #DCCFFF;
+    border-radius: 32px;
+    background: linear-gradient(180deg, #FFFFFF, #F7F0FF);
+    box-shadow: 0 10px 0 rgba(0, 0, 0, 0.16);
+    text-align: center;
+    animation: final-aparecer 0.7s ease-out;
+}
+
+.gran-final-brillos {
+    color: #F1B93D;
+    font-size: 1.6rem;
+    letter-spacing: 0.5rem;
+}
+
+.gran-final-contenido img {
+    display: block;
+    width: 110px;
+    height: 120px;
+    margin: 0 auto;
+    object-fit: contain;
+    animation: final-flotar 2.5s infinite;
+}
+
+.gran-final-etiqueta {
+    color: #8467D7;
+    font-size: 0.8rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+}
+
+.gran-final-contenido h2 {
+    margin: 8px 0 12px;
+    color: #49309A;
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+}
+
+.gran-final-estrellas {
+    margin: 8px 0;
+    font-size: clamp(1.3rem, 3.5vw, 2rem);
+}
+
+.gran-final-total {
+    color: #49309A;
+    font-size: 1.7rem;
+    font-weight: 900;
+}
+
+.gran-final-contenido p {
+    margin: 12px 0;
+    color: #49309A;
+    font-weight: 800;
+}
+
+.gran-final-mensaje {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding: 15px;
+    border: 3px solid #DCCFFF;
+    border-radius: 20px;
+    background: #FFFFFF;
+    color: #49309A;
+    font-weight: 700;
+}
+
+.gran-final-insignia {
+    display: inline-block;
+    margin: 16px 0;
+    padding: 10px 20px;
+    border-radius: 25px;
+    background: #FFE6A8;
+    color: #7B4B1D;
+    font-weight: 900;
+}
+
+.gran-final-boton {
+    display: flex;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 12px 25px;
+}
+
+.final-plataforma:focus-visible,
+.final-audio:focus-visible,
+.gran-final-boton:focus-visible {
+    outline: 4px solid #FFD454;
+    outline-offset: 4px;
+}
+
+@keyframes final-flotar {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-7px); }
+}
+
+@keyframes final-pulso {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+@keyframes final-salto {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-60px) rotate(8deg); }
+}
+
+@keyframes final-estrella {
+    0% { transform: scale(0.3); }
+    65% { transform: scale(1.4); }
+    100% { transform: scale(1); }
+}
+
+@keyframes final-mano-demo {
+    0%, 15% { opacity: 0; transform: translateY(0); }
+    25%, 55% { opacity: 1; transform: translateY(-15px); }
+    70% { opacity: 1; transform: translateY(0) scale(0.8); }
+    100% { opacity: 0; transform: translateY(0); }
+}
+
+@keyframes final-particula {
+    0% { opacity: 1; transform: translate(0, 0) scale(0.5); }
+    100% {
+        opacity: 0;
+        transform: translate(var(--dx), var(--dy)) scale(1.5);
+    }
+}
+
+@keyframes final-aparecer {
+    from { opacity: 0; transform: scale(0.7); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@media (max-width: 700px) {
+    .final-header {
+        gap: 5px;
+        padding: 10px;
+    }
+
+    .final-titulo h1 {
+        font-size: 1.1rem;
+    }
+
+    .final-volver,
+    .final-estrellas {
+        padding: 7px 9px;
+        font-size: 0.8rem;
+    }
+
+    .final-panel {
+        width: 97%;
+        padding: 10px;
+    }
+
+    .final-guia img {
+        width: 58px;
+        height: 65px;
+    }
+
+    .final-dialogo {
+        gap: 6px;
+        padding: 7px;
+    }
+
+    .final-dialogo p {
+        font-size: 0.8rem;
+    }
+
+    .final-audio {
+        width: 34px;
+        height: 34px;
+    }
+
+    .final-progreso {
+        padding: 5px 8px;
+        font-size: 1.1rem;
+    }
+
+    .final-escenario {
+        height: 350px;
+    }
+
+    .final-escuela {
+        top: 25%;
+        right: 4%;
+        width: 36%;
+        height: 43%;
+    }
+
+    .final-starly-jugador {
+        width: 16%;
+        height: 22%;
+    }
+
+    .final-plataforma {
+        width: 19%;
+    }
+
+    .final-plataforma[data-paso="1"] { left: 21%; }
+    .final-plataforma[data-paso="2"] { left: 43%; }
+    .final-plataforma[data-paso="3"] { left: 65%; }
+
+    .gran-final-contenido {
+        padding: 18px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .final-juego * {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}

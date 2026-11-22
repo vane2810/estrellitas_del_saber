@@ -1362,3 +1362,64 @@
         animation: none;
     }
 }
+
+
+/* Transición de polvo hacia el mapa */
+
+.transicion-polvo {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.transicion-polvo.activa {
+    display: flex;
+}
+
+.transicion-polvo span {
+    position: absolute;
+    width: 60vmax;
+    height: 60vmax;
+    border-radius: 50%;
+    background: #F5E7C7;
+    opacity: 0;
+    box-shadow: 0 0 35px rgba(255, 255, 255, 0.35);
+}
+
+.transicion-polvo span:nth-child(1) { --x: -40%; --y: -30%; }
+.transicion-polvo span:nth-child(2) { --x: 40%; --y: -35%; }
+.transicion-polvo span:nth-child(3) { --x: -55%; --y: 15%; }
+.transicion-polvo span:nth-child(4) { --x: 55%; --y: 20%; }
+.transicion-polvo span:nth-child(5) { --x: -15%; --y: 50%; }
+.transicion-polvo span:nth-child(6) { --x: 20%; --y: -5%; }
+
+.transicion-polvo.activa span {
+    animation: polvo-cubrir 0.9s ease-in forwards;
+}
+
+@keyframes polvo-cubrir {
+    0% {
+        opacity: 0;
+        transform: translate(var(--x), var(--y)) scale(0.05);
+    }
+
+    45% {
+        opacity: 0.95;
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(var(--x), var(--y)) scale(3);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .transicion-polvo.activa span {
+        animation-duration: 0.01ms;
+    }
+}

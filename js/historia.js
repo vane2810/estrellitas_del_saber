@@ -35,9 +35,9 @@ const rutasAudio = {
 };
 
 const volumenes = {
-    musica: 0.20,
+    musica: 0.4,
     narracion: 1,
-    efectos: 0.45
+    efectos: 0.8
 };
 
 
@@ -467,16 +467,41 @@ function saltarHistoria() {
    14. COMENZAR EXPLORACIÓN
 ========================================== */
 
+
+/* Comenzar exploración */
+
 function comenzarExploracion() {
+    if (btnExplorar.disabled) {
+        return;
+    }
+
+    btnExplorar.disabled = true;
 
     limpiarTemporizadores();
     detenerNarracion();
     detenerEfectos();
     detenerMusica();
 
-    // Ruta temporal hasta crear el mapa de niveles.
-    window.location.href = "mapa.html";
+    const polvo = document.getElementById("transicion-polvo");
+
+    try {
+        sessionStorage.setItem("estrellitas_transicion_mapa", "1");
+    } catch (error) {
+        // La navegación continúa aunque no se pueda guardar el estado.
+    }
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !polvo) {
+        window.location.href = "mapa.html";
+        return;
+    }
+
+    polvo.classList.add("activa");
+
+    setTimeout(() => {
+        window.location.href = "mapa.html";
+    }, 850);
 }
+
 
 
 /* ==========================================
@@ -492,3 +517,6 @@ btnExplorar.addEventListener("click", comenzarExploracion);
 ========================================== */
 
 mostrarEscena(0);
+
+
+

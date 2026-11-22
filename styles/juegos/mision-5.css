@@ -1,0 +1,580 @@
+/* ESTRELLITAS DEL SABER - LA MOCHILA DE STARLY */
+
+.luna-juego {
+    min-height: 100dvh;
+    padding-bottom: 16px;
+    overflow-x: hidden;
+    background: linear-gradient(180deg, #DDF6FF, #F1F9E8);
+}
+
+.luna-juego *,
+.luna-juego *::before,
+.luna-juego *::after {
+    box-sizing: border-box;
+}
+
+.luna-juego [hidden] {
+    display: none !important;
+}
+
+.luna-header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 28px;
+}
+
+.luna-titulo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.1;
+}
+
+.luna-mision {
+    color: #8467D7;
+    font-size: clamp(0.7rem, 1.4vw, 0.9rem);
+    font-weight: 900;
+    letter-spacing: 0.14em;
+}
+
+.luna-header h1 {
+    margin: 0;
+    color: #49309A;
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    text-align: center;
+}
+
+.luna-volver,
+.luna-contador {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 8px 16px;
+    border: 2px solid #FFFFFF;
+    border-radius: 28px;
+    background: #49309A;
+    box-shadow: 0 4px 0 #30206B;
+    color: #FFFFFF;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.luna-volver { justify-self: start; }
+.luna-contador { justify-self: end; gap: 5px; }
+
+.luna-panel {
+    width: min(96%, 1150px);
+    margin: 8px auto;
+    padding: 10px;
+    border: 4px solid #DCCFFF;
+    border-radius: 28px;
+    background: #FFFFFF;
+    box-shadow: 0 7px 0 rgba(73, 48, 154, 0.15);
+}
+
+/* ---------- Cuarto ---------- */
+
+.luna-escenario {
+    position: relative;
+    height: clamp(380px, 62vh, 560px);
+    overflow: hidden;
+    isolation: isolate;
+    border: 3px solid #DCCFFF;
+    border-radius: 22px;
+    background: #FFF1DA;
+}
+
+.luna-pared {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle, rgba(255, 255, 255, 0.55) 3px, transparent 4px) 0 0 / 36px 36px,
+        #FFE3B8;
+}
+
+.luna-piso {
+    position: absolute;
+    z-index: 2;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 42%;
+    border-top: 8px solid #C48B50;
+    background:
+        repeating-linear-gradient(90deg, rgba(125, 84, 48, 0.12) 0 3px, transparent 3px 120px),
+        #DFA867;
+}
+
+/* ---------- Starly y diálogo ---------- */
+
+.luna-guia {
+    position: absolute;
+    z-index: 35;
+    top: 14px;
+    left: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: min(86%, 520px);
+    pointer-events: none;
+}
+
+.luna-starly {
+    width: 78px;
+    height: 84px;
+    flex-shrink: 0;
+    object-fit: contain;
+    animation: luna-flotar 3s ease-in-out infinite;
+}
+
+.luna-dialogo {
+    display: flex;
+    align-items: center;
+    flex: 0 1 auto;
+    min-width: 0;
+    gap: 10px;
+    min-height: 68px;
+    padding: 10px 10px 10px 17px;
+    border: 3px solid #DCCFFF;
+    border-radius: 20px;
+    background: #FFFFFF;
+    box-shadow: 0 4px 0 rgba(73, 48, 154, 0.12);
+}
+
+.luna-dialogo p {
+    flex: 1;
+    margin: 0;
+    color: #49309A;
+    font-size: clamp(0.9rem, 1.8vw, 1.15rem);
+    font-weight: 800;
+}
+
+.luna-audio {
+    display: grid;
+    place-items: center;
+    flex: 0 0 42px;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: 3px solid #FFFFFF;
+    border-radius: 50%;
+    background: #49309A;
+    box-shadow: 0 4px 0 #30206B;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.luna-audio svg {
+    width: 23px;
+    height: 23px;
+    fill: #FFFFFF;
+    stroke: #FFFFFF;
+    stroke-width: 1.3;
+}
+
+.luna-starly.reaccion {
+    animation: luna-brinco 0.55s ease-out;
+}
+
+.luna-audio.reproduciendo {
+    animation: luna-pulso 1s infinite;
+}
+
+/* ---------- Pie ---------- */
+
+.luna-pie {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 12px 14px 4px;
+}
+
+.luna-pie p {
+    margin: 0;
+    color: #49309A;
+    font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+    font-weight: 800;
+    text-align: center;
+}
+
+.luna-progreso {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+    color: #49309A;
+    font-size: 0.75rem;
+    font-weight: 900;
+}
+
+.luna-estrellas { display: flex; gap: 5px; }
+.luna-estrella { color: #D3C8E6; font-size: 1.6rem; }
+
+.luna-estrella.ganada {
+    color: #FFD454;
+    animation: luna-ganar 0.5s ease-out;
+}
+
+.luna-efectos {
+    position: absolute;
+    z-index: 40;
+    inset: 0;
+    pointer-events: none;
+}
+
+.luna-destello {
+    position: absolute;
+    color: #FFD454;
+    font-size: 28px;
+    animation: luna-destello 1s forwards;
+}
+
+/* ---------- Animaciones ---------- */
+
+@keyframes luna-brinco {
+    0%, 100% { transform: translateY(0) scale(1); }
+    40% { transform: translateY(-18px) scale(1.12) rotate(-6deg); }
+    70% { transform: translateY(0) scale(0.96) rotate(3deg); }
+}
+
+@keyframes luna-flotar {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-7px); }
+}
+
+@keyframes luna-pulso {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(132, 103, 215, 0.4); }
+    50% { box-shadow: 0 0 0 10px rgba(132, 103, 215, 0); }
+}
+
+@keyframes luna-asomar {
+    0%, 100% { transform: rotate(var(--giro, 0deg)) translateY(0); }
+    50% { transform: rotate(var(--giro, 0deg)) translateY(-4px); }
+}
+
+@keyframes luna-pista {
+    0%, 100% { transform: rotate(var(--giro, 0deg)) scale(1); }
+    50% { transform: rotate(var(--giro, 0deg)) scale(1.22); }
+}
+
+@keyframes luna-rebote {
+    0%, 100% { transform: rotate(var(--giro, 0deg)); }
+    20% { transform: rotate(calc(var(--giro, 0deg) - 16deg)) translateX(-6px); }
+    40% { transform: rotate(calc(var(--giro, 0deg) + 16deg)) translateX(6px); }
+    60% { transform: rotate(calc(var(--giro, 0deg) - 10deg)) translateX(-4px); }
+    80% { transform: rotate(calc(var(--giro, 0deg) + 10deg)) translateX(4px); }
+}
+
+@keyframes luna-vuelo {
+    0% {
+        transform: translate(0, 0) rotate(var(--giro, 0deg)) scale(1);
+        opacity: 1;
+    }
+    45% {
+        transform: translate(calc(var(--dx) * 0.45), calc(var(--dy) * 0.45 - 90px)) rotate(0deg) scale(1.3);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--dx), var(--dy)) rotate(0deg) scale(0.3);
+        opacity: 0.2;
+    }
+}
+
+@keyframes luna-recibe {
+    0%, 100% { transform: scale(1, 1); }
+    30% { transform: scale(1.1, 0.88); }
+    60% { transform: scale(0.95, 1.07); }
+}
+
+@keyframes luna-saltar {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-26px) rotate(-4deg); }
+}
+
+@keyframes luna-ganar {
+    0% { transform: scale(0.3) rotate(-30deg); }
+    70% { transform: scale(1.4) rotate(8deg); }
+    100% { transform: scale(1) rotate(0); }
+}
+
+@keyframes luna-destello {
+    0% { opacity: 1; transform: translateY(0) scale(0.5); }
+    100% { opacity: 0; transform: translateY(-50px) scale(1.4) rotate(60deg); }
+}
+
+
+
+/* =========================================================
+   MISIÓN 5: LUNA ESCRIBE SU NOMBRE
+========================================================= */
+
+.luna-piso { height: 22%; }
+
+/* ---------- Pizarra ---------- */
+
+.luna-pizarra {
+    position: absolute;
+    z-index: 4;
+    top: 108px;
+    bottom: 112px;
+    left: 50%;
+    width: min(64%, 620px);
+    padding: 8px;
+    border: 9px solid #B7773F;
+    border-radius: 16px;
+    background: radial-gradient(circle at 50% 40%, #3E8A62, #2B6A49);
+    box-shadow: 0 8px 0 rgba(125, 84, 48, 0.3), inset 0 0 22px rgba(0, 0, 0, 0.25);
+    transform: translateX(-50%);
+}
+
+.luna-pizarra::after {
+    content: "";
+    position: absolute;
+    right: 14%;
+    bottom: -20px;
+    left: 14%;
+    height: 11px;
+    border-radius: 6px;
+    background: #8F5A2C;
+}
+
+.luna-trazo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: pointer;
+}
+
+.luna-trazo:focus-visible {
+    outline: 3px dashed #FFFFFF;
+    outline-offset: -4px;
+}
+
+.luna-trazo path {
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.t-camino {
+    stroke: rgba(255, 255, 255, 0.22);
+    stroke-width: 15;
+}
+
+.t-guia {
+    stroke: rgba(255, 255, 255, 0.9);
+    stroke-width: 1.5;
+    stroke-dasharray: 2.5 4;
+}
+
+.t-progreso {
+    stroke: #FFD454;
+    stroke-width: 12;
+    transition: stroke 0.4s;
+}
+
+.hecha .t-progreso { stroke: #8BE08F; }
+.hecha { animation: luna-pop 0.6s ease-out; transform-origin: 50px 50px; }
+
+.punta circle {
+    fill: #FF6B6B;
+    stroke: #FFFFFF;
+    stroke-width: 2;
+}
+
+.punta .num {
+    fill: #FFFFFF;
+    font-size: 8px;
+    font-weight: 900;
+}
+
+.punta:not(.inicio) .num { opacity: 0; }
+
+.punta.activa circle { fill: #FFD454; }
+
+.punta.oculta { display: none; }
+
+.punta.llama circle {
+    animation: luna-llama 0.6s ease-in-out 2;
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+.mano {
+    font-size: 15px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+.mano.visible { opacity: 1; }
+
+/* ---------- Nombre ---------- */
+
+.luna-nombre {
+    position: absolute;
+    z-index: 6;
+    bottom: 12px;
+    left: 50%;
+    display: flex;
+    gap: 8px;
+    padding: 8px 14px;
+    border: 3px solid #DCCFFF;
+    border-radius: 16px;
+    background: #FFFDF5;
+    box-shadow: 0 4px 0 rgba(73, 48, 154, 0.15);
+    transform: translateX(-50%);
+}
+
+.nombre-casilla {
+    display: grid;
+    place-items: center;
+    width: clamp(46px, 6vw, 64px);
+    height: clamp(46px, 6vw, 64px);
+    border-bottom: 5px dashed #C9BFE6;
+    color: #49309A;
+    font-size: clamp(1.9rem, 4vw, 2.8rem);
+    font-weight: 900;
+    line-height: 1;
+}
+
+.nombre-casilla.llena {
+    border-bottom: 5px solid #7BCB82;
+    animation: luna-pop 0.6s ease-out;
+}
+
+.luna-nombre.completo {
+    background: #E6F8E4;
+    border-color: #7BCB82;
+    animation: luna-pop 0.7s ease-out;
+}
+
+/* ---------- Luna ---------- */
+
+.luna-alumna {
+    position: absolute;
+    z-index: 7;
+    right: 3%;
+    bottom: 12px;
+    width: clamp(110px, 12vw, 150px);
+    aspect-ratio: 120 / 184;
+    transform: translateX(220%);
+    transition: transform 1s cubic-bezier(0.3, 1, 0.5, 1);
+    filter: drop-shadow(0 6px 3px rgba(80, 50, 20, 0.28));
+}
+
+.luna-alumna svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.luna-alumna.llegada { transform: translateX(0); }
+
+/* Los tres niños juntos (llegada y final) */
+.luna-alumna.grupo {
+    display: flex;
+    width: clamp(210px, 24vw, 300px);
+    aspect-ratio: auto;
+    align-items: flex-end;
+}
+
+.luna-alumna.grupo svg {
+    width: 33.33%;
+    height: auto;
+}
+
+.luna-brazo { transform-origin: 82px 112px; }
+
+.luna-alumna.salta { animation: luna-salto 0.6s ease-in-out 2; }
+.luna-alumna.festeja { animation: luna-salto 0.6s ease-in-out 4; }
+
+/* ---------- Animaciones ---------- */
+
+@keyframes luna-pop {
+    0% { transform: scale(0.5); }
+    70% { transform: scale(1.12); }
+    100% { transform: scale(1); }
+}
+
+@keyframes luna-llama {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.6); }
+}
+
+@keyframes luna-salto {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-22px); }
+}
+
+/* ---------- Pantallas pequeñas ---------- */
+
+@media (max-width: 900px) {
+    .luna-guia { width: min(80%, 520px); }
+}
+
+@media (max-width: 600px) {
+    .luna-header { gap: 5px; padding: 10px; }
+    .luna-header h1 { font-size: 1rem; }
+
+    .luna-volver,
+    .luna-contador { padding: 7px 9px; font-size: 0.8rem; }
+
+    .luna-panel { width: 97%; padding: 7px; }
+
+    .luna-escenario {
+        height: min(70dvh, 560px);
+        min-height: 480px;
+    }
+
+    .luna-guia { top: 8px; left: 8px; gap: 5px; width: calc(100% - 16px); }
+    .luna-starly { width: 48px; height: 60px; }
+    .luna-dialogo { flex: 1 1 auto; gap: 6px; min-height: 55px; padding: 6px 6px 6px 10px; }
+    .luna-dialogo p { font-size: 0.8rem; }
+    .luna-audio { flex-basis: 36px; width: 36px; height: 36px; }
+
+    .luna-pizarra {
+        top: 100px;
+        bottom: 128px;
+        left: 3%;
+        width: auto;
+        transform: none;
+        border-width: 7px;
+    }
+
+    .luna-nombre {
+        left: 3%;
+        gap: 4px;
+        padding: 6px 8px;
+        transform: none;
+    }
+
+    .nombre-casilla { width: 44px; height: 44px; font-size: 1.8rem; }
+
+    .luna-alumna {
+        right: 3%;
+        width: 84px;
+    }
+
+    .luna-alumna.grupo { width: 170px; }
+
+    .luna-pie { padding-top: 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .luna-starly,
+    .luna-alumna.salta,
+    .luna-alumna.festeja,
+    .punta.llama circle {
+        animation: none;
+    }
+
+    .luna-alumna { transition-duration: 0.01s; }
+}

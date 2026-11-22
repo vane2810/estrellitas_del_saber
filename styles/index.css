@@ -45,13 +45,16 @@
    2. ESTRELLAS DEL FONDO
 ========================================== */
 
-.inicio-estrellas {
+.inicio-estrellas,
+.inicio-estrellas::before,
+.inicio-estrellas::after {
     position: absolute;
     inset: 0;
-    z-index: 0;
-
     pointer-events: none;
+}
 
+.inicio-estrellas {
+    z-index: 0;
     background-image:
         radial-gradient(2px 2px at 25px 40px, #FFFFFF 98%, transparent),
         radial-gradient(3px 3px at 140px 120px, #FFD84D 98%, transparent),
@@ -60,22 +63,32 @@
         radial-gradient(3px 3px at 320px 190px, #FFFFFF 98%, transparent),
         radial-gradient(1px 1px at 190px 250px, #FFFFFF 98%, transparent),
         radial-gradient(2px 2px at 380px 90px, #FFD84D 98%, transparent);
-
-    background-size: 420px 300px;
-
-    opacity: 0.8;
-
+    background-size: 503px 367px;
     animation: estrellas-brillar 4s ease-in-out infinite alternate;
 }
 
-@keyframes estrellas-brillar {
-    from {
-        opacity: 0.4;
-    }
+.inicio-estrellas::before {
+    content: "";
+    background-image:
+        radial-gradient(2px 2px at 40px 70px, #FFFFFF 98%, transparent),
+        radial-gradient(2px 2px at 210px 310px, #55D6F5 98%, transparent),
+        radial-gradient(3px 3px at 300px 150px, #FFFFFF 98%, transparent),
+        radial-gradient(1px 1px at 120px 450px, #FFFFFF 98%, transparent),
+        radial-gradient(2px 2px at 260px 480px, #FFD84D 98%, transparent);
+    background-size: 347px 523px;
+    animation: estrellas-brillar 3s ease-in-out -1.5s infinite alternate;
+}
 
-    to {
-        opacity: 0.9;
-    }
+.inicio-estrellas::after {
+    content: "";
+    background-image:
+        radial-gradient(2px 2px at 90px 60px, #FFD84D 98%, transparent),
+        radial-gradient(1px 1px at 400px 200px, #FFFFFF 98%, transparent),
+        radial-gradient(3px 3px at 560px 90px, #FFFFFF 98%, transparent),
+        radial-gradient(2px 2px at 230px 320px, #55D6F5 98%, transparent),
+        radial-gradient(2px 2px at 640px 300px, #FFFFFF 98%, transparent);
+    background-size: 691px 379px;
+    animation: estrellas-brillar 5s ease-in-out -3s infinite alternate;
 }
 
 
@@ -308,6 +321,7 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
+    text-shadow: 0 2px 0 #B84B20;
 
     min-width: 220px;
     min-height: 75px;
@@ -340,12 +354,7 @@
     animation: boton-pulso 1.8s ease-in-out infinite;
 }
 
-.boton-despegar:hover {
-    box-shadow:
-        0 6px 0 #B84B20,
-        0 0 25px rgba(255, 216, 77, 0.75),
-        0 10px 20px rgba(0, 0, 0, 0.2);
-}
+
 
 /* ==========================================
    10. ANIMACIÓN DEL BOTÓN
@@ -364,10 +373,13 @@
 }
 
 @media (hover: hover) {
-
     .inicio-boton-jugar:hover {
         animation-play-state: paused;
         transform: scale(1.06);
+        box-shadow:
+            0 6px 0 #B84B20,
+            0 0 25px rgba(255, 216, 77, 0.75),
+            0 10px 20px rgba(0, 0, 0, 0.2);
     }
 }
 
@@ -562,11 +574,13 @@
 ========================================== */
 
 @media (prefers-reduced-motion: reduce) {
-
     .inicio-estrellas,
+    .inicio-estrellas::before,
+    .inicio-estrellas::after,
     .estrella-fugaz,
     .inicio-starly,
-    .inicio-boton-jugar {
+    .inicio-boton-jugar,
+    .inicio-planeta {
         animation: none;
     }
 }
@@ -589,7 +603,7 @@
     position: absolute;
 
     border-radius: 50%;
-    opacity: 0.65;
+    opacity: 0.9;
 
     box-shadow:
         inset -12px -12px 18px rgba(0, 0, 0, 0.15),
@@ -702,3 +716,4 @@
         animation: none;
     }
 }
+

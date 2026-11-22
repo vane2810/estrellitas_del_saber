@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -7,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Estrellitas del Saber</title>
+    <link rel="icon" type="image/png" href="../img/personajes/starly/starly2.webp">
 
     <!-- Estilos -->
     <link rel="stylesheet" href="../styles/global.css">
@@ -34,21 +34,14 @@
         </div>
 
         <!-- Escena 1: Bienvenida -->
-        <section
-            class="escena escena-activa"
-            id="escena-1"
-            aria-label="Bienvenida de Starly"
-        >
+        <section class="escena escena-activa" id="escena-1" aria-label="Bienvenida de Starly">
 
             <div class="escena-contenido escena-bienvenida">
 
                 <div class="zona-bienvenida">
 
-                    <img
-                        src="../img/personajes/starly/starlycohete.webp"
-                        alt="Starly llegando en su nave espacial"
-                        class="starly-nave starly-bienvenida"
-                    >
+                    <img src="../img/personajes/starly/starlycohete.webp" alt="Starly llegando en su nave espacial"
+                        class="starly-nave starly-bienvenida">
 
                 </div>
 
@@ -68,28 +61,17 @@
 
 
         <!-- Escena 2: Viaje a la Tierra -->
-        <section
-            class="escena"
-            id="escena-2"
-            aria-label="Viaje hacia la Tierra"
-            aria-hidden="true"
-        >
+        <section class="escena" id="escena-2" aria-label="Viaje hacia la Tierra" aria-hidden="true">
 
             <div class="escena-contenido escena-viaje">
 
                 <div class="zona-viaje">
 
-                    <img
-                        src="../img/personajes/otros/tierran1.webp"
-                        alt="Planeta Tierra sonriente"
-                        class="planeta-tierra"
-                    >
+                    <img src="../img/personajes/otros/tierran1.webp" alt="Planeta Tierra sonriente"
+                        class="planeta-tierra">
 
-                    <img
-                        src="../img/personajes/starly/starlycohete.webp"
-                        alt="Starly viajando hacia la Tierra"
-                        class="starly-nave starly-viajando"
-                    >
+                    <img src="../img/personajes/starly/starlycohete.webp" alt="Starly viajando hacia la Tierra"
+                        class="starly-nave starly-viajando">
 
                 </div>
 
@@ -109,12 +91,7 @@
 
 
         <!-- Escena 3: Aterrizaje -->
-        <section
-            class="escena"
-            id="escena-3"
-            aria-label="Aterrizaje y comienzo de la exploración"
-            aria-hidden="true"
-        >
+        <section class="escena" id="escena-3" aria-label="Aterrizaje y comienzo de la exploración" aria-hidden="true">
 
             <div class="escena-contenido escena-aterrizaje">
 
@@ -124,11 +101,8 @@
                 <!-- Aterrizaje -->
                 <div class="zona-aterrizaje">
 
-                    <img
-                        src="../img/personajes/starly/starlycohete.webp"
-                        alt="Starly aterrizando en la Tierra"
-                        class="starly-nave starly-aterrizando"
-                    >
+                    <img src="../img/personajes/starly/starlycohete.webp" alt="Starly aterrizando en la Tierra"
+                        class="starly-nave starly-aterrizando">
 
                     <!-- Nube de polvo -->
                     <div class="polvo" aria-hidden="true">
@@ -141,11 +115,8 @@
                     </div>
 
                     <!-- Starly explorador -->
-                    <img
-                        src="../img/personajes/starly/starly_explorador.webp"
-                        alt="Starly con su sombrero de explorador"
-                        class="starly-explorador"
-                    >
+                    <img src="../img/personajes/starly/starly_explorador.webp"
+                        alt="Starly con su sombrero de explorador" class="starly-explorador">
 
                 </div>
 
@@ -158,12 +129,7 @@
                         ¡Vamos a descubrir nuestros derechos!
                     </p>
 
-                    <button
-                        type="button"
-                        class="boton-explorar"
-                        id="btn-explorar"
-                        disabled
-                    >
+                    <button type="button" class="boton-explorar" id="btn-explorar" disabled>
                         ¡Vamos! 🚀
                     </button>
 
@@ -177,11 +143,7 @@
         <!-- Controles -->
         <div class="historia-controles">
 
-            <button
-                type="button"
-                class="boton-saltar"
-                id="btn-saltar"
-            >
+            <button type="button" class="boton-saltar" id="btn-saltar">
                 Saltar ⏭
             </button>
 
@@ -194,6 +156,18 @@
             <span class="punto"></span>
             <span class="punto"></span>
         </div>
+
+
+        <!-- Polvo de transición hacia el mapa -->
+        <div class="transicion-polvo" id="transicion-polvo" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
 
     </main>
 

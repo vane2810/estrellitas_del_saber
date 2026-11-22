@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Misión 5 | Escribimos los nombres</title>
+    <link rel="icon" type="image/png" href="../../img/personajes/starly/starly2.webp">
+    <link rel="stylesheet" href="../../styles/global.css">
+    <link rel="stylesheet" href="../../styles/celebracion.css">
+    <link rel="stylesheet" href="../../styles/juegos/mision-5.css">
+    <script src="../../js/celebracion.js" defer></script>
+    <script src="../../js/juegos/mision-5.js" defer></script>
+</head>
+<body>
+    <main class="luna-juego">
+        <header class="luna-header">
+            <a href="../mapa.html" class="luna-volver">← Mapa</a>
+
+            <div class="luna-titulo">
+                <span class="luna-mision">MISIÓN 5</span>
+                <h1>¡Escribimos los nombres!</h1>
+            </div>
+
+            <div class="luna-contador">⭐ <span id="luna-total">0</span>/3</div>
+        </header>
+
+        <section class="luna-panel">
+            <div class="luna-escenario" id="luna-escenario">
+                <div class="luna-pared"></div>
+                <div class="luna-piso"></div>
+
+                <div class="luna-guia">
+                    <img
+                        src="../../img/personajes/starly/starly_mate.webp"
+                        alt="Starly"
+                        class="luna-starly"
+                        id="luna-starly"
+                    >
+
+                    <div class="luna-dialogo">
+                        <p id="luna-mensaje" aria-live="polite">
+                            ¡Llegaron los niños del autobús! ¡Es su primer día de clases!
+                        </p>
+
+                        <button
+                            type="button"
+                            id="luna-audio"
+                            class="luna-audio"
+                            aria-label="Escuchar a Starly"
+                        >
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M4 9v6h4l5 4V5L8 9H4z"></path>
+                                <path d="M16 9a5 5 0 0 1 0 6M18.5 6a9 9 0 0 1 0 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Pizarra donde se traza la letra -->
+                <div class="luna-pizarra">
+                    <svg
+                        id="luna-trazo"
+                        class="luna-trazo"
+                        viewBox="0 0 100 100"
+                        tabindex="0"
+                        role="img"
+                        aria-label="Letra para trazar con el dedo. Con teclado, usa Enter para avanzar."
+                    >
+                        <g id="trazo-capa"></g>
+
+                        <g id="trazo-punta" class="punta inicio">
+                            <circle r="6.5"></circle>
+                            <text class="num" text-anchor="middle" dy="2.6">1</text>
+                        </g>
+
+                        <text id="trazo-mano" class="mano" dx="-7" dy="15">👆</text>
+                    </svg>
+                </div>
+
+                <!-- El nombre de Luna, letra por letra -->
+                <div class="luna-nombre" id="luna-nombre" aria-label="Nombre del niño"></div>
+
+                <!-- Los niños del autobús (los dibuja el JS) -->
+                <div class="luna-alumna" id="luna-alumna" aria-hidden="true"></div>
+
+                <div class="luna-efectos" id="luna-efectos"></div>
+            </div>
+
+            <div class="luna-pie">
+                <div class="luna-progreso">
+                    <div class="luna-estrellas">
+                        <span class="luna-estrella">☆</span>
+                        <span class="luna-estrella">☆</span>
+                        <span class="luna-estrella">☆</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

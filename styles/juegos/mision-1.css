@@ -1,41 +1,20 @@
 
-/* ==========================================
-   ESTRELLITAS DEL SABER
-   MISIÓN 1 - LA MOCHILA
-========================================== */
-
-/* 1. Pantalla principal */
-
-body {
-    margin: 0;
-}
+/* ESTRELLITAS DEL SABER - MISIÓN 1 */
 
 .juego {
-    position: relative;
-    min-height: 100vh;
     min-height: 100dvh;
-    overflow: hidden;
-
-    background: linear-gradient(
-        180deg,
-        #87DDF6 0%,
-        #D5F6FF 65%,
-        #E8F9E1 100%
-    );
+    overflow-x: hidden;
+    background: linear-gradient(180deg, #8DDDF7, #E8F9E1);
 }
 
-/* 2. Encabezado */
+/* ENCABEZADO */
 
 .juego-encabezado {
-    position: relative;
-    z-index: 2;
-
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
     gap: 12px;
-
-    padding: 18px 30px;
+    padding: 14px 30px;
 }
 
 .boton-volver,
@@ -43,20 +22,14 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-
-    min-height: 46px;
-    padding: 9px 18px;
-
+    min-height: 44px;
+    padding: 8px 16px;
     border: 2px solid white;
     border-radius: 30px;
-
-    background: var(--color-morado);
+    background: #49309A;
     color: white;
-
-    box-shadow: 0 5px 0 #30206B;
-
-    font-family: var(--fuente-titulos);
-    font-weight: 600;
+    box-shadow: 0 4px 0 #30206B;
+    font-weight: 700;
     text-decoration: none;
 }
 
@@ -66,7 +39,11 @@ body {
 
 .contador {
     justify-self: end;
-    font-size: 1.1rem;
+    gap: 5px;
+}
+
+.contador[hidden] {
+    display: none;
 }
 
 .juego-titulo {
@@ -74,614 +51,776 @@ body {
 }
 
 .juego-titulo > span {
-    color: var(--color-morado);
-    font-family: var(--fuente-titulos);
-    font-size: 0.8rem;
-    font-weight: 700;
+    color: #49309A;
+    font-size: 0.75rem;
+    font-weight: 800;
     letter-spacing: 2px;
 }
 
 .juego-titulo h1 {
     margin: 3px 0 0;
-    color: var(--color-morado);
-    font-family: var(--fuente-titulos);
-    font-size: clamp(1.6rem, 3vw, 2.6rem);
+    color: #49309A;
+    font-size: clamp(1.3rem, 3vw, 2.3rem);
 }
 
-/* 3. Starly */
-
-.guia-starly {
-    position: relative;
-    z-index: 2;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-
-    width: min(92%, 600px);
-    margin: 10px auto 25px;
-}
-
-.starly {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-    flex-shrink: 0;
-
-    animation: starly-flotar 3s ease-in-out infinite;
-}
-
-@keyframes starly-flotar {
-    0%, 100% {
-        transform: translateY(0) rotate(-4deg);
-    }
-
-    50% {
-        transform: translateY(-8px) rotate(4deg);
-    }
-}
-
-.mensaje-starly {
-    flex: 1;
-    padding: 15px 20px;
-
-    border: 3px solid #DCCFFF;
-    border-radius: 22px;
-
-    background: white;
-
-    box-shadow: 0 6px 0 rgba(73, 48, 154, 0.2);
-}
-
-.mensaje-starly strong {
-    display: block;
-    margin-bottom: 4px;
-
-    color: var(--color-morado);
-    font-family: var(--fuente-titulos);
-    font-size: 1.25rem;
-}
-
-.mensaje-starly p {
-    margin: 0;
-    color: var(--color-espacio);
-    font-family: var(--fuente-textos);
-    font-size: 1rem;
-    font-weight: 700;
-}
-
-/* 4. Zona del juego */
+/* PANEL */
 
 .zona-juego {
-    position: relative;
-    z-index: 1;
-
-    display: grid;
-    grid-template-columns: 1fr 1.3fr;
-    align-items: center;
-    gap: 35px;
-
-    width: min(94%, 1050px);
-    margin: 0 auto 35px;
-}
-
-.zona-mochila,
-.zona-objetos {
-    padding: 25px;
-
+    width: min(95%, 1100px);
+    margin: 10px auto 25px;
+    padding: 12px;
     border: 4px solid #DCCFFF;
-    border-radius: 30px;
-
-    background: rgba(255, 255, 255, 0.94);
-
-    box-shadow: 0 8px 0 rgba(73, 48, 154, 0.18);
-    text-align: center;
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 7px 0 rgba(73, 48, 154, 0.18);
 }
 
-.zona-juego h2 {
-    margin: 0 0 20px;
-
-    color: var(--color-morado);
-    font-family: var(--fuente-titulos);
-    font-size: 1.6rem;
+.zona-juego.historia-activa {
+    padding-bottom: 12px;
 }
 
-/* 5. Mochila */
+/* ESCENARIO */
 
-.mochila {
+.escenario {
     position: relative;
-
-    display: grid;
-    place-items: center;
-
-    width: min(100%, 280px);
-    height: 245px;
-
-    margin: 0 auto;
-
-    border: 4px dashed #B9A4F1;
-    border-radius: 30px;
-
-    background: #F5EEFF;
+    height: clamp(360px, 55vh, 470px);
+    overflow: hidden;
+    isolation: isolate;
+    border: 3px solid #DCCFFF;
+    border-radius: 22px;
+    background: #A8E5FA;
 }
 
-.mochila-dibujo {
-    font-size: 9rem;
-    line-height: 1;
-
-    filter: drop-shadow(0 8px 4px rgba(0, 0, 0, 0.12));
-}
-
-.mochila-contenido {
+.paisaje {
     position: absolute;
-    bottom: 10px;
-    left: 50%;
+    inset: 0;
+}
 
-    display: flex;
-    gap: 5px;
+.cielo {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        180deg,
+        #9BDFFA 0%,
+        #DEF7FF 72%,
+        #B8E8A7 72%,
+        #8BD07E 100%
+    );
+}
 
+.sol {
+    position: absolute;
+    top: 25px;
+    right: 10%;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #FFDC67;
+    box-shadow: 0 0 0 12px rgba(255, 222, 112, 0.2);
+}
+
+.nube {
+    position: absolute;
+    width: 95px;
+    height: 30px;
+    border-radius: 40px;
+    background: white;
+}
+
+.nube::before,
+.nube::after {
+    content: "";
+    position: absolute;
+    bottom: 8px;
+    border-radius: 50%;
+    background: white;
+}
+
+.nube::before {
+    left: 14px;
+    width: 44px;
+    height: 44px;
+}
+
+.nube::after {
+    right: 10px;
+    width: 35px;
+    height: 35px;
+}
+
+.nube-1 {
+    top: 60px;
+    left: 40%;
+}
+
+.nube-2 {
+    top: 100px;
+    right: 18%;
+    transform: scale(0.75);
+}
+
+.suelo {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 28%;
+    background: linear-gradient(#B8E8A7, #8BD07E);
+}
+
+/* ESCUELA */
+
+.escuela {
+    position: absolute;
+    z-index: 3;
+    top: 100px;
+    left: 54%;
+    width: 350px;
+    height: 270px;
     transform: translateX(-50%);
 }
 
-.util-guardado {
-    display: inline-block;
-    font-size: 2rem;
-
-    animation: guardar-util 0.5s ease-out both;
+.techo {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 112px;
+    background: #A6A6A6;
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+    transition: background 0.6s ease;
 }
 
-@keyframes guardar-util {
-    from {
-        opacity: 0;
-        transform: translateY(-50px) scale(1.5);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+.escuela.techo-pintado .techo {
+    background: #F27474;
 }
 
-.mochila-acierto {
-    animation: mochila-celebrar 0.45s ease;
+.edificio {
+    position: absolute;
+    top: 96px;
+    right: 20px;
+    bottom: 0;
+    left: 20px;
+    border: 6px solid #B5B5B5;
+    border-radius: 7px;
+    background: #C8C8C8;
+    box-shadow: 0 7px 0 #A7A7A7;
+    transition: background 0.6s ease, border-color 0.6s ease;
 }
 
-@keyframes mochila-celebrar {
-    0%, 100% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.08);
-    }
+.escuela.paredes-pintadas .edificio {
+    border-color: #E6B86C;
+    background: #FFE29B;
 }
 
-.progreso-utiles {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-
-    margin-top: 20px;
-}
-
-.estrella-progreso {
-    font-size: 2rem;
-    color: #D3C8E6;
-}
-
-.estrella-progreso.ganada {
-    color: var(--color-amarillo);
-    animation: estrella-aparecer 0.4s ease-out;
-}
-
-@keyframes estrella-aparecer {
-    from {
-        transform: scale(0.2) rotate(-30deg);
-    }
-
-    to {
-        transform: scale(1) rotate(0);
-    }
-}
-
-/* 6. Objetos */
-
-.objetos {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-}
-
-.objeto {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-
-    min-height: 125px;
-    padding: 12px;
-
-    border: 3px solid #E1D5FF;
-    border-radius: 22px;
-
-    background: #F9F5FF;
-    color: var(--color-espacio);
-
-    cursor: pointer;
-
-    transition:
-        transform 0.2s ease,
-        background 0.2s ease,
-        border-color 0.2s ease;
-}
-
-.objeto > span {
-    font-size: 3rem;
-    line-height: 1.1;
-}
-
-.objeto small {
-    font-family: var(--fuente-titulos);
-    font-size: 1rem;
-    font-weight: 600;
-}
-
-.objeto:hover:not(:disabled) {
-    transform: translateY(-5px);
-    border-color: var(--color-morado-claro);
-    background: #EFE6FF;
-}
-
-.objeto:active:not(:disabled) {
-    transform: scale(0.95);
-}
-
-.objeto:disabled {
-    cursor: default;
-}
-
-.objeto.seleccionado {
-    background: #E3FFF0;
-    border-color: var(--color-acierto);
-    opacity: 0.55;
-}
-
-.objeto.incorrecto {
-    animation: objeto-sacudir 0.35s ease;
-    border-color: var(--color-error);
-}
-
-@keyframes objeto-sacudir {
-    0%, 100% {
-        transform: translateX(0);
-    }
-
-    25% {
-        transform: translateX(-6px);
-    }
-
-    75% {
-        transform: translateX(6px);
-    }
-}
-
-/* 7. Recompensa */
-
-.recompensa-fondo {
-    position: fixed;
-    inset: 0;
-    z-index: 100;
-
-    display: grid;
-    place-items: center;
-
-    padding: 20px;
-
-    background: rgba(23, 16, 68, 0.75);
-    backdrop-filter: blur(6px);
-}
-
-.recompensa-fondo[hidden] {
-    display: none;
-}
-
-.recompensa {
-    width: min(100%, 480px);
-    max-height: calc(100dvh - 40px);
-    overflow-y: auto;
-
-    padding: 25px 30px 35px;
-
-    border: 4px solid #DCCFFF;
-    border-radius: 32px;
-
-    background: white;
-    text-align: center;
-
-    box-shadow: 0 12px 0 rgba(73, 48, 154, 0.35);
-
-    animation: premio-entrar 0.5s ease-out;
-}
-
-@keyframes premio-entrar {
-    from {
-        opacity: 0;
-        transform: scale(0.7) translateY(30px);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-}
-
-.starly-premio {
-    width: 120px;
-    height: 120px;
-    object-fit: contain;
-
-    animation: starly-flotar 2.5s ease-in-out infinite;
-}
-
-.recompensa h2 {
-    margin: 5px 0 10px;
-
-    color: var(--color-morado);
-    font-family: var(--fuente-titulos);
-    font-size: 2.5rem;
-}
-
-.recompensa p {
-    color: var(--color-espacio);
-    font-family: var(--fuente-textos);
-    font-size: 1.1rem;
+.letrero {
+    width: max-content;
+    margin: 11px auto;
+    padding: 6px 16px;
+    border: 2px solid #C5C5C5;
+    border-radius: 7px;
+    background: #EFEFEF;
+    color: #555;
+    font-size: 14px;
     font-weight: 700;
 }
 
-.estrellas-premio {
+.ventanas {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
+    margin-top: 13px;
+}
+
+.ventana {
+    width: 52px;
+    height: 52px;
+    border: 5px solid white;
+    border-radius: 7px;
+    background: #A9A9A9;
+}
+
+.escuela.puerta-pintada .ventana {
+    background: #89D8F7;
+}
+
+.puerta {
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    width: 65px;
+    height: 75px;
+    transform: translateX(-50%);
+    border: 5px solid #B0B0B0;
+    border-bottom: 0;
+    border-radius: 13px 13px 0 0;
+    background: #8C8C8C;
+    transition: background 0.6s ease;
+}
+
+.escuela.puerta-pintada .puerta {
+    border-color: #3D7DB8;
+    background: #54B0ED;
+}
+
+/* NATURALEZA */
+
+.camino {
+    position: absolute;
+    z-index: 2;
+    bottom: 0;
+    left: 54%;
+    width: 105px;
+    height: 68px;
+    transform: translateX(-50%);
+    background: #E9CDA0;
+    clip-path: polygon(35% 0, 65% 0, 100% 100%, 0 100%);
+}
+
+.arbol,
+.flor {
+    position: absolute;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.arbol {
+    bottom: 35px;
+    font-size: 75px;
+}
+
+.arbol-izquierdo {
+    left: 10%;
+}
+
+.arbol-derecho {
+    right: 8%;
+}
+
+.flor {
+    bottom: 15px;
+    font-size: 30px;
+}
+
+.flor-1 {
+    left: 25%;
+}
+
+.flor-2 {
+    right: 24%;
+}
+
+.flor-3 {
+    right: 14%;
+}
+
+/* PÉRDIDA Y RECUPERACIÓN DE COLORES */
+
+.paisaje .cielo,
+.paisaje .sol,
+.paisaje .camino,
+.paisaje .suelo,
+.paisaje .arbol,
+.paisaje .flor,
+.paisaje .techo,
+.paisaje .edificio,
+.paisaje .puerta,
+.paisaje .ventana {
+    transition: filter 0.9s ease;
+}
+
+.paisaje.sin-color .cielo,
+.paisaje.sin-color .sol,
+.paisaje.sin-color .camino,
+.paisaje.sin-color .suelo,
+.paisaje.sin-color .arbol,
+.paisaje.sin-color .flor,
+.paisaje.sin-color .techo,
+.paisaje.sin-color .edificio,
+.paisaje.sin-color .puerta,
+.paisaje.sin-color .ventana {
+    filter: grayscale(1);
+}
+
+.paisaje.juego-activo .cielo,
+.paisaje.juego-activo .sol,
+.paisaje.juego-activo .camino,
+.paisaje.juego-activo .suelo,
+.paisaje.juego-activo .arbol,
+.paisaje.juego-activo .flor,
+.paisaje.juego-activo .techo,
+.paisaje.juego-activo .edificio,
+.paisaje.juego-activo .puerta,
+.paisaje.juego-activo .ventana {
+    filter: grayscale(1);
+}
+
+.paisaje.juego-activo .escuela.techo-pintado .techo,
+.paisaje.juego-activo .escuela.paredes-pintadas .edificio,
+.paisaje.juego-activo .escuela.puerta-pintada .puerta,
+.paisaje.juego-activo .escuela.puerta-pintada .ventana,
+.paisaje.juego-activo.naturaleza-pintada .suelo,
+.paisaje.juego-activo.naturaleza-pintada .arbol,
+.paisaje.juego-activo.flores-pintadas .flor {
+    filter: grayscale(0);
+}
+
+.paisaje.recuperando .cielo,
+.paisaje.recuperando .sol,
+.paisaje.recuperando .camino {
+    filter: grayscale(0);
+}
+
+/* DON GRIS */
+
+.villano {
+    position: absolute;
+    z-index: 8;
+    top: 32px;
+    left: 100%;
+    width: 165px;
+    height: 165px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(30px);
+}
+
+.villano-imagen {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 6px 6px rgba(73, 48, 154, 0.25));
+}
+
+.villano.entrando {
+    animation: villano-entrar 2s ease-out forwards;
+}
+
+.villano.robando {
+    left: 72%;
+    opacity: 1;
+    transform: translateX(-50%);
+    animation: villano-robar 3s ease-in-out forwards;
+}
+
+.villano.escapando {
+    left: 72%;
+    opacity: 1;
+    transform: translateX(-50%);
+    animation: villano-salir 2s ease-in forwards;
+}
+
+/* COLORES ROBADOS */
+
+.efecto-robo {
+    position: absolute;
+    z-index: 9;
+    top: 45%;
+    left: 54%;
+    display: flex;
     gap: 12px;
-
-    margin: 25px 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
 }
 
-.estrellas-premio span {
+.efecto-robo span {
     display: inline-block;
-    font-size: 3.5rem;
-
-    animation: premio-estrella 0.6s ease-out both;
+    font-size: 28px;
+    font-weight: 900;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.estrellas-premio span:nth-child(2) {
-    animation-delay: 0.2s;
+.efecto-robo span:nth-child(1) {
+    color: #F27373;
 }
 
-.estrellas-premio span:nth-child(3) {
-    animation-delay: 0.4s;
+.efecto-robo span:nth-child(2) {
+    color: #FFCE54;
 }
 
-@keyframes premio-estrella {
-    from {
-        opacity: 0;
-        transform: scale(0) rotate(-60deg);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1) rotate(0);
-    }
+.efecto-robo span:nth-child(3) {
+    color: #55B9F3;
 }
 
-.boton-continuar {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    min-height: 60px;
-    padding: 12px 35px;
-
-    border: 3px solid var(--color-amarillo);
-    border-radius: 50px;
-
-    background: var(--color-naranja);
-    color: white;
-
-    font-family: var(--fuente-titulos);
-    font-size: 1.5rem;
-    font-weight: 600;
-    text-decoration: none;
-
-    box-shadow: 0 6px 0 #B84B20;
-
-    transition: transform 0.2s ease;
+.efecto-robo span:nth-child(4) {
+    color: #46C98B;
 }
 
-.boton-continuar:hover {
-    transform: translateY(-3px);
+.efecto-robo span:nth-child(5) {
+    color: #A77AE8;
 }
 
-/* 8. Adaptación a pantallas pequeñas */
-
-@media (max-width: 750px) {
-
-    .juego-encabezado {
-        padding: 12px;
-        gap: 8px;
-    }
-
-    .juego-titulo h1 {
-        font-size: 1.3rem;
-    }
-
-    .boton-volver,
-    .contador {
-        padding: 7px 10px;
-        font-size: 0.85rem;
-    }
-
-    .guia-starly {
-        margin-bottom: 15px;
-    }
-
-    .starly {
-        width: 70px;
-        height: 70px;
-    }
-
-    .mensaje-starly {
-        padding: 10px 12px;
-    }
-
-    .mensaje-starly strong {
-        font-size: 1rem;
-    }
-
-    .mensaje-starly p {
-        font-size: 0.85rem;
-    }
-
-    .zona-juego {
-        gap: 12px;
-        width: 96%;
-    }
-
-    .zona-mochila,
-    .zona-objetos {
-        padding: 12px;
-        border-radius: 20px;
-    }
-
-    .zona-juego h2 {
-        font-size: 1.1rem;
-        margin-bottom: 10px;
-    }
-
-    .mochila {
-        height: 180px;
-    }
-
-    .mochila-dibujo {
-        font-size: 6rem;
-    }
-
-    .objetos {
-        gap: 8px;
-    }
-
-    .objeto {
-        min-height: 85px;
-        padding: 6px;
-        gap: 4px;
-        border-radius: 14px;
-    }
-
-    .objeto > span {
-        font-size: 2rem;
-    }
-
-    .objeto small {
-        font-size: 0.75rem;
-    }
+.efecto-robo.activo {
+    animation: colores-robados 2.4s ease-in forwards;
 }
 
-@media (max-width: 520px) {
+/* STARLY */
 
-    .juego-encabezado {
-        grid-template-columns: 1fr auto;
-    }
-
-    .juego-titulo {
-        grid-column: 1 / -1;
-        grid-row: 2;
-    }
-
-    .zona-juego {
-        grid-template-columns: 1fr;
-    }
-
-    .mochila {
-        height: 145px;
-    }
-
-    .mochila-dibujo {
-        font-size: 5rem;
-    }
-
-    .objetos {
-        grid-template-columns: repeat(3, 1fr);
-    }
+.guia-starly {
+    position: absolute;
+    z-index: 10;
+    top: 22px;
+    left: 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
 }
 
-@media (prefers-reduced-motion: reduce) {
-
-    .starly,
-    .starly-premio,
-    .recompensa,
-    .estrellas-premio span {
-        animation: none;
-    }
+.starly {
+    width: 105px;
+    height: 125px;
+    flex-shrink: 0;
+    object-fit: contain;
+    filter: drop-shadow(0 6px 8px rgba(73, 48, 154, 0.2));
+    animation: starly-flotar 3s ease-in-out infinite;
 }
 
-
-
-/* ==========================================
-   MISIÓN 1 - MEJORAS DE AUDIO Y CELEBRACIÓN
-========================================== */
-
-/* Botón para escuchar a Starly */
+.mensaje-starly {
+    width: 255px;
+    margin-top: 4px;
+    padding: 12px 14px;
+    border: 3px solid #DCCFFF;
+    border-radius: 20px;
+    background: white;
+    box-shadow: 0 5px 0 rgba(73, 48, 154, 0.2);
+}
 
 .mensaje-encabezado {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 4px;
+    gap: 8px;
 }
 
-.mensaje-encabezado strong {
-    margin-bottom: 0;
+.mensaje-encabezado p {
+    flex: 1;
+    margin: 0;
+    padding-top: 5px;
+    color: #49309A;
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.4;
 }
 
 .boton-audio {
     display: grid;
     place-items: center;
-    flex-shrink: 0;
-
-    width: 44px;
-    height: 44px;
-
+    flex: 0 0 42px;
+    width: 42px;
+    height: 42px;
+    padding: 0;
     border: 2px solid white;
     border-radius: 50%;
-
-    background: var(--color-morado);
+    background: #49309A;
     color: white;
-
-    font-size: 1.3rem;
-    cursor: pointer;
-
+    font-size: 1.2rem;
     box-shadow: 0 4px 0 #30206B;
-
-    transition: transform 0.2s ease;
-}
-
-.boton-audio:hover {
-    transform: translateY(-2px);
-}
-
-.boton-audio:active {
-    transform: translateY(2px);
+    cursor: pointer;
 }
 
 .boton-audio.reproduciendo {
-    animation: audio-pulso 1s ease-in-out infinite;
+    animation: audio-pulso 1s infinite;
+}
+
+.mensaje-muestra {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    padding: 7px 9px;
+    border: 2px dashed #DCCFFF;
+    border-radius: 13px;
+    background: #F9F5FF;
+}
+
+.mensaje-muestra[hidden] {
+    display: none;
+}
+
+.muestra-etiqueta {
+    flex: 1;
+    color: #49309A;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.muestra-gota {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: white;
+}
+
+/* CONTROLES */
+
+.controles-juego[hidden] {
+    display: none;
+}
+
+.controles-juego.apareciendo {
+    animation: controles-aparecer 0.6s ease-out both;
+}
+
+.colores {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 14px 0 8px;
+}
+
+.color-magico {
+    display: grid;
+    place-items: center;
+    width: 75px;
+    height: 75px;
+    padding: 0;
+    border: 4px solid #DCCFFF;
+    border-radius: 50%;
+    background: #F9F5FF;
+    box-shadow: 0 5px 0 rgba(73, 48, 154, 0.2);
+    cursor: pointer;
+    animation: gota-flotar 2s ease-in-out infinite;
+}
+
+.gota {
+    display: grid;
+    place-items: center;
+    width: 43px;
+    height: 43px;
+    border-radius: 50% 50% 50% 10%;
+    transform: rotate(-45deg);
+    box-shadow: inset -5px -5px 0 rgba(0, 0, 0, 0.08);
+}
+
+.simbolo-color {
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 25px;
+    font-weight: 900;
+    transform: rotate(45deg);
+}
+
+.rojo .gota {
+    background: #F27373;
+}
+
+.amarillo .gota {
+    background: #FFCE54;
+}
+
+.azul .gota {
+    background: #55B9F3;
+}
+
+.verde .gota {
+    background: #46C98B;
+}
+
+.morado .gota {
+    background: #A77AE8;
+}
+
+.muestra-gota .gota {
+    width: 32px;
+    height: 32px;
+}
+
+.muestra-gota .simbolo-color {
+    font-size: 19px;
+}
+
+.color-magico.usado {
+    opacity: 0.3;
+    animation: none;
+}
+
+.color-magico.pista {
+    border-color: #FFCD45;
+    animation: gota-pista 0.8s infinite;
+}
+
+.color-magico.error {
+    animation: gota-error 0.4s;
+}
+
+.color-magico:disabled {
+    cursor: default;
+}
+
+/* ESTRELLAS */
+
+.progreso-estrellas {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    padding: 4px 0 8px;
+}
+
+.estrella-progreso {
+    color: #D3C8E6;
+    font-size: 2rem;
+}
+
+.estrella-progreso.ganada {
+    color: #FFCD45;
+    animation: estrella-ganada 0.5s;
+}
+
+/* DESTELLOS */
+
+.destellos {
+    position: absolute;
+    z-index: 12;
+    inset: 0;
+    pointer-events: none;
+}
+
+.destello {
+    position: absolute;
+    color: #FFD75E;
+    font-size: 25px;
+    animation: destello-aparecer 0.9s forwards;
+}
+
+/* ANIMACIONES */
+
+@keyframes villano-entrar {
+    0% {
+        left: 100%;
+        opacity: 0;
+        transform: translateX(30px) translateY(-20px);
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        left: 72%;
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+@keyframes villano-robar {
+    0%, 100% {
+        transform: translateX(-50%) translateY(0) rotate(0);
+    }
+
+    25% {
+        transform: translateX(-50%) translateY(-12px) rotate(-6deg);
+    }
+
+    50% {
+        transform: translateX(-50%) translateY(8px) rotate(6deg);
+    }
+
+    75% {
+        transform: translateX(-50%) translateY(-8px) rotate(-4deg);
+    }
+}
+
+@keyframes villano-salir {
+    0% {
+        left: 72%;
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+
+    80% {
+        opacity: 1;
+    }
+
+    100% {
+        left: 110%;
+        opacity: 0;
+        transform: translateX(30px) translateY(-35px);
+    }
+}
+
+@keyframes colores-robados {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    70% {
+        opacity: 1;
+        transform: translate(60%, -120%) scale(0.65);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(150%, -170%) scale(0.1);
+    }
+}
+
+@keyframes starly-flotar {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+@keyframes gota-flotar {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-7px);
+    }
+}
+
+@keyframes gota-pista {
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.12);
+    }
+}
+
+@keyframes gota-error {
+    0%, 100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+@keyframes estrella-ganada {
+    from {
+        transform: scale(0.2);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 @keyframes audio-pulso {
     0%, 100% {
-        box-shadow: 0 0 0 0 rgba(132, 103, 215, 0.45);
+        box-shadow: 0 0 0 0 rgba(132, 103, 215, 0.4);
     }
 
     50% {
@@ -689,111 +828,195 @@ body {
     }
 }
 
-/* Respuesta amable cuando un objeto no corresponde */
-
-.objeto.incorrecto {
-    border-color: #B9A4F1;
-    background: #F0E9FF;
-    animation: objeto-suave 0.4s ease;
-}
-
-@keyframes objeto-suave {
-    0%, 100% {
-        transform: translateY(0);
+@keyframes destello-aparecer {
+    0% {
+        opacity: 0;
+        transform: scale(0.2);
     }
 
     50% {
-        transform: translateY(-5px);
-    }
-}
-
-/* Mensaje sobre el derecho a la educación */
-
-.mensaje-derecho {
-    margin: 0 0 24px;
-    color: var(--color-morado);
-    font-weight: 800;
-}
-
-/* Confeti de celebración */
-
-.confeti {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    pointer-events: none;
-}
-
-.pieza-confeti {
-    position: absolute;
-    top: -20px;
-
-    width: 12px;
-    height: 18px;
-
-    border-radius: 3px;
-
-    animation: confeti-caer 3s linear forwards;
-}
-
-@keyframes confeti-caer {
-    0% {
         opacity: 1;
-        transform:
-            translate3d(0, -20px, 0)
-            rotate(0deg);
+        transform: scale(1.3);
     }
 
     100% {
         opacity: 0;
-        transform:
-            translate3d(var(--desplazamiento), 110vh, 0)
-            rotate(720deg);
+        transform: translateY(-30px) scale(0.7);
     }
 }
 
-/* Starly celebra al terminar */
-
-.starly-premio {
-    animation: starly-celebrar 1.2s ease-in-out infinite;
-}
-
-@keyframes starly-celebrar {
-    0%, 100% {
-        transform: translateY(0) rotate(-5deg);
+@keyframes controles-aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
     }
 
-    50% {
-        transform: translateY(-12px) rotate(5deg);
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
-/* Accesibilidad */
+/* TABLETAS */
 
-.boton-audio:focus-visible,
-.objeto:focus-visible,
-.boton-continuar:focus-visible {
-    outline: 4px solid var(--color-amarillo);
-    outline-offset: 4px;
+@media (max-width: 900px) {
+    .escuela {
+        left: 57%;
+        width: 310px;
+    }
+
+    .guia-starly {
+        left: 12px;
+    }
+
+    .starly {
+        width: 85px;
+        height: 105px;
+    }
+
+    .mensaje-starly {
+        width: 225px;
+    }
+
+    .villano {
+        width: 135px;
+        height: 135px;
+    }
 }
 
-@media (max-width: 520px) {
-    .boton-audio {
-        width: 40px;
-        height: 40px;
+/* TELÉFONOS */
+
+@media (max-width: 600px) {
+    .juego-encabezado {
+        gap: 6px;
+        padding: 10px;
+    }
+
+    .juego-titulo h1 {
         font-size: 1.1rem;
     }
 
-    .mensaje-encabezado {
-        gap: 8px;
+    .boton-volver,
+    .contador {
+        padding: 7px 9px;
+        font-size: 0.8rem;
+    }
+
+    .zona-juego {
+        width: 97%;
+        padding: 8px;
+    }
+
+    .escenario {
+        height: 450px;
+    }
+
+    .escuela {
+        top: 195px;
+        left: 50%;
+        width: 255px;
+        height: 205px;
+    }
+
+    .techo {
+        height: 83px;
+    }
+
+    .edificio {
+        top: 71px;
+        right: 15px;
+        left: 15px;
+    }
+
+    .ventana {
+        width: 42px;
+        height: 42px;
+    }
+
+    .puerta {
+        width: 55px;
+        height: 65px;
+    }
+
+    .guia-starly {
+        top: 12px;
+        left: 8px;
+    }
+
+    .starly {
+        width: 65px;
+        height: 85px;
+    }
+
+    .mensaje-starly {
+        width: min(65vw, 230px);
+        padding: 9px;
+    }
+
+    .mensaje-encabezado p {
+        font-size: 0.78rem;
+    }
+
+    .boton-audio {
+        flex-basis: 36px;
+        width: 36px;
+        height: 36px;
+    }
+
+    .colores {
+        gap: 12px;
+    }
+
+    .color-magico {
+        width: 63px;
+        height: 63px;
+    }
+
+    .gota {
+        width: 37px;
+        height: 37px;
+    }
+
+    .simbolo-color {
+        font-size: 21px;
+    }
+
+    .arbol {
+        font-size: 50px;
+    }
+
+    .arbol-izquierdo {
+        left: 1%;
+    }
+
+    .arbol-derecho {
+        right: 1%;
+    }
+
+    .villano {
+        top: 115px;
+        width: 105px;
+        height: 105px;
+    }
+
+    .efecto-robo {
+        top: 65%;
+        left: 50%;
+        gap: 6px;
+    }
+
+    .efecto-robo span {
+        font-size: 20px;
     }
 }
 
+/* MOVIMIENTO REDUCIDO */
+
 @media (prefers-reduced-motion: reduce) {
-    .boton-audio.reproduciendo,
-    .objeto.incorrecto,
-    .pieza-confeti,
-    .starly-premio {
+    .starly,
+    .color-magico,
+    .estrella-progreso.ganada,
+    .destello {
         animation: none;
     }
 }

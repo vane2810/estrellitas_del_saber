@@ -1,0 +1,1026 @@
+/* ESTRELLITAS DEL SABER - MISIÓN 2 */
+
+    .ruta-juego {
+        min-height: 100dvh;
+        padding: 0 0 18px;
+        overflow-x: hidden;
+        background: linear-gradient(180deg, #DDF6FF, #F1F9E8);
+    }
+
+    .ruta-juego *,
+    .ruta-juego *::before,
+    .ruta-juego *::after {
+        box-sizing: border-box;
+    }
+
+    .ruta-juego [hidden] {
+        display: none !important;
+    }
+
+    /* ENCABEZADO */
+
+    .ruta-header {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) minmax(0, 1fr);
+        align-items: center;
+        grid-template-rows: auto auto;
+        column-gap: 12px;
+        row-gap: 3px;
+        width: min(94%, 1480px);
+        margin: 0 auto;
+        padding: 14px 0;
+    }
+
+    .ruta-header .ruta-volver {
+        grid-column: 1;
+        grid-row: 1 / 3;
+        align-self: center;
+        justify-self: start;
+    }
+
+    .ruta-header h1 {
+        grid-column: 2;
+        grid-row: 2;
+        justify-self: center;
+        width: 100%;
+        margin: 0;
+        color: #49309A;
+        font-size: clamp(1.3rem, 3vw, 2.3rem);
+        line-height: 1.2;
+        text-align: center;
+    }
+
+    /* NÚMERO DE MISIÓN SOBRE EL TÍTULO */
+    .ruta-header .ruta-mision-numero,
+    .ruta-mision-numero {
+        display: block !important;
+        grid-column: 2;
+        grid-row: 1;
+        justify-self: center;
+        align-self: end;
+        margin: 0;
+        color: #49309A;
+        font-size: .75rem;
+        font-weight: 800;
+        letter-spacing: .17em;
+        line-height: 1.25;
+        text-align: center;
+        opacity: 1;
+    }
+
+    .ruta-volver,
+    .ruta-contador {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 43px;
+        padding: 8px 17px;
+        border: 3px solid #FFFFFF;
+        border-radius: 30px;
+        background: #49309A;
+        box-shadow: 0 4px 0 #30206B;
+        color: #FFFFFF;
+        font-weight: 800;
+        text-decoration: none;
+        white-space: nowrap;
+    }
+
+    .ruta-header .ruta-contador {
+        grid-column: 3;
+        grid-row: 1 / 3;
+        align-self: center;
+        justify-self: end;
+    }
+
+    /* PANEL */
+
+    .ruta-panel {
+        width: min(95%, 1100px);
+        margin: 10px auto 25px;
+        padding: 12px;
+        border: 4px solid #DCCFFF;
+        border-radius: 28px;
+        background: #FFFFFF;
+        box-shadow: 0 7px 0 rgba(73, 48, 154, .18);
+    }
+
+    .ruta-escenario {
+        position: relative;
+        height: clamp(360px, 55vh, 470px);
+        overflow: hidden;
+        isolation: isolate;
+        border: 3px solid #DCCFFF;
+        border-radius: 22px;
+        background: #9BDEF6;
+    }
+
+    /* PAISAJE */
+
+    .ruta-cielo {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg,
+                #89D7F6 0%,
+                #D9F5FF 72%,
+                #8ED080 72%,
+                #91D384 100%);
+    }
+
+    .ruta-sol {
+        position: absolute;
+        top: 28px;
+        right: 12%;
+        width: 75px;
+        height: 75px;
+        border-radius: 50%;
+        background: #FFDE67;
+        box-shadow: 0 0 0 14px rgba(255, 222, 103, .26);
+    }
+
+    .ruta-nube {
+        position: absolute;
+        width: 105px;
+        height: 33px;
+        border-radius: 35px;
+        background: #FFFFFF;
+    }
+
+    .ruta-nube::before,
+    .ruta-nube::after {
+        content: "";
+        position: absolute;
+        bottom: 8px;
+        border-radius: 50%;
+        background: #FFFFFF;
+    }
+
+    .ruta-nube::before {
+        left: 15px;
+        width: 45px;
+        height: 45px;
+    }
+
+    .ruta-nube::after {
+        right: 12px;
+        width: 37px;
+        height: 37px;
+    }
+
+    .nube-uno {
+        top: 145px;
+        left: 23%;
+    }
+
+    .nube-dos {
+        top: 190px;
+        right: 27%;
+        transform: scale(.7);
+    }
+
+    .ruta-colinas {
+        position: absolute;
+        right: 0;
+        bottom: 105px;
+        left: 0;
+        height: 165px;
+        background: #81C77D;
+        clip-path: polygon(0 100%,
+                0 65%,
+                18% 20%,
+                38% 75%,
+                62% 25%,
+                82% 65%,
+                100% 20%,
+                100% 100%);
+    }
+
+    .ruta-cesped {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 160px;
+        background: #91D384;
+    }
+
+    .ruta-decoracion {
+        position: absolute;
+        z-index: 2;
+        inset: 0;
+        pointer-events: none;
+    }
+
+    .ruta-arbol {
+        position: absolute;
+        bottom: 120px;
+        width: 85px;
+        height: 150px;
+    }
+
+    .arbol-copa {
+        position: absolute;
+        top: 0;
+        width: 85px;
+        height: 85px;
+        border-radius: 50%;
+        background: #4AAE67;
+        box-shadow: -20px 17px #5BBF75, 20px 16px #65C77D;
+    }
+
+    .arbol-tronco {
+        position: absolute;
+        bottom: 0;
+        left: 36px;
+        width: 19px;
+        height: 78px;
+        background: #A9784C;
+    }
+
+    .arbol-uno {
+        left: 14%;
+    }
+
+    .arbol-dos {
+        right: 25%;
+        transform: scale(.75);
+        transform-origin: bottom;
+    }
+
+    .ruta-casa {
+        position: absolute;
+        right: 8%;
+        bottom: 125px;
+        width: 145px;
+        height: 135px;
+    }
+
+    .casa-techo {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 65px;
+        background: #F18C8C;
+        clip-path: polygon(50% 0, 100% 100%, 0 100%);
+    }
+
+    .casa-cuerpo {
+        position: absolute;
+        top: 54px;
+        right: 13px;
+        bottom: 0;
+        left: 13px;
+        border: 4px solid #D5A66F;
+        border-radius: 5px;
+        background: #FFE2A3;
+    }
+
+    .casa-cuerpo::before {
+        content: "";
+        position: absolute;
+        top: 14px;
+        left: 13px;
+        width: 33px;
+        height: 32px;
+        border: 4px solid #FFFFFF;
+        background: #95DFF4;
+    }
+
+    .casa-cuerpo::after {
+        content: "";
+        position: absolute;
+        right: 12px;
+        bottom: 0;
+        width: 34px;
+        height: 53px;
+        border-radius: 7px 7px 0 0;
+        background: #9977CE;
+    }
+
+    /* STARLY */
+
+    .ruta-guia {
+        position: absolute;
+        z-index: 35;
+        top: 13px;
+        left: 15px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        width: max-content;
+        max-width: calc(100% - 30px);
+        pointer-events: none;
+    }
+
+    .ruta-starly {
+        width: 75px;
+        height: 85px;
+        flex: 0 0 75px;
+        object-fit: contain;
+        animation: ruta-flotar 3s ease-in-out infinite;
+    }
+
+    .ruta-dialogo {
+        display: flex;
+        align-items: center;
+        flex: 0 1 auto;
+        width: max-content;
+        max-width: min(420px, 65vw);
+        min-width: 0;
+        min-height: 48px;
+        padding: 8px 14px;
+        border: 3px solid #DCCFFF;
+        border-radius: 17px;
+        background: #FFFFFF;
+        box-shadow: 0 4px 0 rgba(73, 48, 154, .12);
+    }
+
+    .ruta-dialogo p {
+        margin: 0;
+        color: #49309A;
+        font-size: clamp(.85rem, 1.3vw, 1rem);
+        font-weight: 800;
+        line-height: 1.35;
+    }
+
+    .ruta-audio {
+        display: grid;
+        place-items: center;
+        flex: 0 0 40px;
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        border: 3px solid #FFFFFF;
+        border-radius: 50%;
+        background: #49309A;
+        box-shadow: 0 4px 0 #30206B;
+        cursor: pointer;
+        pointer-events: auto;
+    }
+
+    .ruta-audio svg {
+        width: 22px;
+        height: 22px;
+        fill: #FFFFFF;
+        stroke: #FFFFFF;
+        stroke-width: 1.3;
+    }
+
+    .ruta-audio.reproduciendo {
+        animation: ruta-pulso 1s infinite;
+    }
+
+    /* RECORRIDO AMPLIADO */
+
+    .ruta-recorrido {
+        position: absolute;
+        z-index: 17;
+        left: 28%;
+        right: 7%;
+        bottom: 18%;
+        width: 65%;
+        height: 36%;
+        min-height: 145px;
+        touch-action: none;
+        cursor: crosshair;
+    }
+
+    .ruta-recorrido svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+        touch-action: none;
+        user-select: none;
+    }
+
+    /* CAMINO AMARILLO */
+
+    #ruta-camino-fondo {
+        fill: none;
+        stroke: #FFE28A;
+        stroke-width: 65;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        pointer-events: none;
+    }
+
+    /* GUÍA MORADA */
+
+    #ruta-camino-guia {
+        fill: none;
+        stroke: #673AB7;
+        stroke-width: 10;
+        stroke-dasharray: 8 16;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        pointer-events: none;
+    }
+
+    /* CAMINO TRAZADO */
+
+    #ruta-camino-hecho {
+        fill: none;
+        stroke: #1CA9DD;
+        stroke-width: 43;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        pointer-events: none;
+    }
+
+    #ruta-origen {
+        fill: #FFFFFF;
+        stroke: #16A36A;
+        stroke-width: 9;
+        pointer-events: none;
+    }
+
+    #ruta-destino {
+        fill: #FFFFFF;
+        stroke: #F29C24;
+        stroke-width: 9;
+        pointer-events: none;
+    }
+
+    #ruta-indicador {
+        fill: #1CA9DD;
+        stroke: #FFFFFF;
+        stroke-width: 6;
+        pointer-events: none;
+    }
+
+    #ruta-pista {
+        fill: #FFFFFF;
+        stroke: #673AB7;
+        stroke-width: 6;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .ruta-recorrido.mostrar-pista #ruta-pista {
+        opacity: 1;
+    }
+
+    .ruta-recorrido.terminado #ruta-camino-fondo {
+        stroke: #B7EBFA;
+    }
+
+    /* COMPAÑEROS */
+
+    .ruta-companero {
+        position: absolute;
+        z-index: 18;
+        right: 4%;
+        bottom: 110px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        transition: transform .85s ease, opacity .85s ease;
+    }
+
+    .companero-emoji {
+        display: block;
+        width: clamp(50px, 5.2vw, 68px);
+        aspect-ratio: 120 / 184;
+    }
+
+    .companero-emoji svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+    }
+
+    .bus-ventana svg {
+        display: block;
+        width: auto;
+        height: 100%;
+    }
+
+    .companero-nombre {
+        padding: 4px 14px;
+        border: 2px solid #FFFFFF;
+        border-radius: 18px;
+        background: #49309A;
+        color: #FFFFFF;
+        font-size: .85rem;
+        font-weight: 800;
+    }
+
+    .ruta-companero.subiendo {
+        transform: translateX(-95px) scale(.55);
+        opacity: 0;
+    }
+
+    /* CARRETERA */
+
+    .ruta-carretera {
+        position: absolute;
+        z-index: 5;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 108px;
+        border-top: 8px solid #D9DDE5;
+        background: #676D7A;
+    }
+
+    .carretera-lineas {
+        position: absolute;
+        top: 55px;
+        width: 100%;
+        height: 8px;
+        background: repeating-linear-gradient(90deg,
+                #FFE7A0 0 65px,
+                transparent 65px 115px);
+    }
+
+    .ruta-escenario.moviendose .carretera-lineas {
+        animation: ruta-lineas .55s linear infinite;
+    }
+
+    /* AUTOBÚS */
+
+    .ruta-autobus {
+        position: absolute;
+        z-index: 20;
+        bottom: 65px;
+        left: 4%;
+        width: 470px;
+        height: 155px;
+        transform: scale(.74);
+        transform-origin: left bottom;
+        will-change: left;
+    }
+
+    .ruta-autobus.avanzando {
+        animation: ruta-vibrar .2s linear infinite;
+    }
+
+    .bus-techo {
+        position: absolute;
+        top: 5px;
+        left: 12px;
+        width: 435px;
+        height: 28px;
+        border: 5px solid #B8811B;
+        border-radius: 25px 30px 0 0;
+        background: #FFE17A;
+    }
+
+    .bus-cuerpo {
+        position: absolute;
+        top: 25px;
+        width: 470px;
+        height: 112px;
+        border: 5px solid #B8811B;
+        border-radius: 20px 28px 12px 12px;
+        background: #FFD454;
+        box-shadow: inset 0 -18px 0 #F3B92E;
+    }
+
+    .bus-ventanas {
+        position: absolute;
+        top: 10px;
+        left: 18px;
+        display: flex;
+        gap: 8px;
+    }
+
+    .bus-ventana {
+        display: grid;
+        place-items: center;
+        width: 72px;
+        height: 48px;
+        overflow: hidden;
+        border: 4px solid #FFFFFF;
+        border-radius: 10px;
+        background: #A7E5F6;
+        font-size: 2.1rem;
+    }
+
+    .bus-conductor {
+        width: 65px;
+        color: #FFE17A;
+        font-size: 2rem;
+        text-shadow: 0 2px 0 #49309A;
+    }
+
+    .bus-franja {
+        position: absolute;
+        top: 65px;
+        width: 100%;
+        height: 12px;
+        background: #49309A;
+    }
+
+    .bus-puerta {
+        position: absolute;
+        top: 10px;
+        right: 18px;
+        display: flex;
+        width: 52px;
+        height: 89px;
+        overflow: hidden;
+        border: 4px solid #B8811B;
+        border-radius: 8px;
+        background: #BDE9F5;
+    }
+
+    .bus-puerta span {
+        flex: 1;
+        border-right: 2px solid #B8811B;
+        transition: transform .45s;
+    }
+
+    .bus-puerta.abierta span:first-child {
+        transform: translateX(-100%);
+    }
+
+    .bus-puerta.abierta span:last-child {
+        transform: translateX(100%);
+    }
+
+    .bus-texto {
+        position: absolute;
+        bottom: 12px;
+        left: 35%;
+        color: #49309A;
+        font-size: .85rem;
+        font-weight: 900;
+        letter-spacing: 2px;
+    }
+
+    .bus-luz {
+        position: absolute;
+        right: -10px;
+        bottom: 20px;
+        width: 20px;
+        height: 25px;
+        border-radius: 50%;
+        background: #FFF4BD;
+        box-shadow: 0 0 14px #FFE781;
+    }
+
+    .bus-rueda {
+        position: absolute;
+        z-index: 21;
+        bottom: 0;
+        width: 57px;
+        height: 57px;
+        border: 12px solid #343746;
+        border-radius: 50%;
+        background: #C8CFD8;
+    }
+
+    .rueda-trasera {
+        left: 48px;
+    }
+
+    .rueda-delantera {
+        right: 52px;
+    }
+
+    .ruta-escenario.moviendose .bus-rueda {
+        animation: ruta-rueda .5s linear infinite;
+    }
+
+    /* ESCUELA */
+
+    .ruta-escuela {
+        position: absolute;
+        z-index: 8;
+        right: 7%;
+        bottom: 108px;
+        width: 240px;
+        height: 215px;
+    }
+
+    .escuela-techo {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 90px;
+        background: #F17D80;
+        clip-path: polygon(50% 0, 100% 100%, 0 100%);
+    }
+
+    .escuela-cuerpo {
+        position: absolute;
+        top: 75px;
+        right: 16px;
+        bottom: 0;
+        left: 16px;
+        border: 5px solid #D5A66F;
+        border-radius: 7px;
+        background: #FFE2A3;
+    }
+
+    .escuela-nombre {
+        display: block;
+        width: max-content;
+        margin: 10px auto;
+        padding: 5px 10px;
+        border-radius: 5px;
+        background: #FFFFFF;
+        color: #49309A;
+        font-size: .85rem;
+        font-weight: 900;
+    }
+
+    .escuela-ventanas {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 10px;
+    }
+
+    .escuela-ventanas span {
+        width: 40px;
+        height: 40px;
+        border: 4px solid #FFFFFF;
+        border-radius: 6px;
+        background: #8EDBF2;
+    }
+
+    .escuela-puerta {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 55px;
+        height: 62px;
+        transform: translateX(-50%);
+        border-radius: 10px 10px 0 0;
+        background: #9273DF;
+    }
+
+    /* ESTRELLAS */
+
+    .ruta-pie {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 57px;
+        padding: 8px 0 0;
+    }
+
+    .ruta-estrellas {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .ruta-estrella {
+        color: #D3C8E6;
+        font-size: 2rem;
+    }
+
+    .ruta-estrella.ganada {
+        color: #FFD454;
+        animation: ruta-ganar .5s ease;
+    }
+
+    /* EFECTOS */
+
+    .ruta-efectos {
+        position: absolute;
+        z-index: 40;
+        inset: 0;
+        pointer-events: none;
+    }
+
+    .ruta-destello {
+        position: absolute;
+        color: #FFD454;
+        font-size: 30px;
+        animation: ruta-destello 1s forwards;
+    }
+
+    /* ANIMACIONES */
+
+    @keyframes ruta-flotar {
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-6px);
+        }
+    }
+
+    @keyframes ruta-pulso {
+        50% {
+            box-shadow: 0 0 0 10px rgba(132, 103, 215, .18);
+        }
+    }
+
+    @keyframes ruta-lineas {
+        to {
+            background-position: -115px 0;
+        }
+    }
+
+    @keyframes ruta-rueda {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes ruta-vibrar {
+        50% {
+            translate: 0 -2px;
+        }
+    }
+
+    @keyframes ruta-ganar {
+        from {
+            transform: scale(.3);
+            opacity: 0;
+        }
+
+        to {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    @keyframes ruta-destello {
+        0% {
+            opacity: 0;
+            transform: scale(.3);
+        }
+
+        50% {
+            opacity: 1;
+            transform: scale(1.4);
+        }
+
+        100% {
+            opacity: 0;
+            transform: translateY(-40px);
+        }
+    }
+
+    /* TABLETAS */
+
+    @media (max-width: 1000px) {
+        .ruta-autobus {
+            transform: scale(.57);
+        }
+
+        .ruta-recorrido {
+            left: 24%;
+            right: 5%;
+            width: 71%;
+            height: 34%;
+        }
+
+        .ruta-dialogo {
+            max-width: min(390px, 62vw);
+        }
+    }
+
+    /* TELÉFONOS */
+
+    @media (max-width: 600px) {
+        .ruta-header {
+            width: 97%;
+            gap: 5px;
+            padding: 10px 0;
+        }
+
+        .ruta-header h1 {
+            font-size: clamp(.9rem, 3.8vw, 1.1rem);
+        }
+
+        .ruta-volver,
+        .ruta-contador {
+            min-height: 38px;
+            padding: 6px 9px;
+            font-size: .8rem;
+        }
+
+        .ruta-panel {
+            width: 97%;
+            padding: 6px;
+            border-radius: 22px;
+        }
+
+        .ruta-escenario {
+            height: 450px;
+            min-height: 0;
+            border-radius: 16px;
+        }
+
+        .ruta-guia {
+            top: 8px;
+            left: 7px;
+            gap: 5px;
+            max-width: calc(100% - 14px);
+        }
+
+        .ruta-starly {
+            width: 65px;
+            height: 75px;
+            flex: 0 0 65px;
+            object-fit: contain;
+            animation: ruta-flotar 3s ease-in-out infinite;
+        }
+
+        .ruta-dialogo {
+            max-width: calc(100vw - 125px);
+            min-height: 43px;
+            padding: 7px 9px;
+            border-radius: 13px;
+        }
+
+        .ruta-dialogo p {
+            font-size: .75rem;
+            line-height: 1.3;
+        }
+
+        .ruta-audio {
+            flex: 0 0 35px;
+            width: 35px;
+            height: 35px;
+        }
+
+        .ruta-audio svg {
+            width: 19px;
+            height: 19px;
+        }
+
+        .ruta-autobus {
+            left: 2%;
+            bottom: 72px;
+            transform: scale(.29);
+        }
+
+        .ruta-recorrido {
+            left: 29%;
+            right: 3%;
+            bottom: 21%;
+            width: 68%;
+            height: 30%;
+            min-height: 120px;
+        }
+
+        #ruta-camino-fondo {
+            stroke-width: 76;
+        }
+
+        #ruta-camino-guia {
+            stroke-width: 12;
+        }
+
+        #ruta-camino-hecho {
+            stroke-width: 50;
+        }
+
+        .ruta-companero {
+            right: 2%;
+            bottom: 110px;
+        }
+
+        .companero-emoji {
+            width: 38px;
+        }
+
+        .companero-nombre {
+            font-size: .7rem;
+        }
+
+        .ruta-arbol {
+            transform: scale(.65);
+            transform-origin: bottom;
+        }
+
+        .ruta-casa {
+            right: 2%;
+            transform: scale(.7);
+            transform-origin: bottom right;
+        }
+
+        .ruta-escuela {
+            right: 2%;
+            transform: scale(.68);
+            transform-origin: bottom right;
+        }
+
+        .ruta-pie {
+            min-height: 45px;
+        }
+
+        .ruta-estrella {
+            font-size: 1.6rem;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+        .ruta-starly,
+        .ruta-audio {
+            animation: none;
+        }
+    }

@@ -1,0 +1,125 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Misión 4 | Estrellitas del Saber</title>
+    <link rel="icon" type="image/png" href="../../img/personajes/starly/starly2.webp">
+    <link rel="stylesheet" href="../../styles/global.css">
+    <link rel="stylesheet" href="../../styles/celebracion.css">
+    <link rel="stylesheet" href="../../styles/juegos/mision-4.css">
+    <script src="../../js/celebracion.js" defer></script>
+    <script src="../../js/juegos/mision-4.js" defer></script>
+</head>
+<body>
+    <main class="puzzle-juego">
+        <header class="puzzle-header">
+            <a href="../mapa.html" class="puzzle-volver">← Mapa</a>
+
+            <div class="puzzle-titulo">
+                <span>MISIÓN 4</span>
+                <h1>¡Armemos el salón!</h1>
+            </div>
+
+            <div class="puzzle-contador" aria-label="Tres estrellas">
+                <span>⭐</span>
+                <span>3/3</span>
+            </div>
+        </header>
+
+        <section class="puzzle-panel">
+            <div class="puzzle-superior">
+                <div class="puzzle-guia">
+                    <img
+                        id="starly"
+                        class="puzzle-starly"
+                        src="../../img/personajes/starly/starly_lenguaje.webp"
+                        alt="Starly"
+                    >
+
+                    <div class="puzzle-dialogo">
+                        <p id="dialogo" aria-live="polite">
+                            ¡Armemos el salón!
+                        </p>
+
+                        <button
+                            id="boton-audio"
+                            class="puzzle-audio"
+                            type="button"
+                            aria-label="Escuchar a Starly"
+                        >
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M4 9v6h4l5 4V5L8 9H4Z"></path>
+                                <path d="M16 9a4 4 0 0 1 0 6" fill="none"></path>
+                                <path d="M18 6a8 8 0 0 1 0 12" fill="none"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="puzzle-informacion">
+                    <div id="reloj" class="puzzle-reloj" role="timer" aria-label="Tiempo restante">
+                        <span aria-hidden="true">⏱</span>
+                        <span id="tiempo">01:30</span>
+                    </div>
+
+                    <div id="progreso" class="puzzle-progreso">
+                        🧩 0/6
+                    </div>
+                </div>
+            </div>
+
+            <div class="puzzle-area">
+                <div
+                    id="piezas-izquierda"
+                    class="puzzle-lateral"
+                    aria-label="Piezas del lado izquierdo"
+                ></div>
+
+                <div class="puzzle-centro">
+                    <div
+                        id="tablero"
+                        class="puzzle-tablero"
+                        aria-label="Tablero del rompecabezas"
+                    >
+                        <div id="guia-imagen" class="puzzle-guia-imagen"></div>
+                        <div id="casillas" class="puzzle-casillas"></div>
+                    </div>
+                </div>
+
+                <div
+                    id="piezas-derecha"
+                    class="puzzle-lateral"
+                    aria-label="Piezas del lado derecho"
+                ></div>
+            </div>
+
+            <div id="efectos" class="puzzle-efectos" aria-hidden="true"></div>
+        </section>
+
+        <div id="final" class="puzzle-final" hidden>
+            <div class="puzzle-final-contenido">
+                <img
+                    src="../../img/personajes/starly/starly_explorador.webp"
+                    alt="Starly"
+                >
+
+                <h2 id="titulo-final"></h2>
+                <div id="resultado-final" class="puzzle-resultado"></div>
+                <p id="mensaje-final"></p>
+
+                <div class="puzzle-final-botones">
+                    <button id="reintentar" class="puzzle-boton" type="button">
+                        ↻ Otra vez
+                    </button>
+
+                    <a href="../mapa.html" class="puzzle-boton puzzle-boton-secundario">
+                        ← Mapa
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

@@ -4,14 +4,14 @@
    MAPA DE MISIONES
 ========================================== */
 
-/* Elementos */
+/* ELEMENTOS */
 
 const botonesMisiones = document.querySelectorAll(".mision");
-
 const totalEstrellas = document.getElementById("total-estrellas");
-const mensajeStarly = document.getElementById("mensaje-starly");
-const tituloStarly = document.getElementById("titulo-starly");
-const btnEscuchar = document.getElementById("btn-escuchar");
+
+const mapaAventura = document.getElementById("mapa-aventura");
+const mapaDesplazamiento = document.getElementById("mapa-desplazamiento");
+const starlyPosicion = document.getElementById("starly-posicion");
 
 const btnConfiguracion = document.getElementById("btn-configuracion");
 const modalConfiguracion = document.getElementById("modal-configuracion");
@@ -22,68 +22,109 @@ const configMusica = document.getElementById("config-musica");
 const configEfectos = document.getElementById("config-efectos");
 const configVoz = document.getElementById("config-voz");
 
-/* Datos de las seis misiones */
+const modalPremio = document.getElementById("modal-premio");
+const premioMedalla = document.getElementById("premio-medalla");
+const premioTitulo = document.getElementById("premio-titulo");
+const premioDescripcion = document.getElementById("premio-descripcion");
+const premioContinuar = document.getElementById("premio-continuar");
+
+/* MISIONES */
 
 const misiones = [
     {
         id: 1,
-        nombre: "¡A aprender!",
-        titulo: "¡Tengo derecho a aprender!",
-        descripcion: "Todos los niños tenemos derecho a aprender.",
-        icono: "📖",
+        nombre: "¡Vamos a la escuela!",
+        titulo: "¡Vamos a la escuela!",
+        descripcion: "Conozcamos nuestra escuela, un lugar para aprender.",
+        icono: "🏫",
         ruta: "juegos/mision-1.html",
-        audio: null
+        audio: "../audio/narraciones/mision_1.mp3"
     },
     {
         id: 2,
-        nombre: "¡Para todos!",
-        titulo: "¡La escuela es para todos!",
-        descripcion: "Todos podemos estudiar, sin importar nuestras diferencias.",
-        icono: "🏫",
+        nombre: "¡Mi mochila!",
+        titulo: "¡La mochila de Starly!",
+        descripcion: "Ayudemos a Starly a encontrar sus útiles escolares.",
+        icono: "🎒",
         ruta: "juegos/mision-2.html",
-        audio: null
+        audio: "../audio/narraciones/mision_2.mp3"
     },
     {
         id: 3,
-        nombre: "¡A jugar!",
-        titulo: "¡Aprendemos jugando!",
-        descripcion: "Jugando también podemos descubrir cosas nuevas.",
-        icono: "🎨",
+        nombre: "¡Para todos!",
+        titulo: "¡La escuela es para todos!",
+        descripcion: "Todos los niños tenemos derecho a estudiar.",
+        icono: "👧",
         ruta: "juegos/mision-3.html",
-        audio: null
+        audio: "../audio/narraciones/mision_3.mp3"
     },
     {
         id: 4,
-        nombre: "¡Nos ayudamos!",
-        titulo: "¡Aprendemos juntos!",
-        descripcion: "En la escuela nos respetamos y ayudamos.",
-        icono: "🤝",
+        nombre: "¡A jugar!",
+        titulo: "¡Aprendemos jugando!",
+        descripcion: "Jugando también podemos aprender.",
+        icono: "🎨",
         ruta: "juegos/mision-4.html",
-        audio: null
+        audio: "../audio/narraciones/mision_4.mp3"
     },
     {
         id: 5,
         nombre: "¡A descubrir!",
         titulo: "¡Descubrir es aprender!",
-        descripcion: "Podemos hacer preguntas y aprender cada día.",
-        icono: "✏️",
+        descripcion: "Exploremos y descubramos cosas nuevas.",
+        icono: "🔎",
         ruta: "juegos/mision-5.html",
-        audio: null
+        audio: "../audio/narraciones/mision_5.mp3"
     },
     {
         id: 6,
         nombre: "¡Mi escuela!",
         titulo: "¡Cuidemos nuestra escuela!",
-        descripcion: "Cuidamos el lugar donde aprendemos.",
-        icono: "🌟",
+        descripcion: "Nuestra escuela es un lugar especial que debemos cuidar.",
+        icono: "🏫",
         ruta: "juegos/mision-6.html",
-        audio: null
+        audio: "../audio/narraciones/mision_6.mp3"
     }
 ];
 
-/* Configuración */
+/* RECONOCIMIENTOS */
+
+const reconocimientos = [
+    {
+        id: 1,
+        mision: 2,
+        titulo: "Pequeño Explorador",
+        descripcion: "¡Completaste tus primeras dos misiones!",
+        icono: "🏅",
+        audio: "../audio/narraciones/premio_1.mp3"
+    },
+    {
+        id: 2,
+        mision: 4,
+        titulo: "Guardián del Saber",
+        descripcion: "¡Cada día aprendes algo nuevo!",
+        icono: "🏆",
+        audio: "../audio/narraciones/premio_2.mp3"
+    },
+    {
+        id: 3,
+        mision: 6,
+        titulo: "Estrella del Saber",
+        descripcion: "¡Completaste toda la aventura!",
+        icono: "🌟",
+        audio: "../audio/narraciones/premio_3.mp3"
+    }
+];
+
+/* ALMACENAMIENTO */
 
 const CLAVE_CONFIGURACION = "estrellitas_del_saber_configuracion";
+const CLAVE_PROGRESO = "estrellitas_del_saber_progreso";
+const CLAVE_PREMIOS = "estrellitas_del_saber_premios";
+
+const CLAVE_BIENVENIDA = "estrellitas_mapa_bienvenida";
+const CLAVE_MISION_VISITADA = "estrellitas_mapa_mision_visitada";
+const CLAVE_COMPLETADAS_ANTES = "estrellitas_mapa_completadas_antes";
 
 const configuracionInicial = {
     musica: true,
@@ -91,61 +132,234 @@ const configuracionInicial = {
     voz: true
 };
 
-function cargarConfiguracion() {
+function leerJSON(almacen, clave, predeterminado) {
     try {
-        const guardada = JSON.parse(
-            localStorage.getItem(CLAVE_CONFIGURACION)
-        );
+        const valor = almacen.getItem(clave);
 
-        return {
-            ...configuracionInicial,
-            ...(guardada || {})
-        };
+        return valor === null
+            ? predeterminado
+            : JSON.parse(valor);
     } catch (error) {
-        return { ...configuracionInicial };
+        return predeterminado;
     }
+}
+
+function cargarConfiguracion() {
+    const guardada = leerJSON(
+        localStorage,
+        CLAVE_CONFIGURACION,
+        {}
+    );
+
+    return {
+        ...configuracionInicial,
+        ...(guardada && typeof guardada === "object" ? guardada : {})
+    };
 }
 
 let configuracion = cargarConfiguracion();
 
-/* Audio */
+/* PROGRESO */
+
+function obtenerProgreso() {
+    const guardado = leerJSON(
+        localStorage,
+        CLAVE_PROGRESO,
+        {}
+    );
+
+    const completadas = Array.isArray(guardado?.completadas)
+        ? [...new Set(
+            guardado.completadas
+                .map(Number)
+                .filter(id =>
+                    Number.isInteger(id) &&
+                    id >= 1 &&
+                    id <= 6
+                )
+        )]
+        : [];
+
+    const estrellas =
+        guardado?.estrellas &&
+        typeof guardado.estrellas === "object"
+            ? guardado.estrellas
+            : {};
+
+    return { completadas, estrellas };
+}
+
+let progreso = obtenerProgreso();
+
+function estaCompletada(id) {
+    return progreso.completadas.includes(id);
+}
+
+function estaDesbloqueada(id) {
+    return id === 1 || estaCompletada(id - 1);
+}
+
+function calcularEstrellas() {
+    return misiones.reduce((total, mision) => {
+        const cantidad = Number(
+            progreso.estrellas[mision.id] || 0
+        );
+
+        return total + Math.max(
+            0,
+            Math.min(
+                3,
+                Number.isFinite(cantidad)
+                    ? Math.floor(cantidad)
+                    : 0
+            )
+        );
+    }, 0);
+}
+
+function obtenerMisionActual() {
+    const siguiente = misiones.find(mision =>
+        !estaCompletada(mision.id) &&
+        estaDesbloqueada(mision.id)
+    );
+
+    return siguiente ? siguiente.id : null;
+}
+
+/* AUDIO */
 
 const audioMapa = {
-    bienvenida: null,
-    musica: null,
+    bienvenida: "../audio/narraciones/mapa_bienvenida.mp3",
+    siguiente: "../audio/narraciones/mapa_siguiente_mision.mp3",
+    final: "../audio/narraciones/mapa_final.mp3",
+    musica: "../audio/musica/aventura_espacial.mp3",
     efectoSeleccion: null
 };
 
 let narracionActual = null;
 let musicaActual = null;
+let narracionPendiente = false;
+let rutaNarracionPendiente = null;
+let narracionReproducida = false;
+let intentoNarracion = 0;
+let entradaMapaProcesada = false;
+let seleccionMisionActiva = false;
 
 function detenerNarracion() {
+    intentoNarracion++;
+
     if (narracionActual) {
         narracionActual.pause();
         narracionActual.currentTime = 0;
         narracionActual = null;
     }
+
+    narracionPendiente = false;
+    rutaNarracionPendiente = null;
 }
 
-function reproducirNarracion(ruta) {
-    detenerNarracion();
+async function reproducirNarracion(ruta, permitirRepeticion = false) {
+    if (!configuracion.voz || !ruta) return false;
 
-    if (!configuracion.voz || !ruta) {
-        return;
+    if (narracionReproducida && !permitirRepeticion) {
+        return false;
     }
 
-    narracionActual = new Audio(ruta);
-    narracionActual.volume = 1;
+    detenerNarracion();
 
-    narracionActual.play().catch(() => {
-        // El mapa funciona aunque el navegador bloquee el audio.
+    const intento = ++intentoNarracion;
+    const audio = new Audio(ruta);
+
+    narracionActual = audio;
+    audio.volume = 1;
+
+    try {
+        await audio.play();
+
+        if (intento !== intentoNarracion) {
+            audio.pause();
+            return false;
+        }
+
+        narracionReproducida = true;
+        narracionPendiente = false;
+        rutaNarracionPendiente = null;
+
+        return true;
+    } catch (error) {
+        if (intento !== intentoNarracion) return false;
+
+        if (error.name === "NotAllowedError") {
+            narracionPendiente = true;
+            rutaNarracionPendiente = ruta;
+        }
+
+        return false;
+    }
+}
+
+function esperarNarracion(ruta) {
+    if (!configuracion.voz || !ruta) {
+        return Promise.resolve();
+    }
+
+    detenerNarracion();
+
+    return new Promise((resolver) => {
+        const audio = new Audio(ruta);
+        const intento = ++intentoNarracion;
+
+        narracionActual = audio;
+        audio.volume = 1;
+
+        let terminado = false;
+
+        function finalizar() {
+            if (terminado) return;
+
+            terminado = true;
+
+            if (narracionActual === audio) {
+                narracionActual = null;
+            }
+
+            resolver();
+        }
+
+        audio.addEventListener("ended", finalizar, { once: true });
+        audio.addEventListener("error", finalizar, { once: true });
+
+        audio.play().then(() => {
+            if (intento !== intentoNarracion) {
+                audio.pause();
+                finalizar();
+            }
+        }).catch(finalizar);
+
+        setTimeout(() => {
+            if (!terminado) {
+                audio.pause();
+                finalizar();
+            }
+        }, 7000);
     });
 }
 
-function reproducirEfecto(ruta) {
-    if (!configuracion.efectos || !ruta) {
+function reintentarNarracion() {
+    if (
+        !narracionPendiente ||
+        !rutaNarracionPendiente ||
+        narracionReproducida ||
+        !configuracion.voz
+    ) {
         return;
     }
+
+    reproducirNarracion(rutaNarracionPendiente);
+}
+
+function reproducirEfecto(ruta) {
+    if (!configuracion.efectos || !ruta) return;
 
     const efecto = new Audio(ruta);
     efecto.volume = 0.4;
@@ -153,9 +367,7 @@ function reproducirEfecto(ruta) {
 }
 
 function actualizarMusica() {
-    if (!audioMapa.musica) {
-        return;
-    }
+    if (!audioMapa.musica) return;
 
     if (!musicaActual) {
         musicaActual = new Audio(audioMapa.musica);
@@ -170,7 +382,196 @@ function actualizarMusica() {
     }
 }
 
-/* Guardar configuración */
+/* PREMIOS */
+
+function obtenerPremiosGuardados() {
+    const guardados = leerJSON(
+        localStorage,
+        CLAVE_PREMIOS,
+        []
+    );
+
+    return Array.isArray(guardados)
+        ? guardados.map(Number).filter(Number.isInteger)
+        : [];
+}
+
+function guardarPremio(id) {
+    const premios = obtenerPremiosGuardados();
+
+    if (premios.includes(id)) return;
+
+    premios.push(id);
+
+    try {
+        localStorage.setItem(
+            CLAVE_PREMIOS,
+            JSON.stringify(premios)
+        );
+    } catch (error) {
+        console.warn("No se pudo guardar el premio.");
+    }
+}
+
+function obtenerPremioPendiente(nuevasCompletadas) {
+    const guardados = obtenerPremiosGuardados();
+
+    return reconocimientos.find(premio =>
+        nuevasCompletadas.includes(premio.mision) &&
+        !guardados.includes(premio.id) &&
+        Array.from(
+            { length: premio.mision },
+            (_, indice) => indice + 1
+        ).every(id => estaCompletada(id))
+    ) || null;
+}
+
+let premioPendiente = null;
+let focoAnteriorPremio = null;
+
+function mostrarModalPremio(premio) {
+    if (!premio || !modalPremio) return;
+
+    focoAnteriorPremio = document.activeElement;
+
+    premioMedalla.textContent = premio.icono;
+    premioTitulo.textContent = premio.titulo;
+    premioDescripcion.textContent = premio.descripcion;
+
+    premioPendiente = premio;
+    modalPremio.hidden = false;
+
+    document.body.style.overflow = "hidden";
+
+    guardarPremio(premio.id);
+
+    detenerNarracion();
+    reproducirNarracion(premio.audio, true);
+
+    premioContinuar.focus();
+}
+
+function cerrarModalPremio() {
+    if (!modalPremio || modalPremio.hidden) return;
+
+    modalPremio.hidden = true;
+    premioPendiente = null;
+
+    document.body.style.overflow = "";
+
+    detenerNarracion();
+
+    if (focoAnteriorPremio?.focus) {
+        focoAnteriorPremio.focus();
+    }
+}
+
+/* ENTRADA AL MAPA */
+
+function obtenerNarracionEntrada() {
+    const bienvenidaEscuchada =
+        sessionStorage.getItem(CLAVE_BIENVENIDA) === "true";
+
+    const misionVisitada =
+        sessionStorage.getItem(CLAVE_MISION_VISITADA) === "true";
+
+    const completadasAntes = leerJSON(
+        sessionStorage,
+        CLAVE_COMPLETADAS_ANTES,
+        []
+    );
+
+    let ruta = null;
+
+    if (misionVisitada) {
+        const anteriores = Array.isArray(completadasAntes)
+            ? completadasAntes.map(Number)
+            : [];
+
+        const nuevasCompletadas = progreso.completadas.filter(
+            id => !anteriores.includes(id)
+        );
+
+        if (nuevasCompletadas.length > 0) {
+            premioPendiente = obtenerPremioPendiente(
+                nuevasCompletadas
+            );
+
+            if (!premioPendiente) {
+                ruta = progreso.completadas.length === misiones.length
+                    ? audioMapa.final
+                    : audioMapa.siguiente;
+            }
+        }
+
+        sessionStorage.removeItem(CLAVE_MISION_VISITADA);
+        sessionStorage.removeItem(CLAVE_COMPLETADAS_ANTES);
+
+    } else if (!bienvenidaEscuchada) {
+        ruta = audioMapa.bienvenida;
+    }
+
+    sessionStorage.setItem(CLAVE_BIENVENIDA, "true");
+
+    return ruta;
+}
+
+function iniciarEntradaMapa() {
+    if (entradaMapaProcesada) return;
+
+    entradaMapaProcesada = true;
+
+    const transicion = document.getElementById("transicion-polvo");
+
+    const tieneTransicion =
+        document.documentElement.classList.contains("entrada-polvo");
+
+    const rutaNarracion = obtenerNarracionEntrada();
+
+    try {
+        sessionStorage.removeItem("estrellitas_transicion_mapa");
+    } catch (error) {
+        // Continúa la entrada.
+    }
+
+    function terminarEntrada() {
+        document.documentElement.classList.remove("entrada-polvo");
+
+        if (transicion) {
+            transicion.remove();
+        }
+
+        if (premioPendiente) {
+            setTimeout(() => {
+                mostrarModalPremio(premioPendiente);
+            }, 450);
+        } else if (rutaNarracion) {
+            reproducirNarracion(rutaNarracion);
+        }
+    }
+
+    if (!tieneTransicion) {
+        terminarEntrada();
+        return;
+    }
+
+    const movimientoReducido = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    setTimeout(
+        terminarEntrada,
+        movimientoReducido ? 0 : 1100
+    );
+}
+
+/* CONFIGURACIÓN */
+
+function actualizarControlesConfiguracion() {
+    configMusica.checked = configuracion.musica;
+    configEfectos.checked = configuracion.efectos;
+    configVoz.checked = configuracion.voz;
+}
 
 function guardarConfiguracion() {
     configuracion = {
@@ -185,7 +586,7 @@ function guardarConfiguracion() {
             JSON.stringify(configuracion)
         );
     } catch (error) {
-        // Se conserva la configuración durante esta sesión.
+        console.warn("No se pudo guardar la configuración.");
     }
 
     if (!configuracion.voz) {
@@ -195,83 +596,22 @@ function guardarConfiguracion() {
     actualizarMusica();
 }
 
-function actualizarControlesConfiguracion() {
-    configMusica.checked = configuracion.musica;
-    configEfectos.checked = configuracion.efectos;
-    configVoz.checked = configuracion.voz;
-
-    btnEscuchar.disabled =
-        !configuracion.voz || !audioMapa.bienvenida;
-}
-
-/* Progreso */
-
-const CLAVE_PROGRESO = "estrellitas_del_saber_progreso";
-
-function obtenerProgreso() {
-    try {
-        const guardado = localStorage.getItem(CLAVE_PROGRESO);
-
-        if (guardado) {
-            const progresoGuardado = JSON.parse(guardado);
-
-            if (
-                progresoGuardado &&
-                Array.isArray(progresoGuardado.completadas)
-            ) {
-                return {
-                    completadas: progresoGuardado.completadas
-                        .map(Number)
-                        .filter(id => Number.isInteger(id) && id >= 1 && id <= 6),
-
-                    estrellas: progresoGuardado.estrellas || {}
-                };
-            }
-        }
-    } catch (error) {
-        // Se inicia sin progreso si los datos no son válidos.
-    }
-
-    return {
-        completadas: [],
-        estrellas: {}
-    };
-}
-
-let progreso = obtenerProgreso();
-
-function estaCompletada(id) {
-    return progreso.completadas.includes(id);
-}
-
-function estaDesbloqueada(id) {
-    if (id === 1) {
-        return true;
-    }
-
-    return estaCompletada(id - 1);
-}
-
-function calcularEstrellas() {
-    return misiones.reduce((total, mision) => {
-        const cantidad = Number(progreso.estrellas[mision.id] || 0);
-
-        return total + Math.max(
-            0,
-            Math.min(3, Number.isFinite(cantidad) ? cantidad : 0)
-        );
-    }, 0);
-}
-
-/* Actualizar mapa */
+/* ACTUALIZAR MAPA */
 
 function actualizarMapa() {
     totalEstrellas.textContent = calcularEstrellas();
 
+    const misionActual = obtenerMisionActual();
+
     botonesMisiones.forEach((boton) => {
         const id = Number(boton.dataset.mision);
+        const mision = misiones.find(item => item.id === id);
+
+        if (!mision) return;
+
         const completada = estaCompletada(id);
         const desbloqueada = estaDesbloqueada(id);
+        const disponible = id === misionActual;
 
         boton.disabled = !desbloqueada;
 
@@ -282,7 +622,7 @@ function actualizarMapa() {
 
         boton.classList.toggle(
             "mision-disponible",
-            desbloqueada && !completada
+            disponible
         );
 
         boton.classList.toggle(
@@ -299,9 +639,18 @@ function actualizarMapa() {
         const estrellas = boton.querySelector(".mision-estrellas");
 
         if (estrellas) {
+            const cantidadOriginal = Number(
+                progreso.estrellas[id] || 0
+            );
+
             const cantidad = Math.max(
                 0,
-                Math.min(3, Number(progreso.estrellas[id] || 0))
+                Math.min(
+                    3,
+                    Number.isFinite(cantidadOriginal)
+                        ? Math.floor(cantidadOriginal)
+                        : 0
+                )
             );
 
             estrellas.textContent =
@@ -311,57 +660,174 @@ function actualizarMapa() {
             estrellas.hidden = !desbloqueada;
         }
 
-        const mision = misiones.find(item => item.id === id);
+        const nombreVisible = boton.querySelector(
+            ".mision-etiqueta"
+        );
 
-        if (mision) {
-            const estado = completada
-                ? "Misión completada"
-                : desbloqueada
-                    ? "Misión disponible"
-                    : "Misión bloqueada";
+        const iconoVisible = boton.querySelector(
+            ".mision-icono"
+        );
 
-            boton.setAttribute(
-                "aria-label",
-                `${mision.titulo}. ${estado}`
-            );
+        if (nombreVisible) {
+            nombreVisible.textContent = mision.nombre;
         }
+
+        if (iconoVisible) {
+            iconoVisible.textContent = mision.icono;
+        }
+
+        const estado = completada
+            ? "Misión completada"
+            : desbloqueada
+                ? "Misión disponible"
+                : "Misión bloqueada";
+
+        boton.setAttribute(
+            "aria-label",
+            `${mision.titulo}. ${estado}`
+        );
     });
 }
 
-/* Mensajes de Starly */
+/* POSICIONAR STARLY */
 
-function actualizarMensajeStarly(titulo, mensaje) {
-    tituloStarly.textContent = titulo;
-    mensajeStarly.textContent = mensaje;
-}
+function posicionarStarly() {
+    const misionActual = obtenerMisionActual();
+    const idObjetivo = misionActual || 6;
 
-function escucharStarly() {
-    if (!configuracion.voz) {
+    const boton = document.querySelector(
+        `.mision[data-mision="${idObjetivo}"]`
+    );
+
+    if (!boton || !starlyPosicion || !mapaAventura) {
         return;
     }
 
-    reproducirNarracion(audioMapa.bienvenida);
+    const anchoMapa = mapaAventura.clientWidth;
+    const altoMapa = mapaAventura.clientHeight;
+
+    const anchoStarly = starlyPosicion.offsetWidth;
+    const altoStarly = starlyPosicion.offsetHeight;
+
+    const centroBotonY =
+        boton.offsetTop + boton.offsetHeight / 2;
+
+    const separacion = 22;
+
+    let posicionX =
+        boton.offsetLeft - anchoStarly - separacion;
+
+    let posicionY =
+        centroBotonY - altoStarly / 2;
+
+    let colocarDerecha = false;
+
+    if (idObjetivo !== 1 && posicionX < 8) {
+        posicionX =
+            boton.offsetLeft +
+            boton.offsetWidth +
+            separacion;
+
+        colocarDerecha = true;
+    }
+
+    posicionX = Math.max(
+        8,
+        Math.min(
+            posicionX,
+            anchoMapa - anchoStarly - 8
+        )
+    );
+
+    posicionY = Math.max(
+        8,
+        Math.min(
+            posicionY,
+            altoMapa - altoStarly - 8
+        )
+    );
+
+    starlyPosicion.style.left = `${posicionX}px`;
+    starlyPosicion.style.top = `${posicionY}px`;
+
+    starlyPosicion.classList.toggle(
+        "starly-derecha",
+        colocarDerecha
+    );
+
+    starlyPosicion.classList.toggle(
+        "starly-final",
+        misionActual === null
+    );
 }
 
-/* Entrar a las misiones */
+/* ENFOCAR MISIÓN */
 
-function abrirMision(id) {
-    if (!estaDesbloqueada(id)) {
+function enfocarMisionActual() {
+    if (!mapaDesplazamiento) return;
+
+    const misionActual = obtenerMisionActual();
+
+    if (misionActual === null) return;
+
+    const boton = document.querySelector(
+        `.mision[data-mision="${misionActual}"]`
+    );
+
+    if (!boton) return;
+
+    if (
+        mapaDesplazamiento.scrollWidth <=
+        mapaDesplazamiento.clientWidth
+    ) {
+        return;
+    }
+
+    const centroBoton =
+        boton.offsetLeft + boton.offsetWidth / 2;
+
+    const destino =
+        centroBoton - mapaDesplazamiento.clientWidth / 2;
+
+    mapaDesplazamiento.scrollLeft = Math.max(0, destino);
+}
+
+/* ABRIR MISIÓN */
+
+async function abrirMision(id) {
+    if (!estaDesbloqueada(id) || seleccionMisionActiva) {
         return;
     }
 
     const mision = misiones.find(item => item.id === id);
 
-    if (!mision) {
-        return;
+    if (!mision) return;
+
+    seleccionMisionActiva = true;
+
+    detenerNarracion();
+    reproducirEfecto(audioMapa.efectoSeleccion);
+
+    try {
+        sessionStorage.setItem(
+            CLAVE_COMPLETADAS_ANTES,
+            JSON.stringify(progreso.completadas)
+        );
+
+        sessionStorage.setItem(
+            CLAVE_MISION_VISITADA,
+            "true"
+        );
+    } catch (error) {
+        console.warn("No se pudo guardar la visita.");
     }
 
-    reproducirEfecto(audioMapa.efectoSeleccion);
+    await esperarNarracion(mision.audio);
 
     window.location.href = mision.ruta;
 }
 
-/* Modal de configuración */
+/* MODAL DE CONFIGURACIÓN */
 
 let elementoAnterior = null;
 
@@ -383,12 +849,12 @@ function cerrarConfiguracion() {
     modalConfiguracion.hidden = true;
     document.body.style.overflow = "";
 
-    if (elementoAnterior) {
+    if (elementoAnterior?.focus) {
         elementoAnterior.focus();
     }
 }
 
-/* Eventos */
+/* EVENTOS */
 
 botonesMisiones.forEach((boton) => {
     boton.addEventListener("click", () => {
@@ -421,14 +887,14 @@ configEfectos.addEventListener(
     guardarConfiguracion
 );
 
-configVoz.addEventListener("change", () => {
-    guardarConfiguracion();
-    actualizarControlesConfiguracion();
-});
+configVoz.addEventListener(
+    "change",
+    guardarConfiguracion
+);
 
-btnEscuchar.addEventListener(
+premioContinuar.addEventListener(
     "click",
-    escucharStarly
+    cerrarModalPremio
 );
 
 modalConfiguracion.addEventListener("click", (evento) => {
@@ -438,16 +904,51 @@ modalConfiguracion.addEventListener("click", (evento) => {
 });
 
 document.addEventListener("keydown", (evento) => {
-    if (
-        evento.key === "Escape" &&
-        !modalConfiguracion.hidden
-    ) {
-        cerrarConfiguracion();
+    if (evento.key === "Escape") {
+        if (!modalPremio.hidden) {
+            cerrarModalPremio();
+        } else if (!modalConfiguracion.hidden) {
+            cerrarConfiguracion();
+        }
+    }
+
+    if (evento.key === "Tab" && !modalPremio.hidden) {
+        evento.preventDefault();
+        premioContinuar.focus();
     }
 });
 
-/* Iniciar mapa */
+document.addEventListener("pointerdown", reintentarNarracion);
+document.addEventListener("keydown", reintentarNarracion);
+
+/* REGRESAR AL MAPA */
+
+window.addEventListener("pageshow", (evento) => {
+    progreso = obtenerProgreso();
+    seleccionMisionActiva = false;
+
+    actualizarMapa();
+    posicionarStarly();
+    enfocarMisionActual();
+
+    if (evento.persisted) {
+        entradaMapaProcesada = false;
+        narracionReproducida = false;
+        iniciarEntradaMapa();
+    }
+});
+
+/* AJUSTAR PANTALLA */
+
+window.addEventListener("resize", posicionarStarly);
+
+/* INICIAR */
 
 actualizarMapa();
 actualizarControlesConfiguracion();
 actualizarMusica();
+
+posicionarStarly();
+enfocarMisionActual();
+
+iniciarEntradaMapa();
