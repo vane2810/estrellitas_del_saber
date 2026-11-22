@@ -18,15 +18,11 @@
 </head>
 
 <body>
-
     <main class="juego">
 
         <!-- ENCABEZADO -->
         <header class="juego-encabezado">
-
-            <a href="../mapa.html" class="boton-volver">
-                ← Mapa
-            </a>
+            <a href="../mapa.html" class="boton-volver">← Mapa</a>
 
             <div class="juego-titulo">
                 <span>MISIÓN 1</span>
@@ -37,7 +33,6 @@
                 <span aria-hidden="true">⭐</span>
                 <span id="contador-estrellas">0</span>/3
             </div>
-
         </header>
 
         <!-- JUEGO -->
@@ -47,7 +42,6 @@
             <div class="escenario" id="escenario">
 
                 <div class="paisaje" id="paisaje">
-
                     <div class="cielo"></div>
                     <div class="sol"></div>
 
@@ -57,15 +51,10 @@
                     <div class="suelo"></div>
 
                     <!-- ESCUELA -->
-                    <div
-                        class="escuela techo-pintado paredes-pintadas puerta-pintada"
-                        id="escuela"
-                    >
-
+                    <div class="escuela techo-pintado paredes-pintadas puerta-pintada" id="escuela">
                         <div class="techo"></div>
 
                         <div class="edificio">
-
                             <div class="letrero">MI ESCUELA</div>
 
                             <div class="ventanas">
@@ -74,36 +63,29 @@
                             </div>
 
                             <div class="puerta"></div>
-
                         </div>
-
                     </div>
 
                     <div class="camino"></div>
 
                     <!-- NATURALEZA -->
                     <div class="naturaleza">
-
                         <div class="arbol arbol-izquierdo">🌳</div>
                         <div class="arbol arbol-derecho">🌳</div>
 
                         <div class="flor flor-1">🌼</div>
                         <div class="flor flor-2">🌸</div>
                         <div class="flor flor-3">🌺</div>
-
                     </div>
-
                 </div>
 
                 <!-- DON GRIS -->
                 <div class="villano" id="villano" aria-hidden="true">
-
                     <img
                         src="../../img/personajes/otros/don-gris.png"
                         alt=""
                         class="villano-imagen"
                     >
-
                 </div>
 
                 <!-- EFECTO DE ROBO -->
@@ -117,7 +99,6 @@
 
                 <!-- STARLY -->
                 <div class="guia-starly" id="guia-starly">
-
                     <img
                         src="../../img/personajes/starly/starly_explorador.webp"
                         alt="Starly, guía del juego"
@@ -126,10 +107,8 @@
                     >
 
                     <div class="mensaje-starly" id="mensaje-starly">
-
                         <div class="mensaje-encabezado">
-
-                            <p id="mensaje-texto" aria-live="polite">
+                            <p id="mensaje-texto" aria-live="polite" aria-atomic="true">
                                 ¡Mira, tripulante! ¡Esta es nuestra escuela!
                             </p>
 
@@ -142,106 +121,47 @@
                             >
                                 <span aria-hidden="true">🔊</span>
                             </button>
-
                         </div>
 
                         <!-- GOTA SOLICITADA -->
                         <div class="mensaje-muestra" id="mensaje-muestra" hidden>
 
-                            <span class="muestra-etiqueta">
-                                Busca esta:
-                            </span>
-
                             <span class="muestra-gota" id="mensaje-gota">
                                 <span class="gota">
-                                    <span
-                                        class="simbolo-color"
-                                        id="simbolo-muestra"
-                                    ></span>
+                                    <span class="simbolo-color" id="simbolo-muestra"></span>
                                 </span>
                             </span>
-
                         </div>
-
                     </div>
-
                 </div>
 
                 <!-- DESTELLOS -->
                 <div class="destellos" id="destellos" aria-hidden="true"></div>
-
             </div>
 
-            <!-- CONTROLES DEL JUEGO -->
+            <!-- CONTROLES -->
             <div class="controles-juego" id="controles-juego" hidden>
+                <div class="colores" id="colores" role="group" aria-label="Colores mágicos">
 
-                <div
-                    class="colores"
-                    id="colores"
-                    role="group"
-                    aria-label="Colores mágicos"
-                >
-
-                    <button
-                        type="button"
-                        class="color-magico rojo"
-                        data-color="rojo"
-                        aria-label="Gota roja con estrella"
-                        disabled
-                    >
-                        <span class="gota">
-                            <span class="simbolo-color">★</span>
-                        </span>
+                    <button type="button" class="color-magico rojo" data-color="rojo" aria-label="Gota roja con estrella" disabled>
+                        <span class="gota"><span class="simbolo-color">★</span></span>
                     </button>
 
-                    <button
-                        type="button"
-                        class="color-magico amarillo"
-                        data-color="amarillo"
-                        aria-label="Gota amarilla con círculo"
-                        disabled
-                    >
-                        <span class="gota">
-                            <span class="simbolo-color">●</span>
-                        </span>
+                    <button type="button" class="color-magico amarillo" data-color="amarillo" aria-label="Gota amarilla con círculo" disabled>
+                        <span class="gota"><span class="simbolo-color">●</span></span>
                     </button>
 
-                    <button
-                        type="button"
-                        class="color-magico azul"
-                        data-color="azul"
-                        aria-label="Gota azul con triángulo"
-                        disabled
-                    >
-                        <span class="gota">
-                            <span class="simbolo-color">▲</span>
-                        </span>
+                    <button type="button" class="color-magico azul" data-color="azul" aria-label="Gota azul con triángulo" disabled>
+                        <span class="gota"><span class="simbolo-color">▲</span></span>
                     </button>
 
-                    <button
-                        type="button"
-                        class="color-magico verde"
-                        data-color="verde"
-                        aria-label="Gota verde con rombo"
-                        disabled
-                    >
-                        <span class="gota">
-                            <span class="simbolo-color">◆</span>
-                        </span>
+                    <button type="button" class="color-magico verde" data-color="verde" aria-label="Gota verde con rombo" disabled>
+                        <span class="gota"><span class="simbolo-color">◆</span></span>
                     </button>
 
-                    <button
-                        type="button"
-                        class="color-magico morado"
-                        data-color="morado"
-                        aria-label="Gota morada con corazón"
-                        disabled
-                    >
-                        <span class="gota">
-                            <span class="simbolo-color">♥</span>
-                        </span>
+                    <button type="button" class="color-magico morado" data-color="morado" aria-label="Gota morada con corazón" disabled>
+                        <span class="gota"><span class="simbolo-color">♥</span></span>
                     </button>
-
                 </div>
 
                 <!-- ESTRELLAS -->
@@ -250,13 +170,10 @@
                     <span class="estrella-progreso">☆</span>
                     <span class="estrella-progreso">☆</span>
                 </div>
-
             </div>
 
         </section>
-
     </main>
-
 </body>
 
 </html>

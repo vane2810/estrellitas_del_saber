@@ -43,7 +43,7 @@
 }
 
 .contador[hidden] {
-    display: none;
+    display: none !important;
 }
 
 .juego-titulo {
@@ -63,10 +63,10 @@
     font-size: clamp(1.3rem, 3vw, 2.3rem);
 }
 
-/* PANEL */
+/* PANEL DEL JUEGO */
 
 .zona-juego {
-    width: min(95%, 1100px);
+    width: min(95%, 1420px);
     margin: 10px auto 25px;
     padding: 12px;
     border: 4px solid #DCCFFF;
@@ -83,7 +83,7 @@
 
 .escenario {
     position: relative;
-    height: clamp(360px, 55vh, 470px);
+    height: clamp(380px, 56vh, 510px);
     overflow: hidden;
     isolation: isolate;
     border: 3px solid #DCCFFF;
@@ -117,6 +117,7 @@
     border-radius: 50%;
     background: #FFDC67;
     box-shadow: 0 0 0 12px rgba(255, 222, 112, 0.2);
+    animation: sol-brillar 4s ease-in-out infinite;
 }
 
 .nube {
@@ -125,6 +126,7 @@
     height: 30px;
     border-radius: 40px;
     background: white;
+    animation: nube-mover 7s ease-in-out infinite alternate;
 }
 
 .nube::before,
@@ -157,6 +159,8 @@
     top: 100px;
     right: 18%;
     transform: scale(0.75);
+    animation-name: nube-mover-pequena;
+    animation-delay: -3s;
 }
 
 .suelo {
@@ -172,10 +176,10 @@
 .escuela {
     position: absolute;
     z-index: 3;
-    top: 100px;
+    bottom: 0;
     left: 54%;
-    width: 350px;
-    height: 270px;
+    width: clamp(270px, 31vw, 410px);
+    height: clamp(220px, 30vw, 310px);
     transform: translateX(-50%);
 }
 
@@ -183,10 +187,10 @@
     position: absolute;
     top: 0;
     width: 100%;
-    height: 112px;
+    height: 42%;
     background: #A6A6A6;
     clip-path: polygon(50% 0, 100% 100%, 0 100%);
-    transition: background 0.6s ease;
+    transition: background 0.6s ease, filter 0.9s ease;
 }
 
 .escuela.techo-pintado .techo {
@@ -195,15 +199,18 @@
 
 .edificio {
     position: absolute;
-    top: 96px;
-    right: 20px;
+    top: 36%;
+    right: 6%;
     bottom: 0;
-    left: 20px;
+    left: 6%;
     border: 6px solid #B5B5B5;
-    border-radius: 7px;
+    border-radius: 7px 7px 0 0;
     background: #C8C8C8;
     box-shadow: 0 7px 0 #A7A7A7;
-    transition: background 0.6s ease, border-color 0.6s ease;
+    transition:
+        background 0.6s ease,
+        border-color 0.6s ease,
+        filter 0.9s ease;
 }
 
 .escuela.paredes-pintadas .edificio {
@@ -213,6 +220,7 @@
 
 .letrero {
     width: max-content;
+    max-width: 90%;
     margin: 11px auto;
     padding: 6px 16px;
     border: 2px solid #C5C5C5;
@@ -221,6 +229,7 @@
     color: #555;
     font-size: 14px;
     font-weight: 700;
+    text-align: center;
 }
 
 .ventanas {
@@ -235,6 +244,7 @@
     border: 5px solid white;
     border-radius: 7px;
     background: #A9A9A9;
+    transition: background 0.6s ease, filter 0.9s ease;
 }
 
 .escuela.puerta-pintada .ventana {
@@ -252,7 +262,10 @@
     border-bottom: 0;
     border-radius: 13px 13px 0 0;
     background: #8C8C8C;
-    transition: background 0.6s ease;
+    transition:
+        background 0.6s ease,
+        border-color 0.6s ease,
+        filter 0.9s ease;
 }
 
 .escuela.puerta-pintada .puerta {
@@ -284,6 +297,7 @@
 .arbol {
     bottom: 35px;
     font-size: 75px;
+    animation: arbol-mover 4s ease-in-out infinite;
 }
 
 .arbol-izquierdo {
@@ -292,11 +306,13 @@
 
 .arbol-derecho {
     right: 8%;
+    animation-delay: -2s;
 }
 
 .flor {
     bottom: 15px;
     font-size: 30px;
+    animation: flor-mover 3s ease-in-out infinite;
 }
 
 .flor-1 {
@@ -305,10 +321,12 @@
 
 .flor-2 {
     right: 24%;
+    animation-delay: -1s;
 }
 
 .flor-3 {
     right: 14%;
+    animation-delay: -2s;
 }
 
 /* PÉRDIDA Y RECUPERACIÓN DE COLORES */
@@ -335,10 +353,7 @@
 .paisaje.sin-color .techo,
 .paisaje.sin-color .edificio,
 .paisaje.sin-color .puerta,
-.paisaje.sin-color .ventana {
-    filter: grayscale(1);
-}
-
+.paisaje.sin-color .ventana,
 .paisaje.juego-activo .cielo,
 .paisaje.juego-activo .sol,
 .paisaje.juego-activo .camino,
@@ -364,7 +379,14 @@
 
 .paisaje.recuperando .cielo,
 .paisaje.recuperando .sol,
-.paisaje.recuperando .camino {
+.paisaje.recuperando .camino,
+.paisaje.recuperando .suelo,
+.paisaje.recuperando .arbol,
+.paisaje.recuperando .flor,
+.paisaje.recuperando .techo,
+.paisaje.recuperando .edificio,
+.paisaje.recuperando .puerta,
+.paisaje.recuperando .ventana {
     filter: grayscale(0);
 }
 
@@ -374,12 +396,13 @@
     position: absolute;
     z-index: 8;
     top: 32px;
-    left: 100%;
+    left: 72%;
     width: 165px;
     height: 165px;
     opacity: 0;
+    visibility: hidden;
     pointer-events: none;
-    transform: translateX(30px);
+    transform: translateX(-50%);
 }
 
 .villano-imagen {
@@ -391,24 +414,37 @@
 }
 
 .villano.entrando {
-    animation: villano-entrar 2s ease-out forwards;
+    visibility: visible;
+    opacity: 1;
+    animation: villano-entrar 2s ease-out both;
+}
+
+.villano.presente {
+    visibility: visible;
+    opacity: 1;
+    left: 72%;
+    transform: translateX(-50%);
 }
 
 .villano.robando {
-    left: 72%;
+    visibility: visible;
     opacity: 1;
-    transform: translateX(-50%);
-    animation: villano-robar 3s ease-in-out forwards;
+    animation: villano-robar 3s ease-in-out infinite;
 }
 
 .villano.escapando {
-    left: 72%;
+    visibility: visible;
     opacity: 1;
-    transform: translateX(-50%);
     animation: villano-salir 2s ease-in forwards;
 }
 
-/* COLORES ROBADOS */
+.villano.oculto {
+    visibility: hidden;
+    opacity: 0;
+    animation: none;
+}
+
+/* EFECTO DE ROBO */
 
 .efecto-robo {
     position: absolute;
@@ -521,41 +557,51 @@
     animation: audio-pulso 1s infinite;
 }
 
+/* SÍMBOLO DEL COLOR SOLICITADO */
+
 .mensaje-muestra {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
     margin-top: 10px;
-    padding: 7px 9px;
+    padding: 10px;
     border: 2px dashed #DCCFFF;
     border-radius: 13px;
     background: #F9F5FF;
 }
 
 .mensaje-muestra[hidden] {
-    display: none;
+    display: none !important;
 }
 
 .muestra-etiqueta {
-    flex: 1;
-    color: #49309A;
-    font-size: 0.75rem;
-    font-weight: 700;
+    display: none;
 }
 
 .muestra-gota {
     display: grid;
     place-items: center;
-    width: 44px;
-    height: 44px;
+    width: 62px;
+    height: 62px;
     border-radius: 50%;
     background: white;
+    animation: simbolo-palpitando 1.5s ease-in-out infinite;
 }
 
-/* CONTROLES */
+.muestra-gota .gota {
+    width: 45px;
+    height: 45px;
+}
+
+.muestra-gota .simbolo-color {
+    font-size: 25px;
+}
+
+/* CONTROLES DEL JUEGO */
 
 .controles-juego[hidden] {
-    display: none;
+    display: none !important;
 }
 
 .controles-juego.apareciendo {
@@ -623,15 +669,6 @@
     background: #A77AE8;
 }
 
-.muestra-gota .gota {
-    width: 32px;
-    height: 32px;
-}
-
-.muestra-gota .simbolo-color {
-    font-size: 19px;
-}
-
 .color-magico.usado {
     opacity: 0.3;
     animation: none;
@@ -688,18 +725,16 @@
 /* ANIMACIONES */
 
 @keyframes villano-entrar {
-    0% {
-        left: 100%;
+    from {
         opacity: 0;
-        transform: translateX(30px) translateY(-20px);
+        transform: translateX(140%) translateY(-20px);
     }
 
     20% {
         opacity: 1;
     }
 
-    100% {
-        left: 72%;
+    to {
         opacity: 1;
         transform: translateX(-50%) translateY(0);
     }
@@ -724,8 +759,7 @@
 }
 
 @keyframes villano-salir {
-    0% {
-        left: 72%;
+    from {
         opacity: 1;
         transform: translateX(-50%) translateY(0);
     }
@@ -734,10 +768,9 @@
         opacity: 1;
     }
 
-    100% {
-        left: 110%;
+    to {
         opacity: 0;
-        transform: translateX(30px) translateY(-35px);
+        transform: translateX(180%) translateY(-35px);
     }
 }
 
@@ -806,6 +839,16 @@
     }
 }
 
+@keyframes simbolo-palpitando {
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.12);
+    }
+}
+
 @keyframes estrella-ganada {
     from {
         transform: scale(0.2);
@@ -857,12 +900,67 @@
     }
 }
 
+@keyframes sol-brillar {
+    0%, 100% {
+        box-shadow: 0 0 0 12px rgba(255, 222, 112, 0.2);
+    }
+
+    50% {
+        box-shadow: 0 0 0 20px rgba(255, 222, 112, 0.12);
+    }
+}
+
+@keyframes nube-mover {
+    from {
+        transform: translateX(-12px);
+    }
+
+    to {
+        transform: translateX(16px);
+    }
+}
+
+@keyframes nube-mover-pequena {
+    from {
+        transform: translateX(-12px) scale(0.75);
+    }
+
+    to {
+        transform: translateX(16px) scale(0.75);
+    }
+}
+
+@keyframes arbol-mover {
+    0%, 100% {
+        transform: rotate(-2deg);
+    }
+
+    50% {
+        transform: rotate(2deg);
+    }
+}
+
+@keyframes flor-mover {
+    0%, 100% {
+        transform: rotate(-8deg);
+    }
+
+    50% {
+        transform: rotate(8deg);
+    }
+}
+
 /* TABLETAS */
 
 @media (max-width: 900px) {
     .escuela {
         left: 57%;
         width: 310px;
+        height: 260px;
+    }
+
+    .camino {
+        left: 57%;
     }
 
     .guia-starly {
@@ -912,20 +1010,24 @@
     }
 
     .escuela {
-        top: 195px;
+        bottom: 0;
         left: 50%;
-        width: 255px;
+        width: min(255px, 78vw);
         height: 205px;
     }
 
+    .camino {
+        left: 50%;
+    }
+
     .techo {
-        height: 83px;
+        height: 42%;
     }
 
     .edificio {
-        top: 71px;
-        right: 15px;
-        left: 15px;
+        top: 36%;
+        right: 6%;
+        left: 6%;
     }
 
     .ventana {
@@ -963,6 +1065,24 @@
         height: 36px;
     }
 
+    .mensaje-muestra {
+        padding: 7px;
+    }
+
+    .muestra-gota {
+        width: 52px;
+        height: 52px;
+    }
+
+    .muestra-gota .gota {
+        width: 39px;
+        height: 39px;
+    }
+
+    .muestra-gota .simbolo-color {
+        font-size: 21px;
+    }
+
     .colores {
         gap: 12px;
     }
@@ -972,12 +1092,12 @@
         height: 63px;
     }
 
-    .gota {
+    .color-magico .gota {
         width: 37px;
         height: 37px;
     }
 
-    .simbolo-color {
+    .color-magico .simbolo-color {
         font-size: 21px;
     }
 
@@ -995,6 +1115,7 @@
 
     .villano {
         top: 115px;
+        left: 72%;
         width: 105px;
         height: 105px;
     }
@@ -1016,7 +1137,12 @@
     .starly,
     .color-magico,
     .estrella-progreso.ganada,
-    .destello {
+    .destello,
+    .sol,
+    .nube,
+    .arbol,
+    .flor,
+    .muestra-gota {
         animation: none;
     }
 }

@@ -50,14 +50,6 @@ const SIMBOLOS = {
     morado: "♥"
 };
 
-const NOMBRES_SIMBOLOS = {
-    rojo: "estrella",
-    amarillo: "círculo",
-    azul: "triángulo",
-    verde: "rombo",
-    morado: "corazón"
-};
-
 const MENSAJES = {
     bienvenida: {
         texto: "¡Mira, tripulante! ¡Esta es nuestra escuela!",
@@ -94,6 +86,10 @@ const MENSAJES = {
     error: {
         texto: "¡Inténtalo otra vez!",
         audio: "casi.mp3"
+    },
+    recuperados: {
+        texto: "¡Los recuperamos!",
+        audio: "los-recuperamos.mp3"
     }
 };
 
@@ -130,6 +126,28 @@ const RONDAS = [
     }
 ];
 
+const EFECTOS_MP3 = {
+    aparicion: "aparicion.mp3",
+    risa: "risa-don-gris.mp3",
+    robo: "robo-colores.mp3",
+    escape: "escape.mp3",
+    correcto: "color-correcto.mp3",
+    error: "color-error.mp3"
+};
+
+const TIEMPOS = {
+    presentacionMinima: 2500,
+    entradaDonGris: 2000,
+    sustoMinimo: 1100,
+    roboMinimo: 5000,
+    escape: 2000,
+    pausaError: 700,
+    pausaAcierto: 850,
+    pausaFinal: 450,
+    recordatorio: 8000,
+    pistaInicial: 4500
+};
+
 /* ESTADO */
 
 let configuracion = {
@@ -144,22 +162,32 @@ try {
     );
 
     if (guardada && typeof guardada === "object") {
-        configuracion = { ...configuracion, ...guardada };
+        configuracion = {
+            ...configuracion,
+            ...guardada
+        };
     }
 } catch (error) {
-    console.warn("Configuración predeterminada.");
+    console.warn("Se utilizará la configuración predeterminada.");
 }
 
 let rondaActual = 0;
 let estrellasGanadas = 0;
 let introduccionTerminada = false;
 let misionTerminada = false;
-let procesando = false;
+let procesando = true;
 
 let audioActual = null;
+let resolverAudioActual = null;
 let ultimoMensaje = "bienvenida";
+
 let temporizadorPista = null;
-let contextoAudio = null;
+let temporizadorRecordatorio = null;
+let recordatorioEnCurso = false;
+let identificadorRecordatorio = 0;
+
+const efectosActivos = new Set();
+const audiosPrecargados = new Map();
 
 /* UTILIDADES */
 
@@ -169,31 +197,79 @@ function pausa(tiempo) {
     });
 }
 
+function esperarAudioOminimo(promesa, tiempo) {
+    return Promise.all([
+        promesa,
+        pausa(tiempo)
+    ]);
+}
+
+function precargarAudios() {
+    const archivos = [
+        ...Object.values(MENSAJES).map((mensaje) => mensaje.audio),
+        ...Object.values(EFECTOS_MP3),
+        "victoria.mp3"
+    ];
+
+    [...new Set(archivos)].forEach((archivo) => {
+        const audio = new Audio(RUTA_AUDIO + archivo);
+        audio.preload = "auto";
+        audiosPrecargados.set(archivo, audio);
+    });
+}
+
+function obtenerAudio(archivo) {
+    const base = audiosPrecargados.get(archivo);
+
+    if (base) {
+        return base.cloneNode(true);
+    }
+
+    return new Audio(RUTA_AUDIO + archivo);
+}
+
+/* VOCES */
+
 function detenerAudio() {
-    if (audioActual) {
-        audioActual.pause();
-        audioActual.currentTime = 0;
-        audioActual = null;
+    const audio = audioActual;
+    const resolver = resolverAudioActual;
+
+    audioActual = null;
+    resolverAudioActual = null;
+
+    if (audio) {
+        audio.pause();
+
+        try {
+            audio.currentTime = 0;
+        } catch (error) {
+            // El audio todavía puede estar cargando.
+        }
     }
 
     botonAudio.classList.remove("reproduciendo");
+
+    if (resolver) {
+        resolver();
+    }
 }
 
 function reproducirAudio(nombre) {
-    detenerAudio();
-
-    ultimoMensaje = nombre;
-
     const mensaje = MENSAJES[nombre];
 
-    if (!mensaje || !configuracion.voz) {
+    if (!mensaje) {
+        return Promise.resolve();
+    }
+
+    detenerAudio();
+    ultimoMensaje = nombre;
+
+    if (!configuracion.voz) {
         return Promise.resolve();
     }
 
     return new Promise((resolver) => {
-        const audio = new Audio(RUTA_AUDIO + mensaje.audio);
-        audioActual = audio;
-
+        const audio = obtenerAudio(mensaje.audio);
         let terminado = false;
 
         function finalizar() {
@@ -205,18 +281,27 @@ function reproducirAudio(nombre) {
 
             if (audioActual === audio) {
                 audioActual = null;
+                resolverAudioActual = null;
                 botonAudio.classList.remove("reproduciendo");
             }
 
             resolver();
         }
 
+        audioActual = audio;
+        resolverAudioActual = finalizar;
+        audio.volume = 1;
+
         audio.addEventListener("ended", finalizar, { once: true });
         audio.addEventListener("error", finalizar, { once: true });
 
-        audio.play().then(() => {
-            botonAudio.classList.add("reproduciendo");
-        }).catch(finalizar);
+        audio.play()
+            .then(() => {
+                if (audioActual === audio) {
+                    botonAudio.classList.add("reproduciendo");
+                }
+            })
+            .catch(finalizar);
     });
 }
 
@@ -232,56 +317,72 @@ function mostrarMensaje(nombre) {
     return reproducirAudio(nombre);
 }
 
+/* EFECTOS */
+
+function reproducirEfecto(nombre, esperar = false) {
+    const archivo = EFECTOS_MP3[nombre];
+
+    if (!archivo || !configuracion.efectos) {
+        return Promise.resolve();
+    }
+
+    const audio = obtenerAudio(archivo);
+
+    audio.volume = nombre === "error" ? 1 : 0.6;
+    efectosActivos.add(audio);
+
+    const promesa = new Promise((resolver) => {
+        let terminado = false;
+
+        function finalizar() {
+            if (terminado) {
+                return;
+            }
+
+            terminado = true;
+            efectosActivos.delete(audio);
+            resolver();
+        }
+
+        audio.addEventListener("ended", finalizar, { once: true });
+        audio.addEventListener("error", finalizar, { once: true });
+
+        audio.play().catch(finalizar);
+    });
+
+    return esperar ? promesa : Promise.resolve();
+}
+
+function detenerEfectos() {
+    efectosActivos.forEach((audio) => {
+        audio.pause();
+
+        try {
+            audio.currentTime = 0;
+        } catch (error) {
+            // El audio todavía puede estar cargando.
+        }
+
+        audio.dispatchEvent(new Event("ended"));
+    });
+
+    efectosActivos.clear();
+}
+
+/* STARLY */
+
 function cambiarStarly(nombre) {
+    const ruta = RUTA_STARLY + nombre;
     const imagen = new Image();
 
     imagen.onload = () => {
-        starly.src = RUTA_STARLY + nombre;
+        starly.src = ruta;
     };
 
-    imagen.src = RUTA_STARLY + nombre;
+    imagen.src = ruta;
 }
 
-function reproducirTono(frecuencia) {
-    if (!configuracion.efectos) {
-        return;
-    }
-
-    try {
-        const AudioContexto =
-            window.AudioContext || window.webkitAudioContext;
-
-        if (!AudioContexto) {
-            return;
-        }
-
-        if (!contextoAudio) {
-            contextoAudio = new AudioContexto();
-        }
-
-        const oscilador = contextoAudio.createOscillator();
-        const ganancia = contextoAudio.createGain();
-
-        oscilador.frequency.value = frecuencia;
-        oscilador.type = "sine";
-
-        ganancia.gain.setValueAtTime(0.05, contextoAudio.currentTime);
-        ganancia.gain.exponentialRampToValueAtTime(
-            0.001,
-            contextoAudio.currentTime + 0.2
-        );
-
-        oscilador.connect(ganancia);
-        ganancia.connect(contextoAudio.destination);
-
-        oscilador.start();
-        oscilador.stop(contextoAudio.currentTime + 0.2);
-    } catch (error) {
-        // EL JUEGO CONTINÚA SIN AUDIO.
-    }
-}
-
-/* MEZCLAR COLORES */
+/* COLORES */
 
 function mezclarColores() {
     const botones = Array.from(botonesColores);
@@ -297,7 +398,25 @@ function mezclarColores() {
     });
 }
 
-/* PAISAJE */
+function actualizarMuestra(color) {
+    gotaMuestra.classList.remove(
+        "rojo",
+        "amarillo",
+        "azul",
+        "verde",
+        "morado"
+    );
+
+    if (!color || !SIMBOLOS[color]) {
+        muestraColor.hidden = true;
+        simboloMuestra.textContent = "";
+        return;
+    }
+
+    gotaMuestra.classList.add(color);
+    simboloMuestra.textContent = SIMBOLOS[color];
+    muestraColor.hidden = false;
+}
 
 function apagarPaisaje() {
     paisaje.classList.add("sin-color");
@@ -310,7 +429,8 @@ function apagarPaisaje() {
 
     paisaje.classList.remove(
         "naturaleza-pintada",
-        "flores-pintadas"
+        "flores-pintadas",
+        "recuperando"
     );
 }
 
@@ -326,7 +446,6 @@ function prepararColores() {
     controlesJuego.classList.add("apareciendo");
 
     contador.hidden = false;
-
     introduccionTerminada = true;
 
     pedirRonda();
@@ -335,60 +454,127 @@ function prepararColores() {
 /* DON GRIS */
 
 async function animarRobo() {
+    villano.classList.remove(
+        "entrando",
+        "presente",
+        "robando",
+        "escapando",
+        "oculto"
+    );
+
+    efectoRobo.classList.remove("activo");
+
     villano.classList.add("entrando");
 
-    await pausa(2000);
+    reproducirEfecto("aparicion");
+    reproducirEfecto("risa");
+
+    await pausa(TIEMPOS.entradaDonGris);
 
     villano.classList.remove("entrando");
-    villano.classList.add("robando");
+    villano.classList.add("presente");
 
     cambiarStarly(IMAGENES.asustado);
-    mostrarMensaje("susto");
 
-    await pausa(500);
+    await esperarAudioOminimo(
+        mostrarMensaje("susto"),
+        TIEMPOS.sustoMinimo
+    );
 
+    villano.classList.add("robando");
     efectoRobo.classList.add("activo");
 
-    await pausa(1300);
+    const sonidoRobo = reproducirEfecto("robo", true);
+
+    await pausa(1800);
 
     apagarPaisaje();
 
-    await pausa(1200);
-
-    villano.classList.remove("robando");
-    villano.classList.add("escapando");
-
-    await pausa(2000);
-
-    villano.classList.remove("escapando");
-    efectoRobo.classList.remove("activo");
-}
-
-/* MUESTRA */
-
-function actualizarMuestra(color) {
-    gotaMuestra.classList.remove(
-        "rojo",
-        "amarillo",
-        "azul",
-        "verde",
-        "morado"
+    await esperarAudioOminimo(
+        sonidoRobo,
+        TIEMPOS.roboMinimo - 1800
     );
 
-    if (!color) {
-        muestraColor.hidden = true;
+    efectoRobo.classList.remove("activo");
+    villano.classList.remove("robando");
+
+    villano.classList.add("escapando");
+    reproducirEfecto("escape");
+
+    await pausa(TIEMPOS.escape);
+
+    villano.classList.remove("escapando", "presente");
+    villano.classList.add("oculto");
+}
+
+/* RECORDATORIO AUTOMÁTICO */
+
+function detenerRecordatorio() {
+    clearTimeout(temporizadorRecordatorio);
+    temporizadorRecordatorio = null;
+    identificadorRecordatorio++;
+}
+
+function iniciarRecordatorio() {
+    detenerRecordatorio();
+
+    if (
+        misionTerminada ||
+        procesando ||
+        !introduccionTerminada ||
+        recordatorioEnCurso
+    ) {
         return;
     }
 
-    muestraColor.hidden = false;
-    gotaMuestra.classList.add(color);
-    simboloMuestra.textContent = SIMBOLOS[color];
+    const rondaProgramada = rondaActual;
+    const identificador = identificadorRecordatorio;
+
+    temporizadorRecordatorio = setTimeout(async () => {
+        if (
+            identificador !== identificadorRecordatorio ||
+            misionTerminada ||
+            procesando ||
+            rondaActual !== rondaProgramada ||
+            recordatorioEnCurso
+        ) {
+            return;
+        }
+
+        const ronda = RONDAS[rondaActual];
+
+        if (!ronda) {
+            return;
+        }
+
+        // No interrumpir una voz que todavía está hablando.
+        if (audioActual) {
+            iniciarRecordatorio();
+            return;
+        }
+
+        recordatorioEnCurso = true;
+
+        await mostrarMensaje(ronda.pedido);
+
+        recordatorioEnCurso = false;
+
+        if (
+            identificador === identificadorRecordatorio &&
+            !misionTerminada &&
+            !procesando &&
+            rondaActual === rondaProgramada
+        ) {
+            iniciarRecordatorio();
+        }
+    }, TIEMPOS.recordatorio);
 }
 
 /* PISTAS */
 
 function quitarPistas() {
     clearTimeout(temporizadorPista);
+    temporizadorPista = null;
 
     botonesColores.forEach((boton) => {
         boton.classList.remove("pista");
@@ -398,7 +584,11 @@ function quitarPistas() {
 function programarPista() {
     quitarPistas();
 
-    if (rondaActual !== 0) {
+    if (
+        rondaActual !== 0 ||
+        misionTerminada ||
+        procesando
+    ) {
         return;
     }
 
@@ -413,13 +603,30 @@ function programarPista() {
             '.color-magico[data-color="' + ronda.color + '"]'
         );
 
-        if (boton && !misionTerminada && !procesando) {
+        if (
+            boton &&
+            !misionTerminada &&
+            !procesando &&
+            rondaActual === 0
+        ) {
             boton.classList.add("pista");
         }
-    }, 1500);
+    }, TIEMPOS.pistaInicial);
 }
 
 /* RONDAS */
+
+function bloquearColores() {
+    botonesColores.forEach((boton) => {
+        boton.disabled = true;
+    });
+}
+
+function habilitarColores() {
+    botonesColores.forEach((boton) => {
+        boton.disabled = boton.classList.contains("usado");
+    });
+}
 
 function pedirRonda() {
     const ronda = RONDAS[rondaActual];
@@ -428,15 +635,18 @@ function pedirRonda() {
         return;
     }
 
-    procesando = false;
-
-    botonesColores.forEach((boton) => {
-        boton.disabled = boton.classList.contains("usado");
-    });
-
+    recordatorioEnCurso = false;
     actualizarMuestra(ronda.color);
-    mostrarMensaje(ronda.pedido);
+
+    mensajeTexto.textContent = MENSAJES[ronda.pedido].texto;
+
+    procesando = false;
+    habilitarColores();
+
+    reproducirAudio(ronda.pedido);
+
     programarPista();
+    iniciarRecordatorio();
 }
 
 function actualizarEstrellas() {
@@ -459,6 +669,8 @@ function actualizarEstrellas() {
     contadorEstrellas.textContent = estrellasGanadas;
 }
 
+/* DESTELLOS */
+
 function crearDestellos(elemento) {
     const caja = elemento.getBoundingClientRect();
     const escenarioCaja = escenario.getBoundingClientRect();
@@ -479,9 +691,13 @@ function crearDestellos(elemento) {
 
         destellos.appendChild(destello);
 
-        setTimeout(() => destello.remove(), 950);
+        setTimeout(() => {
+            destello.remove();
+        }, 950);
     }
 }
+
+/* SELECCIÓN DE COLORES */
 
 async function seleccionarColor(boton) {
     if (
@@ -499,17 +715,26 @@ async function seleccionarColor(boton) {
         return;
     }
 
+    detenerRecordatorio();
+    quitarPistas();
+
+    procesando = true;
+    bloquearColores();
+
+    // Detener la petición anterior antes de dar una respuesta.
+    detenerAudio();
+    recordatorioEnCurso = false;
+
     if (boton.dataset.color !== ronda.color) {
-        procesando = true;
-
-        reproducirTono(300);
-
         boton.classList.add("error");
 
-        mensajeTexto.textContent = MENSAJES.error.texto;
-        reproducirAudio("error");
+        reproducirEfecto("error");
 
-        await pausa(900);
+        // Esperar a que termine la voz de corrección.
+        await mostrarMensaje("error");
+
+        // Pequeña pausa para que la respuesta sea natural.
+        await pausa(TIEMPOS.pausaError);
 
         boton.classList.remove("error");
 
@@ -520,10 +745,6 @@ async function seleccionarColor(boton) {
         return;
     }
 
-    procesando = true;
-    quitarPistas();
-
-    boton.disabled = true;
     boton.classList.add("usado");
 
     if (rondaActual < 3) {
@@ -538,7 +759,7 @@ async function seleccionarColor(boton) {
         crearDestellos(elemento);
     }
 
-    reproducirTono(650);
+    reproducirEfecto("correcto");
 
     rondaActual++;
     actualizarEstrellas();
@@ -548,11 +769,11 @@ async function seleccionarColor(boton) {
     }
 
     if (rondaActual >= RONDAS.length) {
-        finalizarMision();
+        await finalizarMision();
         return;
     }
 
-    await pausa(850);
+    await pausa(TIEMPOS.pausaAcierto);
 
     if (!misionTerminada) {
         pedirRonda();
@@ -580,7 +801,10 @@ function guardarProgreso() {
             progreso.completadas.push(1);
         }
 
-        if (!progreso.estrellas || typeof progreso.estrellas !== "object") {
+        if (
+            !progreso.estrellas ||
+            typeof progreso.estrellas !== "object"
+        ) {
             progreso.estrellas = {};
         }
 
@@ -601,25 +825,29 @@ async function finalizarMision() {
     misionTerminada = true;
     procesando = true;
 
+    detenerRecordatorio();
     quitarPistas();
     detenerAudio();
+    bloquearColores();
     actualizarMuestra(null);
 
-    botonesColores.forEach((boton) => {
-        boton.disabled = true;
-    });
-
-    paisaje.classList.remove("sin-color");
+    // Recuperar todo el color antes del mensaje final.
+    paisaje.classList.remove("sin-color", "juego-activo");
     paisaje.classList.add("recuperando");
 
     cambiarStarly(IMAGENES.normal);
 
-    mensajeTexto.textContent =
-        "¡Lo logramos! ¡Qué bonita quedó nuestra escuela!";
-
     guardarProgreso();
 
-    await pausa(1600);
+    // El diálogo debe terminar antes de abrir la celebración.
+    await esperarAudioOminimo(
+        mostrarMensaje("recuperados"),
+        1800
+    );
+
+    await pausa(TIEMPOS.pausaFinal);
+
+    detenerAudio();
 
     if (typeof window.mostrarCelebracion === "function") {
         window.mostrarCelebracion({
@@ -630,27 +858,71 @@ async function finalizarMision() {
             audio: RUTA_AUDIO + "victoria.mp3",
             destino: "../mapa.html"
         });
+    } else {
+        console.warn("No se encontró la función mostrarCelebracion.");
     }
 }
 
 /* INTRODUCCIÓN */
 
 async function iniciarIntroduccion() {
+    introduccionTerminada = false;
+    misionTerminada = false;
+    procesando = true;
+
+    detenerRecordatorio();
+    quitarPistas();
+    detenerAudio();
+
     actualizarMuestra(null);
+    bloquearColores();
 
-    await Promise.all([
+    controlesJuego.hidden = true;
+    contador.hidden = true;
+
+    // La escuela comienza completamente coloreada.
+    paisaje.classList.remove(
+        "sin-color",
+        "juego-activo",
+        "recuperando",
+        "naturaleza-pintada",
+        "flores-pintadas"
+    );
+
+    escuela.classList.add(
+        "techo-pintado",
+        "paredes-pintadas",
+        "puerta-pintada"
+    );
+
+    villano.classList.remove(
+        "entrando",
+        "presente",
+        "robando",
+        "escapando"
+    );
+
+    villano.classList.add("oculto");
+    efectoRobo.classList.remove("activo");
+
+    precargarAudios();
+    cambiarStarly(IMAGENES.normal);
+
+    // Presentación: esperar la voz sin alargarla demasiado.
+    await esperarAudioOminimo(
         mostrarMensaje("bienvenida"),
-        pausa(4000)
-    ]);
+        TIEMPOS.presentacionMinima
+    );
 
+    // Don Gris aparece y comienza a reír desde su entrada.
     await animarRobo();
 
     cambiarStarly(IMAGENES.llorando);
 
-    await Promise.all([
-        mostrarMensaje("ayuda"),
-        pausa(3500)
-    ]);
+    // Starly pide ayuda antes de mostrar los controles.
+    await mostrarMensaje("ayuda");
+
+    await pausa(300);
 
     prepararColores();
 }
@@ -664,12 +936,35 @@ botonesColores.forEach((boton) => {
 });
 
 botonAudio.addEventListener("click", () => {
-    reproducirAudio(ultimoMensaje);
+    if (misionTerminada) {
+        return;
+    }
+
+    // Evitar interrumpir la narración automática.
+    if (!introduccionTerminada || procesando) {
+        return;
+    }
+
+    detenerRecordatorio();
+
+    const ronda = RONDAS[rondaActual];
+
+    if (!ronda) {
+        return;
+    }
+
+    mostrarMensaje(ronda.pedido).then(() => {
+        if (!misionTerminada && !procesando) {
+            iniciarRecordatorio();
+        }
+    });
 });
 
 window.addEventListener("pagehide", () => {
+    detenerRecordatorio();
     detenerAudio();
-    clearTimeout(temporizadorPista);
+    detenerEfectos();
+    quitarPistas();
 });
 
 /* INICIO */

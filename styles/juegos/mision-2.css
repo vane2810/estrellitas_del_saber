@@ -400,7 +400,12 @@
 }
 
 .mochila-estrellas { display: flex; gap: 5px; }
-.mochila-estrella { color: #D3C8E6; font-size: 1.6rem; }
+.mochila-estrella {
+    color: #D3C8E6;
+    font-size: 2rem;
+    line-height: 1;
+    transition: transform 0.3s ease;
+}
 
 .mochila-estrella.ganada {
     color: #FFD454;
@@ -1154,3 +1159,124 @@
     .mochila-dialogo p { font-size: 0.78rem; }
     .mochila-audio { width: 34px; height: 34px; flex-basis: 34px; }
 }
+
+
+/* MISIÓN 2 - BLOQUEO DE MUEBLES */
+
+.escondite:disabled {
+    cursor: default;
+}
+
+.escondite:disabled:not(.abierto) {
+    pointer-events: none;
+}
+
+/* MISIÓN 2 - SACUDIDA DE PISTAS */
+
+@keyframes mochila-sacudida {
+    0%, 100% {
+        translate: 0 0;
+        rotate: 0deg;
+    }
+
+    20% {
+        translate: -5px 0;
+        rotate: -2deg;
+    }
+
+    40% {
+        translate: 5px 0;
+        rotate: 2deg;
+    }
+
+    60% {
+        translate: -5px 0;
+        rotate: -2deg;
+    }
+
+    80% {
+        translate: 5px 0;
+        rotate: 2deg;
+    }
+}
+
+.escondite.mochila-sacudir {
+    animation: mochila-sacudida 0.65s ease-in-out 2;
+}
+
+/* MISIÓN 2 - APARICIÓN DE OBJETOS */
+
+@keyframes mochila-aparecer-objeto {
+    0% {
+        opacity: 0;
+        scale: 0.2;
+        filter: brightness(1);
+    }
+
+    55% {
+        opacity: 1;
+        scale: 1.5;
+        filter: brightness(1.5);
+    }
+
+    75% {
+        scale: 0.9;
+    }
+
+    100% {
+        opacity: 1;
+        scale: 1;
+        filter: brightness(1);
+    }
+}
+
+.hallazgo.mochila-hallazgo-aparece {
+    animation: mochila-aparecer-objeto 0.75s ease-out both;
+    transform-origin: center;
+}
+
+/* MISIÓN 2 - BRILLO DEL HALLAZGO */
+
+.mochila-brillo-hallazgo {
+    position: absolute;
+    z-index: 55;
+    pointer-events: none;
+    color: #FFD84D;
+    font-size: 3.5rem;
+    line-height: 1;
+    text-shadow:
+        0 0 12px #FFFFFF,
+        0 0 24px #FFD84D,
+        0 0 35px #FFB800;
+    animation: mochila-brillo-aparecer 0.85s ease-out forwards;
+}
+
+@keyframes mochila-brillo-aparecer {
+    0% {
+        opacity: 0;
+        scale: 0.25;
+        rotate: -30deg;
+    }
+
+    40% {
+        opacity: 1;
+        scale: 1.5;
+        rotate: 10deg;
+    }
+
+    100% {
+        opacity: 0;
+        scale: 2;
+        rotate: 45deg;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .escondite.mochila-sacudir,
+    .hallazgo.mochila-hallazgo-aparece,
+    .mochila-brillo-hallazgo {
+        animation-duration: 0.01ms;
+        animation-iteration-count: 1;
+    }
+}
+

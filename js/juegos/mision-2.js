@@ -1,5 +1,5 @@
 
-/* ESTRELLITAS DEL SABER - LA MOCHILA DE STARLY */
+/* ESTRELLITAS DEL SABER - MISIÓN 2: LA MOCHILA DE STARLY */
 
 "use strict";
 
@@ -10,7 +10,7 @@ const RUTA_STARLY = "../../img/personajes/starly/";
 const RUTA_AUDIO = "../../audio/juegos/mision-2/";
 const CLAVE_PROGRESO = "estrellitas_del_saber_progreso";
 const CLAVE_CONFIGURACION = "estrellitas_del_saber_configuracion";
-const ESPERA_PISTA = 9000;
+const ESPERA_PISTA = 8000;
 
 const EXPRESIONES = {
     mate: ["starly_mate.webp", "Starly con lentes"],
@@ -86,52 +86,53 @@ const ESCONDITES = [
     }
 ];
 
+/* DIÁLOGOS */
+
 const DIALOGOS = {
     historia: [
-        "¡Mis útiles están listos!",
+        "¡Para ir a la escuela necesitamos nuestros útiles! ¡Ya tengo los míos listos!",
         "historia.mp3"
     ],
     inicio: [
         "¡Oh, no! ¡El ratón escondió mis útiles! ¡Vamos a buscarlos!",
         "inicio.mp3"
     ],
-    lapiz: [
-        "¡Un lápiz para escribir!",
-        "lapiz.mp3"
-    ],
-    cuaderno: [
-        "¡Un cuaderno para practicar!",
-        "cuaderno.mp3"
-    ],
-    libro: [
-        "¡Un libro para aprender!",
-        "libro.mp3"
-    ],
-    regla: [
-        "¡Una regla para medir!",
-        "regla.mp3"
-    ],
-    colores: [
-        "¡Colores para dibujar!",
-        "colores.mp3"
-    ],
-    juguete: [
-        "¡Un juguete! ¡Sigamos buscando!",
-        "juguete.mp3"
-    ],
-    raton: [
-        "¡Ahí está el ratoncito!",
-        "raton.mp3"
-    ],
-    pista: [
-        "¡Busca en los muebles!",
-        "pista.mp3"
-    ],
-    final: [
-        "¡Lo logramos! ¡Los útiles nos ayudan a aprender!",
-        "final.mp3"
-    ]
+    lapiz: ["¡Un lápiz para escribir!", "lapiz.mp3"],
+    cuaderno: ["¡Un cuaderno para practicar!", "cuaderno.mp3"],
+    libro: ["¡Un libro para aprender!", "libro.mp3"],
+    regla: ["¡Una regla para medir!", "regla.mp3"],
+    colores: ["¡Colores para dibujar!", "colores.mp3"],
+    juguete: ["Eso no es un útil escolar", "juguete.mp3"],
+    raton: ["¡Ahí está el ratoncito!", "ratoncito.mp3"],
+    pista: ["¡Busca en los muebles!", "pista.mp3"],
+    final: ["¡Lo logramos! ¡Nuestra mochila está lista!", "final.mp3"]
 };
+
+/* EFECTOS MP3 */
+
+const ARCHIVOS_EFECTOS = {
+    abrir: "abrir-mueble.mp3",
+    aparece: "objeto-aparece.mp3",
+    juguete: "juguetee.mp3",
+    raton: "raton.mp3",
+    pasos: "pasos-raton.mp3",
+    robo: "robo-utiles.mp3",
+    encontrado: "util-encontrado.mp3",
+    guardar: "guardar-mochila.mp3"
+};
+
+const VOLUMEN_EFECTOS = {
+    abrir: 0.7,
+    aparece: 0.8,
+    juguete: 0.75,
+    raton: 1,
+    pasos: 0.8,
+    robo: 0.85,
+    encontrado: 0.85,
+    guardar: 0.8
+};
+
+/* ELEMENTOS */
 
 const escenario = $("mochila-escenario");
 const mensaje = $("mochila-mensaje");
@@ -145,6 +146,8 @@ const starly = $("mochila-starly");
 const historia = $("mochila-historia");
 const historiaUtiles = $("historia-utiles");
 const historiaRaton = $("historia-raton");
+
+/* CONFIGURACIÓN */
 
 let configuracion = {
     musica: true,
@@ -161,8 +164,10 @@ try {
         configuracion = { ...configuracion, ...guardada };
     }
 } catch (error) {
-    console.warn("Se utilizará la configuración predeterminada.");
+    console.warn("Configuración predeterminada.");
 }
+
+/* ESTADO */
 
 let guardadas = 0;
 let procesando = true;
@@ -176,7 +181,10 @@ let temporizadorPista = null;
 let ultimoDialogo = "historia";
 let audioActual = null;
 let resolverDialogo = null;
-let contextoAudio = null;
+let sesionIntroduccion = 0;
+let pistaActiva = false;
+
+const efectosActivos = new Set();
 
 function pausa(ms) {
     return new Promise((resolver) => setTimeout(resolver, ms));
@@ -229,7 +237,6 @@ function cambiarStarly(nombre, brincar = false) {
 
 function expresionPasajera(nombre, ms = 1800) {
     clearTimeout(temporizadorStarly);
-
     cambiarStarly(nombre, true);
 
     temporizadorStarly = setTimeout(() => {
@@ -239,19 +246,28 @@ function expresionPasajera(nombre, ms = 1800) {
     }, ms);
 }
 
-/* AUDIO */
+/* VOCES */
 
 function detenerAudio() {
+    const audio = audioActual;
     const pendiente = resolverDialogo;
+
+    audioActual = null;
     resolverDialogo = null;
 
-    if (audioActual) {
-        audioActual.pause();
-        audioActual.currentTime = 0;
-        audioActual = null;
+    if (audio) {
+        audio.pause();
+
+        try {
+            audio.currentTime = 0;
+        } catch (error) {
+            console.warn("No se pudo reiniciar la voz.");
+        }
     }
 
-    botonAudio.classList.remove("reproduciendo");
+    if (botonAudio) {
+        botonAudio.classList.remove("reproduciendo");
+    }
 
     if (pendiente) pendiente();
 }
@@ -261,10 +277,10 @@ function decir(nombre) {
 
     if (!dialogo) return Promise.resolve(false);
 
+    detenerAudio();
+
     ultimoDialogo = nombre;
     mensaje.textContent = dialogo[0];
-
-    detenerAudio();
 
     if (!configuracion.voz) {
         return Promise.resolve(false);
@@ -272,29 +288,29 @@ function decir(nombre) {
 
     return new Promise((resolver) => {
         const audio = new Audio(RUTA_AUDIO + dialogo[1]);
-        audioActual = audio;
-
         let resuelto = false;
 
-        const detener = () => terminar(false);
-        resolverDialogo = detener;
+        audioActual = audio;
+        audio.volume = 1;
 
         function terminar(resultado) {
             if (resuelto) return;
 
             resuelto = true;
 
-            if (resolverDialogo === detener) {
-                resolverDialogo = null;
-            }
-
             if (audioActual === audio) {
                 audioActual = null;
-                botonAudio.classList.remove("reproduciendo");
+                resolverDialogo = null;
+
+                if (botonAudio) {
+                    botonAudio.classList.remove("reproduciendo");
+                }
             }
 
             resolver(resultado);
         }
+
+        resolverDialogo = () => terminar(false);
 
         audio.addEventListener(
             "ended",
@@ -304,203 +320,122 @@ function decir(nombre) {
 
         audio.addEventListener(
             "error",
-            () => terminar(false),
+            () => {
+                console.warn("No se encontró la voz:", dialogo[1]);
+                terminar(false);
+            },
             { once: true }
         );
 
-        audio.play().then(() => {
-            if (audioActual === audio && !audio.paused) {
-                botonAudio.classList.add("reproduciendo");
-            }
-        }).catch(() => terminar(false));
+        audio.play()
+            .then(() => {
+                if (audioActual === audio && !audio.paused) {
+                    botonAudio.classList.add("reproduciendo");
+                }
+            })
+            .catch((error) => {
+                console.warn("No se pudo reproducir:", dialogo[1], error);
+                terminar(false);
+            });
     });
 }
 
-function dialogoConLimite(nombre, limite = 6000, minimo = 0) {
+function dialogoConMinimo(nombre, minimo = 0) {
     return Promise.all([
-        Promise.race([
-            decir(nombre),
-            pausa(limite)
-        ]),
+        decir(nombre),
         pausa(minimo)
     ]);
 }
 
-/* SONIDOS */
+/* EFECTOS */
 
-function obtenerContextoAudio() {
-    if (!configuracion.efectos) return null;
+function reproducirEfecto(nombre) {
+    const archivo = ARCHIVOS_EFECTOS[nombre];
 
-    try {
-        const Contexto = window.AudioContext || window.webkitAudioContext;
-
-        if (!Contexto) return null;
-
-        if (!contextoAudio) {
-            contextoAudio = new Contexto();
-        }
-
-        if (contextoAudio.state === "suspended") {
-            contextoAudio.resume().catch(() => {});
-        }
-
-        return contextoAudio;
-    } catch (error) {
-        return null;
-    }
-}
-
-function tono(frecuencia, duracion = 0.2) {
-    const ctx = obtenerContextoAudio();
-    if (!ctx) return;
-
-    const oscilador = ctx.createOscillator();
-    const ganancia = ctx.createGain();
-    const ahora = ctx.currentTime;
-
-    oscilador.type = "sine";
-    oscilador.frequency.value = frecuencia;
-
-    ganancia.gain.setValueAtTime(0.045, ahora);
-    ganancia.gain.exponentialRampToValueAtTime(
-        0.001,
-        ahora + duracion
-    );
-
-    oscilador.connect(ganancia);
-    ganancia.connect(ctx.destination);
-
-    oscilador.start(ahora);
-    oscilador.stop(ahora + duracion);
-}
-
-function deslizar(
-    desde,
-    hasta,
-    duracion,
-    tipo = "sine",
-    volumen = 0.05,
-    retraso = 0
-) {
-    const ctx = obtenerContextoAudio();
-    if (!ctx) return;
-
-    const inicio = ctx.currentTime + retraso;
-    const oscilador = ctx.createOscillator();
-    const ganancia = ctx.createGain();
-
-    oscilador.type = tipo;
-
-    oscilador.frequency.setValueAtTime(desde, inicio);
-    oscilador.frequency.exponentialRampToValueAtTime(
-        hasta,
-        inicio + duracion
-    );
-
-    ganancia.gain.setValueAtTime(volumen, inicio);
-    ganancia.gain.exponentialRampToValueAtTime(
-        0.001,
-        inicio + duracion
-    );
-
-    oscilador.connect(ganancia);
-    ganancia.connect(ctx.destination);
-
-    oscilador.start(inicio);
-    oscilador.stop(inicio + duracion);
-}
-
-function ruido(duracion, desde, hasta, volumen = 0.06) {
-    const ctx = obtenerContextoAudio();
-    if (!ctx) return;
-
-    const muestras = Math.floor(ctx.sampleRate * duracion);
-    const buffer = ctx.createBuffer(1, muestras, ctx.sampleRate);
-    const datos = buffer.getChannelData(0);
-
-    for (let i = 0; i < muestras; i++) {
-        datos[i] = Math.random() * 2 - 1;
+    if (!configuracion.efectos || !archivo) {
+        return Promise.resolve(false);
     }
 
-    const fuente = ctx.createBufferSource();
-    const filtro = ctx.createBiquadFilter();
-    const ganancia = ctx.createGain();
-    const ahora = ctx.currentTime;
+    const audio = new Audio(RUTA_AUDIO + archivo);
+    audio.preload = "auto";
+    audio.volume = VOLUMEN_EFECTOS[nombre] ?? 0.7;
 
-    fuente.buffer = buffer;
-    filtro.type = "bandpass";
-    filtro.Q.value = 1.2;
+    efectosActivos.add(audio);
 
-    filtro.frequency.setValueAtTime(desde, ahora);
-    filtro.frequency.exponentialRampToValueAtTime(
-        hasta,
-        ahora + duracion
-    );
+    return new Promise((resolver) => {
+        let resuelto = false;
 
-    ganancia.gain.setValueAtTime(0.001, ahora);
-    ganancia.gain.exponentialRampToValueAtTime(
-        volumen,
-        ahora + duracion * 0.3
-    );
-    ganancia.gain.exponentialRampToValueAtTime(
-        0.001,
-        ahora + duracion
-    );
+        function finalizar(resultado) {
+            if (resuelto) return;
 
-    fuente.connect(filtro);
-    filtro.connect(ganancia);
-    ganancia.connect(ctx.destination);
+            resuelto = true;
+            efectosActivos.delete(audio);
+            resolver(resultado);
+        }
 
-    fuente.start();
-    fuente.stop(ahora + duracion);
+        audio.addEventListener(
+            "ended",
+            () => finalizar(true),
+            { once: true }
+        );
+
+        audio.addEventListener(
+            "error",
+            () => {
+                console.warn("No se encontró el efecto:", archivo);
+                finalizar(false);
+            },
+            { once: true }
+        );
+
+        audio.play().catch((error) => {
+            console.warn("No se pudo reproducir:", archivo, error);
+            finalizar(false);
+        });
+    });
+}
+
+function detenerEfectos() {
+    efectosActivos.forEach((audio) => {
+        audio.pause();
+
+        try {
+            audio.currentTime = 0;
+        } catch (error) {
+            console.warn("No se pudo reiniciar el efecto.");
+        }
+
+        audio.dispatchEvent(new Event("ended"));
+    });
+
+    efectosActivos.clear();
 }
 
 function sonidoAcierto() {
-    tono(587, 0.14);
-    setTimeout(() => tono(740, 0.14), 110);
-    setTimeout(() => tono(988, 0.22), 220);
+    return reproducirEfecto("encontrado");
 }
 
-function sonidoAbrir(tipo) {
-    const madera = ["armario", "cofre", "escritorio"];
-
-    if (madera.includes(tipo)) {
-        deslizar(130, 210, 0.32, "sawtooth", 0.03);
-        deslizar(170, 120, 0.2, "sawtooth", 0.02, 0.18);
-    } else {
-        ruido(0.4, 600, 2200, 0.07);
-    }
+function sonidoAbrir() {
+    return reproducirEfecto("abrir");
 }
 
 function sonidoAparece() {
-    deslizar(500, 1000, 0.16);
+    return reproducirEfecto("aparece");
 }
 
 function sonidoJuguete() {
-    deslizar(260, 620, 0.14, "sine", 0.06);
-    deslizar(620, 300, 0.2, "sine", 0.05, 0.14);
+    return reproducirEfecto("juguete");
 }
 
 function sonidoRaton() {
-    deslizar(1700, 2600, 0.09, "sine", 0.04);
-    deslizar(2500, 1800, 0.1, "sine", 0.04, 0.12);
-    deslizar(1800, 2800, 0.09, "sine", 0.04, 0.3);
+    return reproducirEfecto("raton");
 }
 
 function sonidoCierre() {
-    for (let i = 0; i < 9; i++) {
-        deslizar(
-            900 + i * 70,
-            700 + i * 70,
-            0.03,
-            "square",
-            0.015,
-            i * 0.045
-        );
-    }
+    return reproducirEfecto("guardar");
 }
 
-/* ESTRELLAS Y EFECTOS */
+/* ESTRELLAS */
 
 function ganarEstrella() {
     const numero = ESTRELLAS_EN.indexOf(guardadas) + 1;
@@ -513,19 +448,23 @@ function ganarEstrella() {
 
     if (!estrella) return;
 
-    estrella.textContent = "★";
+    estrella.textContent = "⭐";
     estrella.classList.add("ganada");
 
-    $("mochila-total").textContent = numero;
+    const total = $("mochila-total");
 
-    tono(880);
+    if (total) {
+        total.textContent = numero;
+    }
 }
+
+/* DESTELLOS */
 
 function crearDestellos(zona) {
     const caja = zona.getBoundingClientRect();
     const base = escenario.getBoundingClientRect();
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 12; i++) {
         const destello = document.createElement("span");
 
         destello.className = "mochila-destello";
@@ -543,6 +482,24 @@ function crearDestellos(zona) {
 
         setTimeout(() => destello.remove(), 1000);
     }
+}
+
+function crearBrilloHallazgo(cosa) {
+    const brillo = document.createElement("span");
+
+    brillo.className = "mochila-brillo-hallazgo";
+    brillo.textContent = "✦";
+
+    brillo.style.left = cosa.style.left;
+    brillo.style.top = cosa.style.top;
+
+    efectos.appendChild(brillo);
+
+    crearDestellos(cosa);
+
+    setTimeout(() => {
+        brillo.remove();
+    }, 850);
 }
 
 /* PREPARAR HABITACIÓN */
@@ -578,6 +535,22 @@ function prepararLista() {
     });
 }
 
+function bloquearMuebles() {
+    document.querySelectorAll(".escondite").forEach((sitio) => {
+        sitio.disabled = true;
+        sitio.setAttribute("aria-disabled", "true");
+    });
+}
+
+function habilitarMuebles() {
+    document.querySelectorAll(".escondite").forEach((sitio) => {
+        if (!sitio.classList.contains("abierto")) {
+            sitio.disabled = false;
+            sitio.removeAttribute("aria-disabled");
+        }
+    });
+}
+
 function prepararEscondites() {
     contenedorCosas.innerHTML = "";
     reparto = {};
@@ -596,11 +569,14 @@ function prepararEscondites() {
         boton.type = "button";
         boton.className = `escondite t-${sitio.tipo}`;
         boton.dataset.indice = indice;
+        boton.disabled = true;
 
         boton.setAttribute(
             "aria-label",
             `${sitio.nombre}. Toca para abrir`
         );
+
+        boton.setAttribute("aria-disabled", "true");
 
         boton.style.setProperty("--w", sitio.w);
         boton.style.setProperty("--h", sitio.h);
@@ -622,16 +598,24 @@ function prepararEscondites() {
 
 function quitarPistas() {
     clearTimeout(temporizadorPista);
+    temporizadorPista = null;
 
-    document.querySelectorAll(".escondite.pista").forEach((sitio) => {
-        sitio.classList.remove("pista");
+    document.querySelectorAll(".escondite").forEach((sitio) => {
+        sitio.classList.remove("pista", "mochila-sacudir");
     });
 }
 
 function programarPista() {
     clearTimeout(temporizadorPista);
 
-    if (terminado || introActiva) return;
+    if (
+        terminado ||
+        introActiva ||
+        procesando ||
+        pistaActiva
+    ) {
+        return;
+    }
 
     temporizadorPista = setTimeout(
         mostrarPista,
@@ -639,28 +623,53 @@ function programarPista() {
     );
 }
 
-function mostrarPista() {
-    if (terminado || introActiva) return;
+async function mostrarPista() {
+    if (
+        terminado ||
+        introActiva ||
+        procesando ||
+        pistaActiva
+    ) {
+        return;
+    }
 
-    if (procesando) {
+    if (audioActual) {
         programarPista();
         return;
     }
 
-    const cerrados = document.querySelectorAll(
-        ".escondite:not(.abierto)"
+    const cerrados = Array.from(
+        document.querySelectorAll(
+            ".escondite:not(.abierto)"
+        )
     );
 
     if (!cerrados.length) return;
 
+    pistaActiva = true;
+
     cerrados.forEach((sitio) => {
-        sitio.classList.add("pista");
+        sitio.classList.remove("mochila-sacudir");
+        void sitio.offsetWidth;
+        sitio.classList.add("pista", "mochila-sacudir");
     });
 
-    decir("pista");
+    await decir("pista");
+
+    await pausa(250);
+
+    cerrados.forEach((sitio) => {
+        sitio.classList.remove("mochila-sacudir");
+    });
+
+    pistaActiva = false;
+
+    if (!terminado && !procesando) {
+        programarPista();
+    }
 }
 
-/* EXPLORAR MUEBLES */
+/* HALLAZGOS */
 
 function ponerHallazgo(sitio, contenido) {
     const ancla = sitio.querySelector(".ancla");
@@ -669,7 +678,7 @@ function ponerHallazgo(sitio, contenido) {
 
     const cosa = document.createElement("div");
 
-    cosa.className = "hallazgo";
+    cosa.className = "hallazgo mochila-hallazgo-aparece";
     cosa.textContent = contenido.icono;
 
     cosa.style.left = caja.left - base.left + "px";
@@ -677,20 +686,26 @@ function ponerHallazgo(sitio, contenido) {
 
     efectos.appendChild(cosa);
 
+    crearBrilloHallazgo(cosa);
+
     return cosa;
 }
+
+/* EXPLORAR MUEBLES */
 
 async function abrirEscondite(sitio) {
     if (
         procesando ||
         terminado ||
         introActiva ||
+        sitio.disabled ||
         sitio.classList.contains("abierto")
     ) {
         return;
     }
 
     procesando = true;
+    pistaActiva = false;
     quitarPistas();
 
     const indice = Number(sitio.dataset.indice);
@@ -699,16 +714,21 @@ async function abrirEscondite(sitio) {
 
     if (!contenido || !mueble) {
         procesando = false;
+        programarPista();
         return;
     }
 
+    detenerAudio();
+
     sitio.classList.add("abierto");
+    sitio.disabled = true;
+
     sitio.setAttribute(
         "aria-label",
         `${mueble.nombre}. Abierto`
     );
 
-    sonidoAbrir(mueble.tipo);
+    sonidoAbrir();
 
     await pausa(420);
 
@@ -716,30 +736,34 @@ async function abrirEscondite(sitio) {
 
     sonidoAparece();
 
+    // Dejar que el niño observe el objeto y su brillo.
+    await pausa(950);
+
     if (contenido.tipo === "util") {
-        await pausa(700);
         await guardarUtil(cosa, contenido);
         return;
     }
 
     vacios++;
 
+    let vozHallazgo;
+
     if (contenido.tipo === "sorpresa") {
         cosa.classList.add("travieso");
-        sonidoRaton();
+
+        // Primero el chirrido, después habla Starly.
+        await sonidoRaton();
 
         expresionPasajera("asustado", 2200);
-        decir("raton");
+        vozHallazgo = decir("raton");
     } else {
         sonidoJuguete();
-        decir("juguete");
+        vozHallazgo = decir("juguete");
     }
 
-    await pausa(900);
+    await vozHallazgo;
 
-    procesando = false;
-
-    await pausa(900);
+    if (terminado) return;
 
     cosa.classList.add("se-va");
 
@@ -747,10 +771,12 @@ async function abrirEscondite(sitio) {
         cosa.remove();
     }, 650);
 
+    procesando = false;
+
     if (vacios >= 2) {
         vacios = 0;
 
-        setTimeout(() => {
+        temporizadorPista = setTimeout(() => {
             if (!terminado && !procesando) {
                 mostrarPista();
             }
@@ -759,6 +785,7 @@ async function abrirEscondite(sitio) {
         programarPista();
     }
 }
+
 
 /* GUARDAR ÚTILES */
 
@@ -779,14 +806,14 @@ async function guardarUtil(cosa, util) {
     cosa.style.setProperty("--dx", dx + "px");
     cosa.style.setProperty("--dy", dy + "px");
 
+    cosa.classList.remove("mochila-hallazgo-aparece");
     cosa.classList.add("volando");
 
-    tono(523, 0.1);
+    reproducirEfecto("guardar");
 
     await pausa(780);
 
     cosa.remove();
-
     guardadas++;
 
     mochila.classList.remove("recibe");
@@ -805,20 +832,24 @@ async function guardarUtil(cosa, util) {
     crearDestellos(mochila);
     ganarEstrella();
 
+    cambiarStarly("mate");
+
+    // REPRODUCIR SIEMPRE EL AUDIO DEL ÚTIL ENCONTRADO
+    await decir(util.id);
+
+    // FINALIZAR SOLAMENTE DESPUÉS DEL AUDIO DEL ÚLTIMO ÚTIL
     if (guardadas >= UTILES.length) {
+        await pausa(400);
         await finalizarMision();
         return;
     }
 
     procesando = false;
-
-    cambiarStarly("mate");
-    decir(util.id);
-
     programarPista();
 }
 
-/* PROGRESO */
+
+/* GUARDAR PROGRESO */
 
 function guardarProgreso() {
     try {
@@ -883,8 +914,6 @@ async function finalizarMision() {
     mochila.classList.add("feliz");
 
     cambiarStarly("explorador", true);
-
-    sonidoAcierto();
     crearDestellos(mochila);
 
     const caja = mochila.getBoundingClientRect();
@@ -903,12 +932,11 @@ async function finalizarMision() {
 
     efectos.appendChild(raton);
 
-    sonidoRaton();
+    await sonidoRaton();
+
     guardarProgreso();
 
-    await dialogoConLimite("final", 6500, 2000);
-
-    detenerAudio();
+    await dialogoConMinimo("final", 1500);
 
     if (typeof window.mostrarCelebracion === "function") {
         window.mostrarCelebracion({
@@ -925,7 +953,7 @@ async function finalizarMision() {
     }
 }
 
-/* MINI HISTORIA DEL RATONCITO */
+/* HISTORIA DEL RATONCITO */
 
 function limpiarHistoria() {
     historia.getAnimations({ subtree: true }).forEach((animacion) => {
@@ -938,33 +966,48 @@ function limpiarHistoria() {
     historiaRaton.style.opacity = "0";
 }
 
-function terminarIntro() {
+async function terminarIntro() {
     if (!introActiva) return;
 
     introActiva = false;
+    sesionIntroduccion++;
 
     limpiarHistoria();
 
-    procesando = false;
-
     cambiarStarly("mate", true);
 
-    mensaje.textContent =
-        "¡Toca los muebles para encontrar mis útiles!";
-}
+    // Los muebles siguen bloqueados mientras Starly habla.
+    procesando = true;
 
-function saltarIntro() {
-    if (!introActiva) return;
+    const cerrados = document.querySelectorAll(
+        ".escondite:not(.abierto)"
+    );
 
-    terminarIntro();
+    cerrados.forEach((sitio) => {
+        sitio.classList.remove("mochila-sacudir");
+        void sitio.offsetWidth;
+        sitio.classList.add("mochila-sacudir");
+    });
 
-    decir("inicio");
+    await decir("pista");
+
+    cerrados.forEach((sitio) => {
+        sitio.classList.remove("mochila-sacudir");
+    });
+
+    // Ahora el niño puede comenzar a buscar.
+    procesando = false;
+    habilitarMuebles();
     programarPista();
 }
 
 async function contarHistoria() {
     introActiva = true;
     procesando = true;
+
+    bloquearMuebles();
+
+    const sesion = ++sesionIntroduccion;
 
     cambiarStarly("mate");
 
@@ -979,11 +1022,11 @@ async function contarHistoria() {
 
     historia.hidden = false;
 
-    // STARLY PRESENTA SUS ÚTILES
+    // STARLY PRESENTA LOS ÚTILES
 
-    await dialogoConLimite("historia", 3500, 1500);
+    await dialogoConMinimo("historia", 1500);
 
-    if (!introActiva) return;
+    if (!introActiva || sesion !== sesionIntroduccion) return;
 
     // APARECE EL RATONCITO
 
@@ -998,12 +1041,20 @@ async function contarHistoria() {
         caja.width / 2 -
         anchoRaton / 2;
 
+    // Starly se sorprende al ver al ratoncito.
+    cambiarStarly("asustado", true);
+
     historiaRaton.style.opacity = "1";
     historiaRaton.classList.add("corre");
 
-    sonidoRaton();
+    // El ratoncito aparece con su chirrido.
+    await sonidoRaton();
 
-    historiaRaton.animate(
+    if (!introActiva || sesion !== sesionIntroduccion) return;
+
+    reproducirEfecto("pasos");
+
+    const llegada = historiaRaton.animate(
         [
             {
                 transform: `translateX(${base.width + 30}px)`
@@ -1019,13 +1070,15 @@ async function contarHistoria() {
         }
     );
 
-    await pausa(1100);
+    await llegada.finished.catch(() => { });
 
-    if (!introActiva) return;
+    if (!introActiva || sesion !== sesionIntroduccion) return;
 
     historiaRaton.classList.remove("corre");
 
-    // EL RATONCITO RECOGE LOS ÚTILES
+    // EL RATONCITO ROBA LOS ÚTILES
+
+    reproducirEfecto("robo");
 
     const cuerpo = historiaRaton.getBoundingClientRect();
 
@@ -1058,19 +1111,13 @@ async function contarHistoria() {
                 fill: "forwards"
             }
         );
-
-        setTimeout(() => {
-            if (introActiva) {
-                tono(700 + indice * 120, 0.08);
-            }
-        }, indice * 90);
     });
 
     await pausa(450 + piezas.length * 90);
 
-    if (!introActiva) return;
+    if (!introActiva || sesion !== sesionIntroduccion) return;
 
-    // STARLY LLORA CUANDO EL RATÓN HUYE CON LOS ÚTILES
+    // EL RATONCITO HUYE
 
     cambiarStarly("llorando", true);
 
@@ -1092,20 +1139,16 @@ async function contarHistoria() {
         }
     );
 
-    sonidoRaton();
+    reproducirEfecto("pasos");
 
     await Promise.all([
-        dialogoConLimite("inicio", 5000, 1700),
-        huida.finished.catch(() => {})
+        dialogoConMinimo("inicio", 1700),
+        huida.finished.catch(() => { })
     ]);
 
-    if (!introActiva) return;
+    if (!introActiva || sesion !== sesionIntroduccion) return;
 
-    // STARLY MATE REGRESA PARA LA EXPLORACIÓN
-
-    terminarIntro();
-
-    programarPista();
+    await terminarIntro();
 }
 
 /* EVENTOS */
@@ -1119,15 +1162,15 @@ contenedorCosas.addEventListener("click", (evento) => {
 });
 
 botonAudio.addEventListener("click", () => {
-    decir(ultimoDialogo);
-});
+    if (introActiva || terminado || procesando) return;
 
-escenario.addEventListener("pointerdown", (evento) => {
-    if (evento.target.closest("#mochila-audio")) return;
+    quitarPistas();
 
-    if (introActiva) {
-        saltarIntro();
-    }
+    decir(ultimoDialogo).then(() => {
+        if (!terminado && !procesando) {
+            programarPista();
+        }
+    });
 });
 
 window.addEventListener("resize", ajustarTamanoStarly);
@@ -1135,7 +1178,9 @@ window.addEventListener("resize", ajustarTamanoStarly);
 window.addEventListener("pagehide", () => {
     clearTimeout(temporizadorPista);
     clearTimeout(temporizadorStarly);
+
     detenerAudio();
+    detenerEfectos();
 });
 
 /* INICIAR JUEGO */

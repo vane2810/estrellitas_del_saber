@@ -1,12 +1,12 @@
 
-/* ==========================================
-   ESTRELLITAS DEL SABER
-   MAPA DE MISIONES
-========================================== */
+/* ESTRELLITAS DEL SABER - MAPA DE MISIONES */
+
+"use strict";
 
 /* ELEMENTOS */
 
 const botonesMisiones = document.querySelectorAll(".mision");
+const botonesMedallas = document.querySelectorAll(".mapa-medalla");
 const totalEstrellas = document.getElementById("total-estrellas");
 
 const mapaAventura = document.getElementById("mapa-aventura");
@@ -28,6 +28,14 @@ const premioTitulo = document.getElementById("premio-titulo");
 const premioDescripcion = document.getElementById("premio-descripcion");
 const premioContinuar = document.getElementById("premio-continuar");
 
+/* RUTAS */
+
+const RUTA_CERTIFICADO = "certificado.html";
+
+const RUTA_NARRACIONES = "../audio/narraciones/";
+const RUTA_EFECTOS = "../audio/efecto/";
+const RUTA_MUSICA = "../audio/musica/";
+
 /* MISIONES */
 
 const misiones = [
@@ -38,7 +46,7 @@ const misiones = [
         descripcion: "Conozcamos nuestra escuela, un lugar para aprender.",
         icono: "🏫",
         ruta: "juegos/mision-1.html",
-        audio: "../audio/narraciones/mision_1.mp3"
+        audio: RUTA_NARRACIONES + "mision_1.mp3"
     },
     {
         id: 2,
@@ -47,7 +55,7 @@ const misiones = [
         descripcion: "Ayudemos a Starly a encontrar sus útiles escolares.",
         icono: "🎒",
         ruta: "juegos/mision-2.html",
-        audio: "../audio/narraciones/mision_2.mp3"
+        audio: RUTA_NARRACIONES + "mision_2.mp3"
     },
     {
         id: 3,
@@ -56,25 +64,25 @@ const misiones = [
         descripcion: "Todos los niños tenemos derecho a estudiar.",
         icono: "👧",
         ruta: "juegos/mision-3.html",
-        audio: "../audio/narraciones/mision_3.mp3"
+        audio: RUTA_NARRACIONES + "mision_3.mp3"
     },
     {
         id: 4,
-        nombre: "¡A jugar!",
-        titulo: "¡Aprendemos jugando!",
-        descripcion: "Jugando también podemos aprender.",
-        icono: "🎨",
+        nombre: "¡Armemos el salón!",
+        titulo: "¡Armemos el salón!",
+        descripcion: "Ayudemos a organizar nuestro salón para aprender.",
+        icono: "🧩",
         ruta: "juegos/mision-4.html",
-        audio: "../audio/narraciones/mision_4.mp3"
+        audio: RUTA_NARRACIONES + "mision_4.mp3"
     },
     {
         id: 5,
-        nombre: "¡A descubrir!",
-        titulo: "¡Descubrir es aprender!",
-        descripcion: "Exploremos y descubramos cosas nuevas.",
-        icono: "🔎",
+        nombre: "¡Escribamos juntos!",
+        titulo: "¡Escribamos juntos!",
+        descripcion: "Aprendamos a escribir nuestros nombres.",
+        icono: "✏️",
         ruta: "juegos/mision-5.html",
-        audio: "../audio/narraciones/mision_5.mp3"
+        audio: RUTA_NARRACIONES + "mision_5.mp3"
     },
     {
         id: 6,
@@ -83,7 +91,7 @@ const misiones = [
         descripcion: "Nuestra escuela es un lugar especial que debemos cuidar.",
         icono: "🏫",
         ruta: "juegos/mision-6.html",
-        audio: "../audio/narraciones/mision_6.mp3"
+        audio: RUTA_NARRACIONES + "mision_6.mp3"
     }
 ];
 
@@ -96,7 +104,7 @@ const reconocimientos = [
         titulo: "Pequeño Explorador",
         descripcion: "¡Completaste tus primeras dos misiones!",
         icono: "🏅",
-        audio: "../audio/narraciones/premio_1.mp3"
+        audio: RUTA_NARRACIONES + "premio_1.mp3"
     },
     {
         id: 2,
@@ -104,7 +112,7 @@ const reconocimientos = [
         titulo: "Guardián del Saber",
         descripcion: "¡Cada día aprendes algo nuevo!",
         icono: "🏆",
-        audio: "../audio/narraciones/premio_2.mp3"
+        audio: RUTA_NARRACIONES + "premio_2.mp3"
     },
     {
         id: 3,
@@ -112,7 +120,7 @@ const reconocimientos = [
         titulo: "Estrella del Saber",
         descripcion: "¡Completaste toda la aventura!",
         icono: "🌟",
-        audio: "../audio/narraciones/premio_3.mp3"
+        audio: RUTA_NARRACIONES + "premio_3.mp3"
     }
 ];
 
@@ -186,7 +194,10 @@ function obtenerProgreso() {
             ? guardado.estrellas
             : {};
 
-    return { completadas, estrellas };
+    return {
+        completadas,
+        estrellas
+    };
 }
 
 let progreso = obtenerProgreso();
@@ -199,13 +210,19 @@ function estaDesbloqueada(id) {
     return id === 1 || estaCompletada(id - 1);
 }
 
+function todasCompletadas() {
+    return misiones.every(mision =>
+        estaCompletada(mision.id)
+    );
+}
+
 function calcularEstrellas() {
     return misiones.reduce((total, mision) => {
         const cantidad = Number(
             progreso.estrellas[mision.id] || 0
         );
 
-        return total + Math.max(
+        const estrellas = Math.max(
             0,
             Math.min(
                 3,
@@ -214,6 +231,8 @@ function calcularEstrellas() {
                     : 0
             )
         );
+
+        return total + estrellas;
     }, 0);
 }
 
@@ -229,21 +248,32 @@ function obtenerMisionActual() {
 /* AUDIO */
 
 const audioMapa = {
-    bienvenida: "../audio/narraciones/mapa_bienvenida.mp3",
-    siguiente: "../audio/narraciones/mapa_siguiente_mision.mp3",
-    final: "../audio/narraciones/mapa_final.mp3",
-    musica: "../audio/musica/aventura_espacial.mp3",
-    efectoSeleccion: null
+    bienvenida: RUTA_NARRACIONES + "mapa_bienvenida.mp3",
+    siguiente: RUTA_NARRACIONES + "mapa_siguiente_mision.mp3",
+    final: RUTA_NARRACIONES + "mapa_final.mp3",
+    musica: RUTA_MUSICA + "aventura_espacial.mp3",
+    efectoSeleccion: RUTA_EFECTOS + "seleccion.mp3",
+    efectoEstrellas: RUTA_EFECTOS + "estrellas.mp3",
+    efectoMedalla: RUTA_EFECTOS + "medalla.mp3"
 };
 
 let narracionActual = null;
 let musicaActual = null;
+
 let narracionPendiente = false;
 let rutaNarracionPendiente = null;
 let narracionReproducida = false;
+
 let intentoNarracion = 0;
 let entradaMapaProcesada = false;
 let seleccionMisionActiva = false;
+
+let estrellasNuevasEntrada = false;
+let premioFinalNuevo = false;
+
+let premioPendiente = null;
+let focoAnteriorPremio = null;
+let elementoAnterior = null;
 
 function detenerNarracion() {
     intentoNarracion++;
@@ -258,10 +288,18 @@ function detenerNarracion() {
     rutaNarracionPendiente = null;
 }
 
-async function reproducirNarracion(ruta, permitirRepeticion = false) {
-    if (!configuracion.voz || !ruta) return false;
+async function reproducirNarracion(
+    ruta,
+    permitirRepeticion = false
+) {
+    if (!configuracion.voz || !ruta) {
+        return false;
+    }
 
-    if (narracionReproducida && !permitirRepeticion) {
+    if (
+        narracionReproducida &&
+        !permitirRepeticion
+    ) {
         return false;
     }
 
@@ -287,7 +325,9 @@ async function reproducirNarracion(ruta, permitirRepeticion = false) {
 
         return true;
     } catch (error) {
-        if (intento !== intentoNarracion) return false;
+        if (intento !== intentoNarracion) {
+            return false;
+        }
 
         if (error.name === "NotAllowedError") {
             narracionPendiente = true;
@@ -313,11 +353,14 @@ function esperarNarracion(ruta) {
         audio.volume = 1;
 
         let terminado = false;
+        let temporizador = null;
 
         function finalizar() {
             if (terminado) return;
 
             terminado = true;
+
+            clearTimeout(temporizador);
 
             if (narracionActual === audio) {
                 narracionActual = null;
@@ -326,8 +369,17 @@ function esperarNarracion(ruta) {
             resolver();
         }
 
-        audio.addEventListener("ended", finalizar, { once: true });
-        audio.addEventListener("error", finalizar, { once: true });
+        audio.addEventListener(
+            "ended",
+            finalizar,
+            { once: true }
+        );
+
+        audio.addEventListener(
+            "error",
+            finalizar,
+            { once: true }
+        );
 
         audio.play().then(() => {
             if (intento !== intentoNarracion) {
@@ -336,7 +388,7 @@ function esperarNarracion(ruta) {
             }
         }).catch(finalizar);
 
-        setTimeout(() => {
+        temporizador = setTimeout(() => {
             if (!terminado) {
                 audio.pause();
                 finalizar();
@@ -358,19 +410,54 @@ function reintentarNarracion() {
     reproducirNarracion(rutaNarracionPendiente);
 }
 
-function reproducirEfecto(ruta) {
-    if (!configuracion.efectos || !ruta) return;
+/* EFECTOS DE SONIDO */
+
+function reproducirEfecto(ruta, volumen = 0.4) {
+    if (!configuracion.efectos || !ruta) {
+        return;
+    }
 
     const efecto = new Audio(ruta);
-    efecto.volume = 0.4;
+
+    efecto.volume = Math.max(
+        0,
+        Math.min(1, volumen)
+    );
+
     efecto.play().catch(() => {});
 }
+
+function efectoSeleccion() {
+    reproducirEfecto(
+        audioMapa.efectoSeleccion,
+        0.4
+    );
+}
+
+function efectoEstrellas() {
+    reproducirEfecto(
+        audioMapa.efectoEstrellas,
+        0.45
+    );
+}
+
+function efectoMedalla() {
+    reproducirEfecto(
+        audioMapa.efectoMedalla,
+        0.5
+    );
+}
+
+/* MÚSICA */
 
 function actualizarMusica() {
     if (!audioMapa.musica) return;
 
     if (!musicaActual) {
-        musicaActual = new Audio(audioMapa.musica);
+        musicaActual = new Audio(
+            audioMapa.musica
+        );
+
         musicaActual.loop = true;
         musicaActual.volume = 0.18;
     }
@@ -382,7 +469,7 @@ function actualizarMusica() {
     }
 }
 
-/* PREMIOS */
+/* PREMIOS GUARDADOS */
 
 function obtenerPremiosGuardados() {
     const guardados = leerJSON(
@@ -392,14 +479,18 @@ function obtenerPremiosGuardados() {
     );
 
     return Array.isArray(guardados)
-        ? guardados.map(Number).filter(Number.isInteger)
+        ? guardados
+            .map(Number)
+            .filter(Number.isInteger)
         : [];
 }
 
 function guardarPremio(id) {
     const premios = obtenerPremiosGuardados();
 
-    if (premios.includes(id)) return;
+    if (premios.includes(id)) {
+        return;
+    }
 
     premios.push(id);
 
@@ -409,7 +500,9 @@ function guardarPremio(id) {
             JSON.stringify(premios)
         );
     } catch (error) {
-        console.warn("No se pudo guardar el premio.");
+        console.warn(
+            "No se pudo guardar el premio."
+        );
     }
 }
 
@@ -417,7 +510,9 @@ function obtenerPremioPendiente(nuevasCompletadas) {
     const guardados = obtenerPremiosGuardados();
 
     return reconocimientos.find(premio =>
-        nuevasCompletadas.includes(premio.mision) &&
+        nuevasCompletadas.includes(
+            premio.mision
+        ) &&
         !guardados.includes(premio.id) &&
         Array.from(
             { length: premio.mision },
@@ -426,11 +521,15 @@ function obtenerPremioPendiente(nuevasCompletadas) {
     ) || null;
 }
 
-let premioPendiente = null;
-let focoAnteriorPremio = null;
+/* MOSTRAR RECONOCIMIENTO */
 
-function mostrarModalPremio(premio) {
-    if (!premio || !modalPremio) return;
+function mostrarModalPremio(
+    premio,
+    automatico = false
+) {
+    if (!premio || !modalPremio) {
+        return;
+    }
 
     focoAnteriorPremio = document.activeElement;
 
@@ -439,6 +538,12 @@ function mostrarModalPremio(premio) {
     premioDescripcion.textContent = premio.descripcion;
 
     premioPendiente = premio;
+
+    premioFinalNuevo =
+        automatico &&
+        premio.id === 3 &&
+        todasCompletadas();
+
     modalPremio.hidden = false;
 
     document.body.style.overflow = "hidden";
@@ -446,20 +551,43 @@ function mostrarModalPremio(premio) {
     guardarPremio(premio.id);
 
     detenerNarracion();
-    reproducirNarracion(premio.audio, true);
 
-    premioContinuar.focus();
+    efectoMedalla();
+
+    reproducirNarracion(
+        premio.audio,
+        true
+    );
+
+    if (premioContinuar) {
+        premioContinuar.focus();
+    }
 }
 
+/* CERRAR RECONOCIMIENTO */
+
 function cerrarModalPremio() {
-    if (!modalPremio || modalPremio.hidden) return;
+    if (!modalPremio || modalPremio.hidden) {
+        return;
+    }
+
+    const abrirCertificado =
+        premioFinalNuevo &&
+        todasCompletadas();
+
+    premioFinalNuevo = false;
+    premioPendiente = null;
 
     modalPremio.hidden = true;
-    premioPendiente = null;
 
     document.body.style.overflow = "";
 
     detenerNarracion();
+
+    if (abrirCertificado) {
+        window.location.href = RUTA_CERTIFICADO;
+        return;
+    }
 
     if (focoAnteriorPremio?.focus) {
         focoAnteriorPremio.focus();
@@ -470,10 +598,14 @@ function cerrarModalPremio() {
 
 function obtenerNarracionEntrada() {
     const bienvenidaEscuchada =
-        sessionStorage.getItem(CLAVE_BIENVENIDA) === "true";
+        sessionStorage.getItem(
+            CLAVE_BIENVENIDA
+        ) === "true";
 
     const misionVisitada =
-        sessionStorage.getItem(CLAVE_MISION_VISITADA) === "true";
+        sessionStorage.getItem(
+            CLAVE_MISION_VISITADA
+        ) === "true";
 
     const completadasAntes = leerJSON(
         sessionStorage,
@@ -483,70 +615,114 @@ function obtenerNarracionEntrada() {
 
     let ruta = null;
 
+    premioPendiente = null;
+    estrellasNuevasEntrada = false;
+
     if (misionVisitada) {
-        const anteriores = Array.isArray(completadasAntes)
+        const anteriores = Array.isArray(
+            completadasAntes
+        )
             ? completadasAntes.map(Number)
             : [];
 
-        const nuevasCompletadas = progreso.completadas.filter(
-            id => !anteriores.includes(id)
-        );
-
-        if (nuevasCompletadas.length > 0) {
-            premioPendiente = obtenerPremioPendiente(
-                nuevasCompletadas
+        const nuevasCompletadas =
+            progreso.completadas.filter(
+                id => !anteriores.includes(id)
             );
 
+        if (nuevasCompletadas.length > 0) {
+            estrellasNuevasEntrada = true;
+
+            premioPendiente =
+                obtenerPremioPendiente(
+                    nuevasCompletadas
+                );
+
+            nuevasCompletadas.forEach(id => {
+                animarEstrellasMision(id);
+            });
+
             if (!premioPendiente) {
-                ruta = progreso.completadas.length === misiones.length
+                ruta = todasCompletadas()
                     ? audioMapa.final
                     : audioMapa.siguiente;
             }
         }
 
-        sessionStorage.removeItem(CLAVE_MISION_VISITADA);
-        sessionStorage.removeItem(CLAVE_COMPLETADAS_ANTES);
+        sessionStorage.removeItem(
+            CLAVE_MISION_VISITADA
+        );
 
+        sessionStorage.removeItem(
+            CLAVE_COMPLETADAS_ANTES
+        );
     } else if (!bienvenidaEscuchada) {
         ruta = audioMapa.bienvenida;
     }
 
-    sessionStorage.setItem(CLAVE_BIENVENIDA, "true");
+    sessionStorage.setItem(
+        CLAVE_BIENVENIDA,
+        "true"
+    );
 
     return ruta;
 }
 
 function iniciarEntradaMapa() {
-    if (entradaMapaProcesada) return;
+    if (entradaMapaProcesada) {
+        return;
+    }
 
     entradaMapaProcesada = true;
 
-    const transicion = document.getElementById("transicion-polvo");
+    const transicion = document.getElementById(
+        "transicion-polvo"
+    );
 
     const tieneTransicion =
-        document.documentElement.classList.contains("entrada-polvo");
+        document.documentElement.classList.contains(
+            "entrada-polvo"
+        );
 
     const rutaNarracion = obtenerNarracionEntrada();
 
     try {
-        sessionStorage.removeItem("estrellitas_transicion_mapa");
+        sessionStorage.removeItem(
+            "estrellitas_transicion_mapa"
+        );
     } catch (error) {
-        // Continúa la entrada.
+        console.warn(
+            "No se pudo limpiar la transición."
+        );
     }
 
     function terminarEntrada() {
-        document.documentElement.classList.remove("entrada-polvo");
+        document.documentElement.classList.remove(
+            "entrada-polvo"
+        );
 
         if (transicion) {
             transicion.remove();
         }
 
+        if (estrellasNuevasEntrada) {
+            efectoEstrellas();
+            estrellasNuevasEntrada = false;
+        }
+
         if (premioPendiente) {
+            const premio = premioPendiente;
+
             setTimeout(() => {
-                mostrarModalPremio(premioPendiente);
-            }, 450);
+                mostrarModalPremio(
+                    premio,
+                    true
+                );
+            }, 650);
         } else if (rutaNarracion) {
-            reproducirNarracion(rutaNarracion);
+            reproducirNarracion(
+                rutaNarracion
+            );
         }
     }
 
@@ -568,16 +744,32 @@ function iniciarEntradaMapa() {
 /* CONFIGURACIÓN */
 
 function actualizarControlesConfiguracion() {
-    configMusica.checked = configuracion.musica;
-    configEfectos.checked = configuracion.efectos;
-    configVoz.checked = configuracion.voz;
+    if (configMusica) {
+        configMusica.checked = configuracion.musica;
+    }
+
+    if (configEfectos) {
+        configEfectos.checked = configuracion.efectos;
+    }
+
+    if (configVoz) {
+        configVoz.checked = configuracion.voz;
+    }
 }
 
 function guardarConfiguracion() {
     configuracion = {
-        musica: configMusica.checked,
-        efectos: configEfectos.checked,
-        voz: configVoz.checked
+        musica: configMusica
+            ? configMusica.checked
+            : configuracion.musica,
+
+        efectos: configEfectos
+            ? configEfectos.checked
+            : configuracion.efectos,
+
+        voz: configVoz
+            ? configVoz.checked
+            : configuracion.voz
     };
 
     try {
@@ -586,7 +778,9 @@ function guardarConfiguracion() {
             JSON.stringify(configuracion)
         );
     } catch (error) {
-        console.warn("No se pudo guardar la configuración.");
+        console.warn(
+            "No se pudo guardar la configuración."
+        );
     }
 
     if (!configuracion.voz) {
@@ -599,19 +793,69 @@ function guardarConfiguracion() {
 /* ACTUALIZAR MAPA */
 
 function actualizarMapa() {
-    totalEstrellas.textContent = calcularEstrellas();
+    progreso = obtenerProgreso();
+
+    if (totalEstrellas) {
+        totalEstrellas.textContent =
+            calcularEstrellas();
+    }
+
+    botonesMedallas.forEach(boton => {
+        const id = Number(
+            boton.dataset.premio
+        );
+
+        const premio = reconocimientos.find(
+            item => item.id === id
+        );
+
+        if (!premio) return;
+
+        const desbloqueada = Array.from(
+            { length: premio.mision },
+            (_, indice) => indice + 1
+        ).every(numero =>
+            estaCompletada(numero)
+        );
+
+        boton.disabled = !desbloqueada;
+
+        boton.classList.toggle(
+            "desbloqueada",
+            desbloqueada
+        );
+
+        boton.setAttribute(
+            "aria-label",
+            `${premio.titulo}. ${
+                desbloqueada
+                    ? "Conseguida"
+                    : "Bloqueada"
+            }`
+        );
+    });
 
     const misionActual = obtenerMisionActual();
 
-    botonesMisiones.forEach((boton) => {
-        const id = Number(boton.dataset.mision);
-        const mision = misiones.find(item => item.id === id);
+    botonesMisiones.forEach(boton => {
+        const id = Number(
+            boton.dataset.mision
+        );
+
+        const mision = misiones.find(
+            item => item.id === id
+        );
 
         if (!mision) return;
 
-        const completada = estaCompletada(id);
-        const desbloqueada = estaDesbloqueada(id);
-        const disponible = id === misionActual;
+        const completada =
+            estaCompletada(id);
+
+        const desbloqueada =
+            estaDesbloqueada(id);
+
+        const disponible =
+            id === misionActual;
 
         boton.disabled = !desbloqueada;
 
@@ -630,13 +874,17 @@ function actualizarMapa() {
             !desbloqueada
         );
 
-        const candado = boton.querySelector(".mision-candado");
+        const candado = boton.querySelector(
+            ".mision-candado"
+        );
 
         if (candado) {
             candado.hidden = desbloqueada;
         }
 
-        const estrellas = boton.querySelector(".mision-estrellas");
+        const estrellas = boton.querySelector(
+            ".mision-estrellas"
+        );
 
         if (estrellas) {
             const cantidadOriginal = Number(
@@ -669,11 +917,13 @@ function actualizarMapa() {
         );
 
         if (nombreVisible) {
-            nombreVisible.textContent = mision.nombre;
+            nombreVisible.textContent =
+                mision.nombre;
         }
 
         if (iconoVisible) {
-            iconoVisible.textContent = mision.icono;
+            iconoVisible.textContent =
+                mision.icono;
         }
 
         const estado = completada
@@ -689,40 +939,117 @@ function actualizarMapa() {
     });
 }
 
+/* ANIMACIÓN DE ESTRELLAS */
+
+function animarEstrellasMision(id) {
+    const boton = document.querySelector(
+        `.mision[data-mision="${id}"]`
+    );
+
+    if (!boton) return;
+
+    const contenedor = boton.querySelector(
+        ".mision-estrellas"
+    );
+
+    if (!contenedor) return;
+
+    const cantidad = Math.max(
+        0,
+        Math.min(
+            3,
+            Number(progreso.estrellas[id]) || 0
+        )
+    );
+
+    if (cantidad === 0) return;
+
+    if (
+        window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches
+    ) {
+        return;
+    }
+
+    contenedor.innerHTML = "";
+
+    for (let indice = 0; indice < 3; indice++) {
+        const estrella = document.createElement(
+            "span"
+        );
+
+        estrella.textContent =
+            indice < cantidad ? "★" : "☆";
+
+        estrella.className =
+            "estrella-recompensa";
+
+        if (indice < cantidad) {
+            estrella.style.animationDelay =
+                `${indice * 0.25}s`;
+        } else {
+            estrella.classList.add(
+                "estrella-sin-animacion"
+            );
+        }
+
+        contenedor.appendChild(estrella);
+    }
+}
+
 /* POSICIONAR STARLY */
 
 function posicionarStarly() {
     const misionActual = obtenerMisionActual();
+
     const idObjetivo = misionActual || 6;
 
     const boton = document.querySelector(
         `.mision[data-mision="${idObjetivo}"]`
     );
 
-    if (!boton || !starlyPosicion || !mapaAventura) {
+    if (
+        !boton ||
+        !starlyPosicion ||
+        !mapaAventura
+    ) {
         return;
     }
 
-    const anchoMapa = mapaAventura.clientWidth;
-    const altoMapa = mapaAventura.clientHeight;
+    const anchoMapa =
+        mapaAventura.clientWidth;
 
-    const anchoStarly = starlyPosicion.offsetWidth;
-    const altoStarly = starlyPosicion.offsetHeight;
+    const altoMapa =
+        mapaAventura.clientHeight;
+
+    const anchoStarly =
+        starlyPosicion.offsetWidth;
+
+    const altoStarly =
+        starlyPosicion.offsetHeight;
 
     const centroBotonY =
-        boton.offsetTop + boton.offsetHeight / 2;
+        boton.offsetTop +
+        boton.offsetHeight / 2;
 
     const separacion = 22;
 
     let posicionX =
-        boton.offsetLeft - anchoStarly - separacion;
+        boton.offsetLeft -
+        anchoStarly -
+        separacion;
 
     let posicionY =
-        centroBotonY - altoStarly / 2;
+        centroBotonY -
+        altoStarly / 2;
 
     let colocarDerecha = false;
 
-    if (idObjetivo !== 1 && posicionX < 8) {
+    if (
+        idObjetivo !== 1 &&
+        posicionX < 8
+    ) {
         posicionX =
             boton.offsetLeft +
             boton.offsetWidth +
@@ -747,8 +1074,11 @@ function posicionarStarly() {
         )
     );
 
-    starlyPosicion.style.left = `${posicionX}px`;
-    starlyPosicion.style.top = `${posicionY}px`;
+    starlyPosicion.style.left =
+        `${posicionX}px`;
+
+    starlyPosicion.style.top =
+        `${posicionY}px`;
 
     starlyPosicion.classList.toggle(
         "starly-derecha",
@@ -761,7 +1091,7 @@ function posicionarStarly() {
     );
 }
 
-/* ENFOCAR MISIÓN */
+/* ENFOCAR MISIÓN ACTUAL */
 
 function enfocarMisionActual() {
     if (!mapaDesplazamiento) return;
@@ -784,29 +1114,39 @@ function enfocarMisionActual() {
     }
 
     const centroBoton =
-        boton.offsetLeft + boton.offsetWidth / 2;
+        boton.offsetLeft +
+        boton.offsetWidth / 2;
 
     const destino =
-        centroBoton - mapaDesplazamiento.clientWidth / 2;
+        centroBoton -
+        mapaDesplazamiento.clientWidth / 2;
 
-    mapaDesplazamiento.scrollLeft = Math.max(0, destino);
+    mapaDesplazamiento.scrollLeft =
+        Math.max(0, destino);
 }
 
 /* ABRIR MISIÓN */
 
+
+/* ABRIR MISIÓN */
+
 async function abrirMision(id) {
-    if (!estaDesbloqueada(id) || seleccionMisionActiva) {
+    if (
+        !estaDesbloqueada(id) ||
+        seleccionMisionActiva
+    ) {
         return;
     }
 
-    const mision = misiones.find(item => item.id === id);
+    const mision = misiones.find(
+        item => item.id === id
+    );
 
     if (!mision) return;
 
     seleccionMisionActiva = true;
 
     detenerNarracion();
-    reproducirEfecto(audioMapa.efectoSeleccion);
 
     try {
         sessionStorage.setItem(
@@ -822,31 +1162,45 @@ async function abrirMision(id) {
         console.warn("No se pudo guardar la visita.");
     }
 
+    // STARLY ANUNCIA LA MISIÓN
     await esperarNarracion(mision.audio);
 
+    // PAUSA ANTES DE ENTRAR AL JUEGO
+    await new Promise(resolver => {
+        setTimeout(resolver, 1000);
+    });
+
+    // ABRIR LA MISIÓN
     window.location.href = mision.ruta;
 }
 
+
 /* MODAL DE CONFIGURACIÓN */
 
-let elementoAnterior = null;
-
 function abrirConfiguracion() {
+    if (!modalConfiguracion) return;
+
     elementoAnterior = document.activeElement;
 
     actualizarControlesConfiguracion();
 
     modalConfiguracion.hidden = false;
+
     document.body.style.overflow = "hidden";
 
-    configuracionCerrar.focus();
+    if (configuracionCerrar) {
+        configuracionCerrar.focus();
+    }
 }
 
 function cerrarConfiguracion() {
+    if (!modalConfiguracion) return;
+
     guardarConfiguracion();
     actualizarControlesConfiguracion();
 
     modalConfiguracion.hidden = true;
+
     document.body.style.overflow = "";
 
     if (elementoAnterior?.focus) {
@@ -854,77 +1208,157 @@ function cerrarConfiguracion() {
     }
 }
 
-/* EVENTOS */
+/* EVENTOS DE MISIONES */
 
-botonesMisiones.forEach((boton) => {
+botonesMisiones.forEach(boton => {
     boton.addEventListener("click", () => {
-        abrirMision(Number(boton.dataset.mision));
+        abrirMision(
+            Number(boton.dataset.mision)
+        );
     });
 });
 
-btnConfiguracion.addEventListener(
-    "click",
-    abrirConfiguracion
-);
+/* EVENTOS DE MEDALLAS */
 
-configuracionCerrar.addEventListener(
-    "click",
-    cerrarConfiguracion
-);
+botonesMedallas.forEach(boton => {
+    boton.addEventListener("click", () => {
+        if (boton.disabled) return;
 
-configuracionListo.addEventListener(
-    "click",
-    cerrarConfiguracion
-);
+        const id = Number(
+            boton.dataset.premio
+        );
 
-configMusica.addEventListener(
-    "change",
-    guardarConfiguracion
-);
+        const premio = reconocimientos.find(
+            item => item.id === id
+        );
 
-configEfectos.addEventListener(
-    "change",
-    guardarConfiguracion
-);
+        if (!premio) return;
 
-configVoz.addEventListener(
-    "change",
-    guardarConfiguracion
-);
+        efectoSeleccion();
 
-premioContinuar.addEventListener(
-    "click",
-    cerrarModalPremio
-);
-
-modalConfiguracion.addEventListener("click", (evento) => {
-    if (evento.target === modalConfiguracion) {
-        cerrarConfiguracion();
-    }
+        mostrarModalPremio(
+            premio,
+            false
+        );
+    });
 });
 
-document.addEventListener("keydown", (evento) => {
-    if (evento.key === "Escape") {
-        if (!modalPremio.hidden) {
+/* EVENTOS DE CONFIGURACIÓN */
+
+if (btnConfiguracion) {
+    btnConfiguracion.addEventListener(
+        "click",
+        () => {
+            efectoSeleccion();
+            abrirConfiguracion();
+        }
+    );
+}
+
+if (configuracionCerrar) {
+    configuracionCerrar.addEventListener(
+        "click",
+        cerrarConfiguracion
+    );
+}
+
+if (configuracionListo) {
+    configuracionListo.addEventListener(
+        "click",
+        cerrarConfiguracion
+    );
+}
+
+if (configMusica) {
+    configMusica.addEventListener(
+        "change",
+        guardarConfiguracion
+    );
+}
+
+if (configEfectos) {
+    configEfectos.addEventListener(
+        "change",
+        guardarConfiguracion
+    );
+}
+
+if (configVoz) {
+    configVoz.addEventListener(
+        "change",
+        guardarConfiguracion
+    );
+}
+
+if (premioContinuar) {
+    premioContinuar.addEventListener(
+        "click",
+        () => {
+            efectoSeleccion();
             cerrarModalPremio();
-        } else if (!modalConfiguracion.hidden) {
+        }
+    );
+}
+
+/* CERRAR MODALES */
+
+if (modalConfiguracion) {
+    modalConfiguracion.addEventListener(
+        "click",
+        evento => {
+            if (
+                evento.target ===
+                modalConfiguracion
+            ) {
+                cerrarConfiguracion();
+            }
+        }
+    );
+}
+
+document.addEventListener("keydown", evento => {
+    if (evento.key === "Escape") {
+        if (
+            modalPremio &&
+            !modalPremio.hidden
+        ) {
+            cerrarModalPremio();
+        } else if (
+            modalConfiguracion &&
+            !modalConfiguracion.hidden
+        ) {
             cerrarConfiguracion();
         }
     }
 
-    if (evento.key === "Tab" && !modalPremio.hidden) {
+    if (
+        evento.key === "Tab" &&
+        modalPremio &&
+        !modalPremio.hidden &&
+        premioContinuar
+    ) {
         evento.preventDefault();
         premioContinuar.focus();
     }
 });
 
-document.addEventListener("pointerdown", reintentarNarracion);
-document.addEventListener("keydown", reintentarNarracion);
+/* REINTENTAR AUDIO BLOQUEADO */
+
+document.addEventListener(
+    "pointerdown",
+    reintentarNarracion
+);
+
+document.addEventListener(
+    "keydown",
+    reintentarNarracion
+);
 
 /* REGRESAR AL MAPA */
 
-window.addEventListener("pageshow", (evento) => {
+window.addEventListener("pageshow", evento => {
     progreso = obtenerProgreso();
+
     seleccionMisionActiva = false;
 
     actualizarMapa();
@@ -934,15 +1368,29 @@ window.addEventListener("pageshow", (evento) => {
     if (evento.persisted) {
         entradaMapaProcesada = false;
         narracionReproducida = false;
+
         iniciarEntradaMapa();
     }
 });
 
 /* AJUSTAR PANTALLA */
 
-window.addEventListener("resize", posicionarStarly);
+window.addEventListener(
+    "resize",
+    posicionarStarly
+);
 
-/* INICIAR */
+/* LIMPIEZA */
+
+window.addEventListener("pagehide", () => {
+    detenerNarracion();
+
+    if (musicaActual) {
+        musicaActual.pause();
+    }
+});
+
+/* INICIAR MAPA */
 
 actualizarMapa();
 actualizarControlesConfiguracion();

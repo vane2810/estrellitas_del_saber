@@ -7,6 +7,7 @@
     const RUTA_BASE = "../../";
     const RUTA_STARLY = RUTA_BASE + "img/personajes/starly/starly_globos.webp";
     const RUTA_VICTORIA = RUTA_BASE + "audio/efecto/victoria.mp3";
+    const RUTA_ESTRELLAS = RUTA_BASE + "audio/efecto/estrellas.mp3";
     const CLAVE_CONFIGURACION = "estrellitas_del_saber_configuracion";
 
     let ventana = null;
@@ -14,6 +15,7 @@
     let temporizadores = [];
     let audioVictoria = null;
     let audioNarracion = null;
+    let audiosEstrellas = [];
     let configuracionActual = {};
     let ejecucion = 0;
     let elementoAnterior = null;
@@ -30,7 +32,11 @@
                 localStorage.getItem(CLAVE_CONFIGURACION) || "{}"
             );
 
-            if (guardada && typeof guardada === "object" && !Array.isArray(guardada)) {
+            if (
+                guardada &&
+                typeof guardada === "object" &&
+                !Array.isArray(guardada)
+            ) {
                 return { ...predeterminada, ...guardada };
             }
         } catch (error) {
@@ -57,6 +63,8 @@
         temporizadores = [];
     }
 
+    /* CONTROL DE AUDIOS */
+
     function detenerAudios() {
         if (audioVictoria) {
             audioVictoria.pause();
@@ -69,6 +77,13 @@
             audioNarracion.currentTime = 0;
             audioNarracion = null;
         }
+
+        audiosEstrellas.forEach((audio) => {
+            audio.pause();
+            audio.currentTime = 0;
+        });
+
+        audiosEstrellas = [];
     }
 
     function reproducirVictoria() {
@@ -82,15 +97,44 @@
         audioVictoria.play().catch(() => {});
     }
 
+    /* SONIDO INDIVIDUAL DE CADA ESTRELLA */
+
+    function reproducirEstrella() {
+        if (!configuracionActual.efectos || !celebracionActiva) {
+            return;
+        }
+
+        const audio = new Audio(RUTA_ESTRELLAS);
+        audio.volume = 0.55;
+
+        audiosEstrellas.push(audio);
+
+        const limpiar = () => {
+            audiosEstrellas = audiosEstrellas.filter(
+                (actual) => actual !== audio
+            );
+        };
+
+        audio.addEventListener("ended", limpiar, { once: true });
+        audio.addEventListener("error", limpiar, { once: true });
+
+        audio.play().catch(limpiar);
+    }
+
     function reproducirNarracion(ruta, id) {
         return new Promise((resolver) => {
-            if (!configuracionActual.voz || !ruta || id !== ejecucion) {
+            if (
+                !configuracionActual.voz ||
+                !ruta ||
+                id !== ejecucion
+            ) {
                 resolver(false);
                 return;
             }
 
             const audio = new Audio(ruta);
             audioNarracion = audio;
+
             let terminado = false;
 
             const finalizar = (resultado) => {
@@ -107,12 +151,23 @@
                 resolver(resultado);
             };
 
-            audio.addEventListener("ended", () => finalizar(true), { once: true });
-            audio.addEventListener("error", () => finalizar(false), { once: true });
+            audio.addEventListener(
+                "ended",
+                () => finalizar(true),
+                { once: true }
+            );
+
+            audio.addEventListener(
+                "error",
+                () => finalizar(false),
+                { once: true }
+            );
 
             audio.play().catch(() => finalizar(false));
         });
     }
+
+    /* ESTRUCTURA DE LA CELEBRACIÓN */
 
     function crearEstructura() {
         if (ventana) {
@@ -125,7 +180,11 @@
         ventana.hidden = true;
 
         ventana.innerHTML = `
-            <div class="celebracion-confeti" id="celebracion-confeti" aria-hidden="true"></div>
+            <div
+                class="celebracion-confeti"
+                id="celebracion-confeti"
+                aria-hidden="true"
+            ></div>
 
             <section
                 class="celebracion-panel"
@@ -135,12 +194,29 @@
                 aria-describedby="celebracion-mensaje"
                 tabindex="-1"
             >
-                <h2 id="celebracion-titulo">¡Misión completada!</h2>
+                <h2 id="celebracion-titulo">
+                    ¡Misión completada!
+                </h2>
 
-                <div class="celebracion-estrellas" id="celebracion-estrellas" aria-label="Estrellas obtenidas">
-                    <span class="celebracion-estrella" aria-hidden="true">★</span>
-                    <span class="celebracion-estrella" aria-hidden="true">★</span>
-                    <span class="celebracion-estrella" aria-hidden="true">★</span>
+                <div
+                    class="celebracion-estrellas"
+                    id="celebracion-estrellas"
+                    aria-label="Estrellas obtenidas"
+                >
+                    <span
+                        class="celebracion-estrella"
+                        aria-hidden="true"
+                    >★</span>
+
+                    <span
+                        class="celebracion-estrella"
+                        aria-hidden="true"
+                    >★</span>
+
+                    <span
+                        class="celebracion-estrella"
+                        aria-hidden="true"
+                    >★</span>
                 </div>
 
                 <img
@@ -149,7 +225,11 @@
                     class="celebracion-starly"
                 >
 
-                <p class="celebracion-mensaje" id="celebracion-mensaje" hidden></p>
+                <p
+                    class="celebracion-mensaje"
+                    id="celebracion-mensaje"
+                    hidden
+                ></p>
 
                 <a
                     href="../mapa.html"
@@ -162,22 +242,32 @@
                         ¡SIGUIENTE MISIÓN!
                     </span>
 
-                    <span class="celebracion-boton-icono" aria-hidden="true">
+                    <span
+                        class="celebracion-boton-icono"
+                        aria-hidden="true"
+                    >
                         ➜
                     </span>
                 </a>
 
-                <p class="celebracion-ayuda" id="celebracion-ayuda" hidden>
-                    
-                </p>
+                <p
+                    class="celebracion-ayuda"
+                    id="celebracion-ayuda"
+                    hidden
+                ></p>
             </section>
         `;
 
         document.body.appendChild(ventana);
     }
 
+    /* CONFETI */
+
     function crearConfeti() {
-        const contenedor = ventana.querySelector("#celebracion-confeti");
+        const contenedor = ventana.querySelector(
+            "#celebracion-confeti"
+        );
+
         contenedor.innerHTML = "";
 
         const colores = [
@@ -193,53 +283,95 @@
             const pieza = document.createElement("span");
 
             pieza.className = "celebracion-confeti-pieza";
+
             pieza.style.left = Math.random() * 100 + "%";
-            pieza.style.backgroundColor = colores[Math.floor(Math.random() * colores.length)];
-            pieza.style.animationDuration = (2 + Math.random() * 2) + "s";
-            pieza.style.animationDelay = Math.random() * 0.7 + "s";
+
+            pieza.style.backgroundColor = colores[
+                Math.floor(Math.random() * colores.length)
+            ];
+
+            pieza.style.animationDuration =
+                (2 + Math.random() * 2) + "s";
+
+            pieza.style.animationDelay =
+                Math.random() * 0.7 + "s";
 
             contenedor.appendChild(pieza);
         }
     }
 
+    /* ANIMACIÓN Y SONIDO DE LAS ESTRELLAS */
+
     function animarEstrellas(cantidad, id) {
-        const estrellas = ventana.querySelectorAll(".celebracion-estrella");
+        const estrellas = ventana.querySelectorAll(
+            ".celebracion-estrella"
+        );
 
         estrellas.forEach((estrella) => {
-            estrella.classList.remove("encendida", "llegando", "acumulada");
+            estrella.classList.remove(
+                "encendida",
+                "llegando",
+                "acumulada"
+            );
         });
 
         for (let indice = 0; indice < cantidad; indice++) {
             esperar(() => {
-                if (id !== ejecucion) {
+                if (
+                    id !== ejecucion ||
+                    !celebracionActiva
+                ) {
                     return;
                 }
 
                 const estrella = estrellas[indice];
+
+                if (!estrella) {
+                    return;
+                }
+
                 estrella.classList.add("llegando");
 
                 esperar(() => {
-                    if (id !== ejecucion) {
+                    if (
+                        id !== ejecucion ||
+                        !celebracionActiva
+                    ) {
                         return;
                     }
 
-                    estrella.classList.add("encendida", "acumulada");
+                    estrella.classList.add(
+                        "encendida",
+                        "acumulada"
+                    );
+
+                    reproducirEstrella();
                 }, 750);
+
             }, 350 + indice * 800);
         }
 
         esperar(() => {
-            if (id !== ejecucion) {
+            if (
+                id !== ejecucion ||
+                !celebracionActiva
+            ) {
                 return;
             }
 
-            ventana.querySelector("#celebracion-estrellas")
-                .classList.add("completadas");
+            ventana.querySelector(
+                "#celebracion-estrellas"
+            ).classList.add("completadas");
+
         }, 350 + cantidad * 800);
     }
 
+    /* MENSAJE FINAL */
+
     function mostrarMensajeFinal(mensaje) {
-        const elemento = ventana.querySelector("#celebracion-mensaje");
+        const elemento = ventana.querySelector(
+            "#celebracion-mensaje"
+        );
 
         elemento.textContent = mensaje;
         elemento.hidden = false;
@@ -249,13 +381,23 @@
         elemento.classList.add("apareciendo");
     }
 
+    /* BOTÓN PARA CONTINUAR */
+
     function mostrarBoton(id) {
-        if (!celebracionActiva || id !== ejecucion) {
+        if (
+            !celebracionActiva ||
+            id !== ejecucion
+        ) {
             return;
         }
 
-        const boton = ventana.querySelector("#celebracion-continuar");
-        const ayuda = ventana.querySelector("#celebracion-ayuda");
+        const boton = ventana.querySelector(
+            "#celebracion-continuar"
+        );
+
+        const ayuda = ventana.querySelector(
+            "#celebracion-ayuda"
+        );
 
         boton.hidden = false;
         ayuda.hidden = false;
@@ -267,6 +409,8 @@
         boton.focus();
     }
 
+    /* MOSTRAR CELEBRACIÓN */
+
     async function mostrarCelebracion(opciones = {}) {
         if (celebracionActiva) {
             return;
@@ -275,6 +419,7 @@
         crearEstructura();
 
         celebracionActiva = true;
+
         const id = ++ejecucion;
 
         configuracionActual = obtenerConfiguracion();
@@ -287,21 +432,42 @@
             titulo = "¡Misión completada!"
         } = opciones;
 
-        const cantidad = Math.max(0, Math.min(3, Number(estrellas) || 0));
+        const cantidad = Math.max(
+            0,
+            Math.min(3, Number(estrellas) || 0)
+        );
 
         limpiarTemporizadores();
         detenerAudios();
 
         elementoAnterior = document.activeElement;
 
-        const panel = ventana.querySelector(".celebracion-panel");
-        const tituloElemento = ventana.querySelector("#celebracion-titulo");
-        const mensajeElemento = ventana.querySelector("#celebracion-mensaje");
-        const boton = ventana.querySelector("#celebracion-continuar");
-        const ayuda = ventana.querySelector("#celebracion-ayuda");
-        const contenedorEstrellas = ventana.querySelector("#celebracion-estrellas");
+        const panel = ventana.querySelector(
+            ".celebracion-panel"
+        );
+
+        const tituloElemento = ventana.querySelector(
+            "#celebracion-titulo"
+        );
+
+        const mensajeElemento = ventana.querySelector(
+            "#celebracion-mensaje"
+        );
+
+        const boton = ventana.querySelector(
+            "#celebracion-continuar"
+        );
+
+        const ayuda = ventana.querySelector(
+            "#celebracion-ayuda"
+        );
+
+        const contenedorEstrellas = ventana.querySelector(
+            "#celebracion-estrellas"
+        );
 
         tituloElemento.textContent = titulo;
+
         mensajeElemento.textContent = "";
         mensajeElemento.hidden = true;
 
@@ -312,7 +478,10 @@
         contenedorEstrellas.classList.remove("completadas");
 
         ventana.hidden = false;
-        document.body.classList.add("celebracion-abierta");
+
+        document.body.classList.add(
+            "celebracion-abierta"
+        );
 
         panel.focus();
 
@@ -322,7 +491,10 @@
 
         await pausa(3100);
 
-        if (id !== ejecucion || !celebracionActiva) {
+        if (
+            id !== ejecucion ||
+            !celebracionActiva
+        ) {
             return;
         }
 
@@ -333,12 +505,17 @@
             pausa(6500)
         ]);
 
-        if (id !== ejecucion || !celebracionActiva) {
+        if (
+            id !== ejecucion ||
+            !celebracionActiva
+        ) {
             return;
         }
 
         esperar(() => mostrarBoton(id), 400);
     }
+
+    /* CERRAR CELEBRACIÓN */
 
     function cerrarCelebracion() {
         celebracionActiva = false;
@@ -351,9 +528,14 @@
             ventana.hidden = true;
         }
 
-        document.body.classList.remove("celebracion-abierta");
+        document.body.classList.remove(
+            "celebracion-abierta"
+        );
 
-        if (elementoAnterior && typeof elementoAnterior.focus === "function") {
+        if (
+            elementoAnterior &&
+            typeof elementoAnterior.focus === "function"
+        ) {
             elementoAnterior.focus();
         }
     }
@@ -362,7 +544,11 @@
     window.cerrarCelebracion = cerrarCelebracion;
 
     if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", crearEstructura, { once: true });
+        document.addEventListener(
+            "DOMContentLoaded",
+            crearEstructura,
+            { once: true }
+        );
     } else {
         crearEstructura();
     }

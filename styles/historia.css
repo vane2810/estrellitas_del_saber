@@ -891,6 +891,10 @@
 ========================================== */
 
 .boton-explorar {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+
     min-height: 60px;
 
     margin-top: 15px;
@@ -1421,5 +1425,59 @@
 @media (prefers-reduced-motion: reduce) {
     .transicion-polvo.activa span {
         animation-duration: 0.01ms;
+    }
+}
+
+
+
+/* ==========================================
+   BRILLO ANIMADO DEL BOTÓN EXPLORAR
+========================================== */
+
+.boton-explorar::before {
+    content: "";
+
+    position: absolute;
+    top: -40%;
+    left: -65%;
+    z-index: 1;
+
+    width: 35%;
+    height: 180%;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.65),
+        transparent
+    );
+
+    transform: rotate(25deg);
+    pointer-events: none;
+
+    animation: historia-boton-brillo 2.4s ease-in-out infinite;
+}
+
+@keyframes historia-boton-brillo {
+    0%, 25% {
+        left: -65%;
+    }
+
+    65%, 100% {
+        left: 140%;
+    }
+}
+
+/* DETENER ANIMACIÓN SI EL BOTÓN ESTÁ DESACTIVADO */
+
+.boton-explorar:disabled::before {
+    animation: none;
+}
+
+/* ACCESIBILIDAD */
+
+@media (prefers-reduced-motion: reduce) {
+    .boton-explorar::before {
+        animation: none;
     }
 }

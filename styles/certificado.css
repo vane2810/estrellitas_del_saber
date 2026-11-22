@@ -1,0 +1,657 @@
+
+/* ESTRELLITAS DEL SABER - CERTIFICADO FINAL */
+
+.certificado-final {
+    --final-morado: var(--color-morado, #6241ad);
+    --final-amarillo: var(--color-amarillo, #ffdc63);
+    position: relative;
+    isolation: isolate;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: hidden;
+    color: #ffffff;
+    background:
+        radial-gradient(ellipse at 50% 40%, #314f99 0%, transparent 65%),
+        linear-gradient(180deg, #15265e 0%, #091331 100%);
+}
+
+.certificado-final [hidden] {
+    display: none !important;
+}
+
+.certificado-cielo {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.final-estrella-fondo {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    width: var(--tamano);
+    height: var(--tamano);
+    border-radius: 50%;
+    background: #ffffff;
+    opacity: .6;
+    animation: final-titilar var(--duracion) ease-in-out infinite alternate;
+    animation-delay: var(--retraso);
+}
+
+@keyframes final-titilar {
+    from { opacity: .2; transform: scale(.7); }
+    to { opacity: 1; transform: scale(1.3); }
+}
+
+.final-escena {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 25px 18px;
+}
+
+.final-escena-certificado {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    text-align: center;
+}
+
+.final-encabezado h1,
+.final-fin-contenido h2,
+.final-despedida-texto {
+    font-family: var(--fuente-titulos, inherit);
+}
+
+.final-encabezado h1 {
+    margin: 8px 0;
+    color: #ffec98;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    line-height: 1.15;
+    text-shadow: 0 4px 12px #0005;
+}
+
+.final-encabezado p {
+    margin: 0;
+    font-size: clamp(.95rem, 2vw, 1.15rem);
+}
+
+.final-marca {
+    color: var(--final-amarillo);
+    font-size: .8rem;
+    font-weight: 800;
+    letter-spacing: .15em;
+}
+
+.final-entrega {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+    width: min(100%, 900px);
+}
+
+.final-starly {
+    flex: 0 0 22%;
+    animation: final-flotar 2.6s ease-in-out infinite;
+}
+
+.final-starly-imagen {
+    display: block;
+    width: 100%;
+    max-width: 190px;
+    max-height: 240px;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 12px #0005);
+}
+
+.final-starly-sombra {
+    width: 65%;
+    height: 12px;
+    margin: 0 auto;
+    border-radius: 50%;
+    background: #0005;
+    filter: blur(6px);
+}
+
+@keyframes final-flotar {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+
+.final-diploma {
+    flex: 1;
+    max-width: 600px;
+    padding: 9px;
+    border: 5px solid #e7b94d;
+    border-radius: 15px;
+    background: #fff6d6;
+    color: #30345f;
+    box-shadow: 0 15px 40px #0005;
+    animation: final-entregar .8s ease both;
+}
+
+.final-diploma-interior {
+    padding: clamp(15px, 3vw, 28px);
+    border: 2px solid #e1c57d;
+    border-radius: 7px;
+    background:
+        radial-gradient(circle at top, #ffffff 0%, transparent 70%),
+        #fffaf0;
+}
+
+.final-diploma-decoracion {
+    color: #d9a82d;
+    font-size: 1.5rem;
+    letter-spacing: .25em;
+}
+
+.final-diploma-marca {
+    margin: 7px 0;
+    color: var(--final-morado);
+    font-size: .75rem;
+    font-weight: 800;
+    letter-spacing: .12em;
+}
+
+.final-diploma h2 {
+    margin: 8px 0 14px;
+    color: #51358c;
+    font-family: var(--fuente-titulos, inherit);
+    font-size: clamp(1.4rem, 3vw, 2.2rem);
+}
+
+.final-diploma p {
+    margin: 9px auto;
+    line-height: 1.5;
+}
+
+.final-diploma-nombre {
+    display: block;
+    margin: 10px 0;
+    color: #aa7b20;
+    font-family: var(--fuente-titulos, inherit);
+    font-size: clamp(1.4rem, 3vw, 2rem);
+}
+
+.final-diploma-descripcion {
+    max-width: 420px;
+    font-size: .95rem;
+}
+
+.final-diploma-medalla {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    margin: 12px auto;
+    padding: 8px 18px;
+    border: 2px solid #d8ab38;
+    border-radius: 40px;
+    background: #fff0b5;
+    color: #77551b;
+}
+
+.final-diploma-medalla span {
+    font-size: 2rem;
+}
+
+.final-diploma-medalla strong {
+    font-size: .72rem;
+    line-height: 1.25;
+}
+
+.final-diploma-estrellas {
+    color: #a67b21;
+    font-size: .85rem;
+    font-weight: 800;
+}
+
+.final-diploma-firma {
+    color: var(--final-morado);
+    font-weight: 800;
+}
+
+@keyframes final-entregar {
+    from {
+        opacity: 0;
+        transform: translateY(35px) scale(.88);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.final-mensaje {
+    min-height: 28px;
+    margin: 0;
+    color: #ffefa2;
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    font-weight: 800;
+}
+
+.final-acciones {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.final-boton {
+    min-height: 48px;
+    padding: 11px 22px;
+    border: 3px solid #ffffff;
+    border-radius: 30px;
+    font-family: var(--fuente-titulos, inherit);
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform .2s ease, opacity .2s ease;
+}
+
+.final-boton:hover:not(:disabled) {
+    transform: translateY(-3px);
+}
+
+.final-boton:focus-visible,
+.final-control-audio:focus-visible {
+    outline: 4px solid var(--final-amarillo);
+    outline-offset: 4px;
+}
+
+.final-boton:disabled {
+    opacity: .55;
+    cursor: wait;
+}
+
+.final-boton-principal {
+    background: var(--final-amarillo);
+    color: #42256f;
+    box-shadow: 0 5px 0 #b48128;
+}
+
+.final-boton-secundario {
+    background: var(--final-morado);
+    color: #ffffff;
+    box-shadow: 0 5px 0 #32216a;
+}
+
+.final-control-audio {
+    position: fixed;
+    z-index: 50;
+    top: 16px;
+    right: 16px;
+    display: grid;
+    place-items: center;
+    width: 45px;
+    height: 45px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    background: var(--final-morado);
+    color: #ffffff;
+    font-size: 1.3rem;
+    cursor: pointer;
+}
+
+.final-escena-despedida {
+    text-align: center;
+}
+
+.final-despedida-texto {
+    position: relative;
+    z-index: 5;
+    max-width: 750px;
+    margin: 9vh auto 0;
+    color: #fff0a0;
+    font-size: clamp(1.5rem, 4vw, 2.7rem);
+    font-weight: 800;
+    text-shadow: 0 4px 14px #0007;
+}
+
+.final-espacio-vuelo {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+}
+
+.final-plataforma {
+    position: absolute;
+    bottom: 9%;
+    left: 50%;
+    width: min(360px, 75vw);
+    height: 28px;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: #4865a0;
+    box-shadow: 0 0 30px #89baff44;
+}
+
+.final-nave {
+    position: absolute;
+    z-index: 2;
+    bottom: calc(9% + 20px);
+    left: 50%;
+    width: 150px;
+    height: 225px;
+    transform: translateX(-50%);
+    transform-origin: center 70%;
+    filter: drop-shadow(0 10px 12px #0005);
+}
+
+.final-nave-punta {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 25px;
+    width: 100px;
+    height: 130px;
+    background: #f16a7b;
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.final-nave-cuerpo {
+    position: absolute;
+    z-index: 3;
+    top: 90px;
+    left: 25px;
+    width: 100px;
+    height: 110px;
+    border-radius: 12px 12px 35px 35px;
+    background: linear-gradient(90deg, #c4e4ff, #ffffff, #b5d6f5);
+}
+
+.final-nave-ventana {
+    position: absolute;
+    z-index: 5;
+    top: 92px;
+    left: 46px;
+    display: grid;
+    place-items: center;
+    width: 58px;
+    height: 58px;
+    overflow: hidden;
+    border: 7px solid #6173b5;
+    border-radius: 50%;
+    background: #a6eaff;
+}
+
+.final-nave-ventana img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.final-nave-aleta {
+    position: absolute;
+    z-index: 1;
+    bottom: 24px;
+    width: 47px;
+    height: 80px;
+    background: #f16a7b;
+}
+
+.final-nave-aleta-izquierda {
+    left: 0;
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+}
+
+.final-nave-aleta-derecha {
+    right: 0;
+    clip-path: polygon(0 0, 100% 100%, 0 100%);
+}
+
+.final-nave-motor {
+    position: absolute;
+    z-index: 4;
+    bottom: 20px;
+    left: 40px;
+    width: 70px;
+    height: 22px;
+    border-radius: 8px;
+    background: #5369aa;
+}
+
+.final-nave-fuego {
+    position: absolute;
+    z-index: 0;
+    bottom: -70px;
+    left: 52px;
+    width: 46px;
+    height: 105px;
+    opacity: 0;
+    background: linear-gradient(
+        #fff7a1,
+        #ffc22b 40%,
+        #ff693d 80%,
+        transparent
+    );
+    clip-path: polygon(0 0, 100% 0, 75% 75%, 50% 100%, 25% 75%);
+    transform-origin: top;
+}
+
+.final-nave.encendida .final-nave-fuego {
+    opacity: 1;
+    animation: final-fuego .15s ease-in-out infinite alternate;
+}
+
+.final-nave.temblando {
+    animation: final-temblor .15s linear infinite alternate;
+}
+
+.final-nave.despegando {
+    animation: final-despegue 5s cubic-bezier(.35, 0, .65, 1) forwards;
+}
+
+@keyframes final-fuego {
+    from { transform: scaleY(.8); }
+    to { transform: scaleY(1.15); }
+}
+
+@keyframes final-temblor {
+    from { translate: -3px 0; }
+    to { translate: 3px 0; }
+}
+
+@keyframes final-despegue {
+    0% {
+        transform: translateX(-50%) translateY(0) scale(1);
+        opacity: 1;
+    }
+    20% {
+        transform: translateX(-50%) translateY(-55px) scale(1);
+    }
+    50% {
+        transform: translateX(-40%) translateY(-35vh) scale(.7);
+    }
+    80% {
+        transform: translateX(10vw) translateY(-70vh) scale(.25);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(20vw) translateY(-100vh) scale(.03);
+        opacity: 0;
+    }
+}
+
+.final-escena-fin {
+    display: grid;
+    place-items: center;
+    text-align: center;
+}
+
+.final-fin-contenido {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    animation: final-aparecer 1s ease both;
+}
+
+.final-fin-estrella {
+    color: var(--final-amarillo);
+    font-size: 5rem;
+    filter: drop-shadow(0 0 20px #ffdf64);
+    animation: final-flotar 3s ease-in-out infinite;
+}
+
+.final-fin-contenido h2 {
+    margin: 0;
+    color: #fff0a0;
+    font-size: clamp(4rem, 12vw, 7rem);
+}
+
+.final-fin-contenido p {
+    margin: 0;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-weight: 800;
+}
+
+.final-fin-contenido > span {
+    color: #c4d8ff;
+    font-size: .85rem;
+    font-weight: 800;
+    letter-spacing: .15em;
+}
+
+.final-fin-contenido .final-boton {
+    margin-top: 20px;
+}
+
+@keyframes final-aparecer {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@media (max-width: 650px) {
+    .final-escena-certificado {
+        padding: 65px 12px 24px;
+        gap: 12px;
+    }
+
+    .final-entrega {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .final-starly {
+        flex: none;
+        width: 100px;
+    }
+
+    .final-starly-imagen {
+        max-height: 110px;
+    }
+
+    .final-diploma {
+        width: min(100%, 440px);
+    }
+
+    .final-diploma-interior {
+        padding: 12px;
+    }
+
+    .final-diploma p {
+        margin: 6px auto;
+    }
+
+    .final-boton {
+        padding: 10px 15px;
+        font-size: .9rem;
+    }
+
+    .final-nave {
+        scale: .8;
+        transform-origin: bottom center;
+    }
+}
+
+@media (max-height: 700px) and (min-width: 651px) {
+    .final-escena-certificado {
+        gap: 8px;
+        padding: 12px;
+    }
+
+    .final-starly-imagen {
+        max-height: 155px;
+    }
+
+    .final-diploma-interior {
+        padding: 10px 18px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .final-estrella-fondo,
+    .final-starly,
+    .final-diploma,
+    .final-fin-estrella {
+        animation: none;
+    }
+
+    .final-nave.temblando {
+        animation: none;
+    }
+
+    .final-nave.despegando {
+        animation: final-despegue-reducido .5s ease forwards;
+    }
+
+    @keyframes final-despegue-reducido {
+        to {
+            opacity: 0;
+            transform: translateX(-50%) translateY(-80px) scale(.5);
+        }
+    }
+}
+
+@media print {
+    @page {
+        size: landscape;
+        margin: 12mm;
+    }
+
+    body,
+    .certificado-final {
+        background: #ffffff !important;
+    }
+
+    .certificado-cielo,
+    .final-encabezado,
+    .final-starly,
+    .final-mensaje,
+    .final-acciones,
+    .final-control-audio,
+    .final-escena-despedida,
+    .final-escena-fin {
+        display: none !important;
+    }
+
+    .final-escena-certificado {
+        display: flex !important;
+        min-height: auto;
+        padding: 0;
+    }
+
+    .final-entrega {
+        width: 100%;
+    }
+
+    .final-diploma {
+        width: 100%;
+        max-width: none;
+        animation: none;
+        box-shadow: none;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+    }
+
+    .final-diploma-interior {
+        padding: 35px;
+    }
+}

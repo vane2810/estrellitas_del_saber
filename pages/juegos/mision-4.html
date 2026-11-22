@@ -22,9 +22,9 @@
                 <h1>¡Armemos el salón!</h1>
             </div>
 
-            <div class="puzzle-contador" aria-label="Tres estrellas">
-                <span>⭐</span>
-                <span>3/3</span>
+            <div class="puzzle-contador" aria-label="Estrellas de la misión">
+                <span aria-hidden="true">⭐</span>
+                <span id="contador-estrellas">0/3</span>
             </div>
         </header>
 
@@ -40,7 +40,7 @@
 
                     <div class="puzzle-dialogo">
                         <p id="dialogo" aria-live="polite">
-                            ¡Armemos el salón!
+                            ¡Mira nuestro salón!
                         </p>
 
                         <button
@@ -61,20 +61,20 @@
                 <div class="puzzle-informacion">
                     <div id="reloj" class="puzzle-reloj" role="timer" aria-label="Tiempo restante">
                         <span aria-hidden="true">⏱</span>
-                        <span id="tiempo">01:30</span>
+                        <span id="tiempo">00:40</span>
                     </div>
 
-                    <div id="progreso" class="puzzle-progreso">
+                    <div id="progreso" class="puzzle-progreso" aria-live="polite">
                         🧩 0/6
                     </div>
                 </div>
             </div>
 
-            <div class="puzzle-area">
+            <div id="area-juego" class="puzzle-area introduccion">
                 <div
                     id="piezas-izquierda"
                     class="puzzle-lateral"
-                    aria-label="Piezas del lado izquierdo"
+                    aria-label="Piezas izquierdas"
                 ></div>
 
                 <div class="puzzle-centro">
@@ -85,37 +85,52 @@
                     >
                         <div id="guia-imagen" class="puzzle-guia-imagen"></div>
                         <div id="casillas" class="puzzle-casillas"></div>
+                        <div id="salon-completo" class="puzzle-salon-completo visible"></div>
                     </div>
                 </div>
 
                 <div
                     id="piezas-derecha"
                     class="puzzle-lateral"
-                    aria-label="Piezas del lado derecho"
+                    aria-label="Piezas derechas"
                 ></div>
             </div>
 
             <div id="efectos" class="puzzle-efectos" aria-hidden="true"></div>
         </section>
 
-        <div id="final" class="puzzle-final" hidden>
+        <div
+            id="final"
+            class="puzzle-final"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="titulo-final"
+            hidden
+        >
             <div class="puzzle-final-contenido">
                 <img
+                    id="starly-final"
                     src="../../img/personajes/starly/starly_explorador.webp"
                     alt="Starly"
                 >
 
-                <h2 id="titulo-final"></h2>
-                <div id="resultado-final" class="puzzle-resultado"></div>
-                <p id="mensaje-final"></p>
+                <h2 id="titulo-final">¡Se acabó el tiempo!</h2>
+
+                <div id="resultado-final" class="puzzle-resultado">
+                    <span class="puzzle-reloj-grande">⏰</span>
+                </div>
+
+                <p id="mensaje-final">¡Intentémoslo otra vez!</p>
 
                 <div class="puzzle-final-botones">
                     <button id="reintentar" class="puzzle-boton" type="button">
-                        ↻ Otra vez
+                        <span aria-hidden="true">↻</span>
+                        Reintentar
                     </button>
 
                     <a href="../mapa.html" class="puzzle-boton puzzle-boton-secundario">
-                        ← Mapa
+                        <span aria-hidden="true">⌂</span>
+                        Mapa
                     </a>
                 </div>
             </div>

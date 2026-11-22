@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,13 +12,16 @@
     <script src="../../js/celebracion.js" defer></script>
     <script src="../../js/juegos/mision-3.js" defer></script>
 </head>
+
 <body>
     <main class="ruta-juego">
         <header class="ruta-header">
             <a class="ruta-volver" href="../mapa.html">← Mapa</a>
             <span class="ruta-mision-numero">MISIÓN 3</span>
             <h1>¡La ruta escolar!</h1>
-            <div class="ruta-contador">⭐ <span id="ruta-total">0</span>/3</div>
+            <div class="ruta-contador">
+                ⭐ <span id="ruta-total">0</span>/3
+            </div>
         </header>
 
         <section class="ruta-panel">
@@ -45,22 +49,14 @@
                 </div>
 
                 <div class="ruta-guia">
-                    <img
-                        class="ruta-starly"
-                        src="../../img/personajes/starly/starly_gorro.webp"
-                        alt="Starly"
-                    >
+                    <img class="ruta-starly" id="ruta-starly" src="../../img/personajes/starly/starly_gorro.webp"
+                        alt="Starly">
                     <div class="ruta-dialogo">
                         <p id="ruta-mensaje" aria-live="polite">
-                            ¡Vamos a la escuela!
+                            ¡Hoy iremos a la escuela en autobús!
                         </p>
                     </div>
-                    <button
-                        class="ruta-audio"
-                        id="ruta-audio"
-                        type="button"
-                        aria-label="Escuchar a Starly"
-                    >
+                    <button class="ruta-audio" id="ruta-audio" type="button" aria-label="Escuchar a Starly">
                         <svg viewBox="0 0 24 24" aria-hidden="true">
                             <path d="M4 9v6h4l5 4V5L8 9H4z"></path>
                             <path d="M16 9a5 5 0 0 1 0 6"></path>
@@ -70,12 +66,8 @@
                 </div>
 
                 <div class="ruta-recorrido" id="ruta-recorrido" hidden>
-                    <svg
-                        id="ruta-svg"
-                        viewBox="0 0 700 230"
-                        preserveAspectRatio="xMidYMid meet"
-                        aria-label="Camino para llegar hasta nuestro compañero"
-                    >
+                    <svg id="ruta-svg" viewBox="0 0 700 230" preserveAspectRatio="xMidYMid meet"
+                        aria-label="Camino para llegar hasta nuestro compañero">
                         <path id="ruta-camino-fondo"></path>
                         <path id="ruta-camino-guia"></path>
                         <path id="ruta-camino-hecho"></path>
@@ -85,6 +77,15 @@
                         <circle id="ruta-pista" r="12"></circle>
                     </svg>
                 </div>
+
+
+                <!-- CAMINO AUTOMÁTICO DE LA INTRODUCCIÓN -->
+                <svg id="ruta-intro-camino" class="ruta-intro-camino" viewBox="0 0 1000 400" preserveAspectRatio="none"
+                    aria-hidden="true">
+                    <path id="ruta-intro-trazo" d="M365 285 C460 250 560 245 650 260 S770 270 820 265" fill="none"
+                        stroke="#8052DC" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+
 
                 <div class="ruta-escuela" id="ruta-escuela" hidden>
                     <div class="escuela-techo"></div>
@@ -100,7 +101,9 @@
 
                 <div class="ruta-companero" id="ruta-companero" hidden>
                     <span class="companero-emoji" id="companero-emoji" aria-hidden="true"></span>
-                    <span class="companero-nombre" id="companero-nombre">Ana</span>
+                    <span class="companero-nombre" id="companero-nombre">
+                        Ana
+                    </span>
                 </div>
 
                 <div class="ruta-carretera">
@@ -141,4 +144,5 @@
         </section>
     </main>
 </body>
+
 </html>

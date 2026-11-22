@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#101B48">
+    <title>Certificado | Estrellitas del Saber</title>
+    <link rel="icon" type="image/webp" href="../img/personajes/starly/starly2.webp">
+    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/certificado.css">
+    <script src="../js/certificado.js" defer></script>
+</head>
+<body>
+    <main class="certificado-final" id="certificado-final">
+        <div class="certificado-cielo" id="certificado-cielo" aria-hidden="true"></div>
+
+        <section class="final-escena final-escena-certificado" id="escena-certificado">
+            <header class="final-encabezado">
+                <span class="final-marca">ESTRELLITAS DEL SABER</span>
+                <h1>¡Misión cumplida!</h1>
+                <p>¡Completaste nuestra aventura!</p>
+            </header>
+
+            <div class="final-entrega">
+                <div class="final-starly">
+                    <img
+                        src="../img/personajes/starly/starly2.webp"
+                        alt="Starly felicitando al tripulante"
+                        class="final-starly-imagen"
+                    >
+                    <div class="final-starly-sombra"></div>
+                </div>
+
+                <article class="final-diploma" id="diploma">
+                    <div class="final-diploma-interior">
+                        <div class="final-diploma-decoracion">★ ✦ ★</div>
+                        <p class="final-diploma-marca">ESTRELLITAS DEL SABER</p>
+                        <h2>Certificado de logro</h2>
+                        <p>Se reconoce a nuestro</p>
+                        <strong class="final-diploma-nombre">¡Gran Tripulante!</strong>
+                        <p class="final-diploma-descripcion">
+                            Por completar las seis misiones de esta
+                            aventura y aprender que todos los niños
+                            y las niñas tienen derecho a la educación.
+                        </p>
+                        <div class="final-diploma-medalla">
+                            <span>★</span>
+                            <strong>ESTRELLA<br>DEL SABER</strong>
+                        </div>
+                        <p class="final-diploma-estrellas" id="certificado-estrellas">
+                            18 estrellas de aventura
+                        </p>
+                        <p class="final-diploma-firma">Con cariño, Starly</p>
+                    </div>
+                </article>
+            </div>
+
+            <p class="final-mensaje" id="mensaje-certificado" aria-live="polite">
+                ¡Lo logramos, tripulante!
+            </p>
+
+            <div class="final-acciones">
+                <button class="final-boton final-boton-secundario"
+                        id="btn-guardar" type="button">
+                    Guardar certificado
+                </button>
+                <button class="final-boton final-boton-principal"
+                        id="btn-continuar" type="button" disabled>
+                    Finalizar aventura
+                </button>
+            </div>
+        </section>
+
+        <section class="final-escena final-escena-despedida"
+                 id="escena-despedida" hidden>
+            <div class="final-despedida-texto"
+                 id="texto-despedida" aria-live="polite">
+                ¡Hasta pronto, tripulante!
+            </div>
+
+            <div class="final-espacio-vuelo">
+                <div class="final-nave" id="final-nave">
+                    <div class="final-nave-punta"></div>
+                    <div class="final-nave-cuerpo"></div>
+                    <div class="final-nave-ventana">
+                        <img src="../img/personajes/starly/starly2.webp"
+                             alt="Starly dentro de la nave">
+                    </div>
+                    <div class="final-nave-aleta final-nave-aleta-izquierda"></div>
+                    <div class="final-nave-aleta final-nave-aleta-derecha"></div>
+                    <div class="final-nave-motor"></div>
+                    <div class="final-nave-fuego"></div>
+                </div>
+                <div class="final-plataforma"></div>
+            </div>
+        </section>
+
+        <section class="final-escena final-escena-fin"
+                 id="escena-fin" hidden>
+            <div class="final-fin-contenido">
+                <div class="final-fin-estrella">★</div>
+                <h2>¡FIN!</h2>
+                <p>¡Nunca dejes de aprender!</p>
+                <span>ESTRELLITAS DEL SABER</span>
+                <button class="final-boton final-boton-principal"
+                        id="btn-volver" type="button">
+                    Volver al mapa
+                </button>
+            </div>
+        </section>
+
+        <button class="final-control-audio"
+                id="btn-audio" type="button"
+                aria-label="Activar o desactivar narración">
+            🔊
+        </button>
+    </main>
+</body>
+</html>

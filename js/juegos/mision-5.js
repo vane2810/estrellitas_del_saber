@@ -1,3 +1,4 @@
+
 /* ESTRELLITAS DEL SABER - MISIÓN 5: ESCRIBIMOS LOS NOMBRES */
 
 "use strict";
@@ -5,18 +6,12 @@
 const $ = (id) => document.getElementById(id);
 
 const NUMERO_MISION = 5;
-
 const RUTA_AUDIO = "../../audio/juegos/mision-5/";
 const RUTA_STARLY = "../../img/personajes/starly/";
 const CLAVE_PROGRESO = "estrellitas_del_saber_progreso";
 const CLAVE_CONFIGURACION = "estrellitas_del_saber_configuracion";
 
-// Tiempo sin avanzar antes de mostrar la pista (ms).
 const ESPERA_PISTA = 6000;
-
-/* Trazado: cada trazo se divide en MUESTRAS puntos. El dedo avanza
-   el trazo si pasa a menos de TOLERANCIA (en unidades del dibujo,
-   de 0 a 100) del punto siguiente. */
 const MUESTRAS = 140;
 const TOLERANCIA = 13;
 const TOLERANCIA_INICIO = 20;
@@ -35,8 +30,7 @@ const punta = $("trazo-punta");
 const numero = punta.querySelector(".num");
 const mano = $("trazo-mano");
 
-/* Las letras. Cada trazo es un camino en un cuadro de 100 x 100,
-   en el orden en que se escribe. */
+/* LETRAS */
 
 const DIBUJOS = {
     A: ["M26 86 L50 14 L74 86", "M37 62 L63 62"],
@@ -48,38 +42,125 @@ const DIBUJOS = {
     O: ["M50 14 A24 36 0 1 0 50 86 A24 36 0 1 0 50 14"]
 };
 
-/* Los niños que recogimos en el autobús. */
+/* PERSONAJES */
 
 const NINOS = [
-    { id: "ana", nombre: "ANA", turno: "turnoAna", bien: "bienAna",
-      estilo: "larga", piel: "#E8B48A", pelo: "#5B3420", ropa: "#FF7BA9", ropa2: "#FF7BA9", vestido: true },
-    { id: "luis", nombre: "LUIS", turno: "turnoLuis", bien: "bienLuis",
-      estilo: "corto", piel: "#D99A6C", pelo: "#1F1410", ropa: "#4FA3F7", ropa2: "#3B4FA0", vestido: false },
-    { id: "sol", nombre: "SOL", turno: "turnoSol", bien: "bienSol",
-      estilo: "rizos", piel: "#B9784B", pelo: "#2B1B12", ropa: "#FFC83D", ropa2: "#FFC83D", vestido: true, silla: true }
+    {
+        id: "ana",
+        nombre: "ANA",
+        turno: "turnoAna",
+        bien: "bienAna",
+        estilo: "larga",
+        piel: "#E8B48A",
+        pelo: "#5B3420",
+        ropa: "#FF7BA9",
+        ropa2: "#FF7BA9",
+        vestido: true
+    },
+    {
+        id: "luis",
+        nombre: "LUIS",
+        turno: "turnoLuis",
+        bien: "bienLuis",
+        estilo: "corto",
+        piel: "#D99A6C",
+        pelo: "#1F1410",
+        ropa: "#4FA3F7",
+        ropa2: "#3B4FA0",
+        vestido: false
+    },
+    {
+        id: "sol",
+        nombre: "SOL",
+        turno: "turnoSol",
+        bien: "bienSol",
+        estilo: "rizos",
+        piel: "#B9784B",
+        pelo: "#2B1B12",
+        ropa: "#FFC83D",
+        ropa2: "#FFC83D",
+        vestido: true,
+        silla: true
+    }
 ];
+
+/* EXPRESIONES */
 
 const EXPRESIONES = {
     feliz: ["starly_mate.webp", "Starly contento"],
     celebrando: ["starly_globos.webp", "Starly celebrando con globos"]
 };
 
+/* DIÁLOGOS Y AUDIOS */
+
 const DIALOGOS = {
-    llegada: ["¡Llegaron los niños del autobús! ¡Es su primer día de clases!", "llegada.mp3"],
-    inicio: ["¡Ayúdalos a escribir sus nombres! ¡Sigue la línea con tu dedo!", "inicio.mp3"],
-    turnoAna: ["¡Primero Ana! ¡Escribe su nombre!", "ana.mp3"],
-    turnoLuis: ["¡Ahora Luis! ¡Escribe su nombre!", "luis.mp3"],
-    turnoSol: ["¡Ahora Sol! ¡Ya casi terminamos!", "sol.mp3"],
-    bienAna: ["¡ANA! ¡Ana ya sabe escribir su nombre!", "bien-ana.mp3"],
-    bienLuis: ["¡LUIS! ¡Luis ya sabe escribir su nombre!", "bien-luis.mp3"],
-    bienSol: ["¡SOL! ¡Todos saben escribir su nombre! ¡Qué bien se aprende en la escuela!", "bien-sol.mp3"],
-    pista: ["¡Sigue la línea con tu dedo, así!", "pista.mp3"]
+    inicio: [
+        "¡Nuestro salón está listo! ¡Ahora vamos a aprender!",
+        "inicio.mp3"
+    ],
+    instrucciones: [
+        "¡Hoy aprenderemos a escribir nombres! ¡Sigue las líneas con tu dedo!",
+        "instrucciones.mp3"
+    ],
+    turnoAna: [
+        "¡Comencemos con Ana!",
+        "ana.mp3"
+    ],
+    turnoLuis: [
+        "¡Ahora escribamos Luis!",
+        "luis.mp3"
+    ],
+    turnoSol: [
+        "¡Es el turno de Sol!",
+        "sol.mp3"
+    ],
+    muyBien: [
+        "¡Muy bien! ¡Sigue así!",
+        "muy-bien.mp3"
+    ],
+    excelente: [
+        "¡Excelente trabajo!",
+        "excelente.mp3"
+    ],
+    bienAna: [
+        "¡Lo logramos! ¡Escribimos ANA!",
+        "bien-ana.mp3"
+    ],
+    bienLuis: [
+        "¡Muy bien! ¡Escribimos LUIS!",
+        "bien-luis.mp3"
+    ],
+    bienSol: [
+        "¡Excelente! ¡Escribimos SOL!",
+        "bien-sol.mp3"
+    ],
+    pista: [
+        "¡Mira cómo se hace! ¡Ahora inténtalo tú!",
+        "pista.mp3"
+    ],
+    final: [
+        "¡Lo logramos, hemos completado los nombres!",
+        "final.mp3"
+    ],
+    victoria: [
+        "Todos tenemos derecho a aprender escribir nuestros nombres",
+        "victoria.mp3"
+    ]
 };
 
-let configuracion = { musica: true, efectos: true, voz: true };
+/* CONFIGURACIÓN */
+
+let configuracion = {
+    musica: true,
+    efectos: true,
+    voz: true
+};
 
 try {
-    const guardada = JSON.parse(localStorage.getItem(CLAVE_CONFIGURACION) || "{}");
+    const guardada = JSON.parse(
+        localStorage.getItem(CLAVE_CONFIGURACION) || "{}"
+    );
+
     if (guardada && typeof guardada === "object") {
         configuracion = { ...configuracion, ...guardada };
     }
@@ -87,31 +168,40 @@ try {
     console.warn("Se utilizará la configuración predeterminada.");
 }
 
+/* ESTADO DEL JUEGO */
+
 let trazos = [];
 let indiceLetra = 0;
 let indiceNino = 0;
 let indiceTrazo = 0;
 let ninosHechos = 0;
+
 let trazando = false;
 let puedeTrazar = false;
 let introActiva = false;
 let terminado = false;
-let ultimoDialogo = "llegada";
+let finalizando = false;
+
+let ultimoDialogo = "inicio";
 let audioActual = null;
 let resolverDialogo = null;
 let contextoAudio = null;
+
 let temporizadorPista = null;
-let numeroDeCaras = 0;
 let idDemo = 0;
 let ultimoTic = 0;
 let pistasDadas = 0;
 let expresionActual = "";
 
+let letrasCompletadas = 0;
+let primeraDemostracion = false;
+let secuenciaActual = 0;
+
+/* UTILIDADES */
+
 function pausa(ms) {
     return new Promise((resolver) => setTimeout(resolver, ms));
 }
-
-/* Caras de Starly */
 
 function cambiarStarly(clave, brincar = false) {
     const expresion = EXPRESIONES[clave];
@@ -135,15 +225,17 @@ function cambiarStarly(clave, brincar = false) {
         starly.classList.remove("reaccion");
         void starly.offsetWidth;
         starly.classList.add("reaccion");
-        setTimeout(() => starly.classList.remove("reaccion"), 600);
+
+        setTimeout(() => {
+            starly.classList.remove("reaccion");
+        }, 600);
     }
 }
 
-/* Voz de Starly */
+/* REPRODUCCIÓN DE AUDIOS */
 
 function detenerAudio() {
     const pendiente = resolverDialogo;
-
     resolverDialogo = null;
 
     if (audioActual) {
@@ -154,44 +246,32 @@ function detenerAudio() {
 
     botonAudio.classList.remove("reproduciendo");
 
-    if (pendiente) {
-        pendiente();
-    }
+    if (pendiente) pendiente();
 }
 
-// Muestra el texto y reproduce el audio. La promesa se cumple cuando el
-// audio termina (o falla, o lo interrumpen).
 function decir(clave) {
     const dialogo = DIALOGOS[clave];
 
-    if (!dialogo) {
-        return Promise.resolve(false);
-    }
+    if (!dialogo) return Promise.resolve(false);
+
+    detenerAudio();
 
     ultimoDialogo = clave;
     mensaje.textContent = dialogo[0];
-    detenerAudio();
 
-    if (!configuracion.voz) {
-        return Promise.resolve(false);
-    }
+    if (!configuracion.voz) return Promise.resolve(false);
 
     return new Promise((resolver) => {
         const audio = new Audio(RUTA_AUDIO + dialogo[1]);
 
         audioActual = audio;
-
         let resuelto = false;
 
         const detener = () => terminar(false);
-
         resolverDialogo = detener;
 
         function terminar(resultado) {
-            if (resuelto) {
-                return;
-            }
-
+            if (resuelto) return;
             resuelto = true;
 
             if (resolverDialogo === detener) {
@@ -217,24 +297,32 @@ function decir(clave) {
     });
 }
 
-// Dice algo y espera a que termine (máximo "limite"), y como mínimo "minimo".
-function dialogoConLimite(clave, limite = 6000, minimo = 0) {
-    return Promise.all([
-        Promise.race([decir(clave), pausa(limite)]),
+async function dialogoConLimite(clave, limite = 6000, minimo = 0) {
+    const reproduccion = decir(clave);
+
+    await Promise.all([
+        Promise.race([reproduccion, pausa(limite)]),
         pausa(minimo)
     ]);
+
+    if (audioActual) detenerAudio();
 }
 
-/* Efectos de sonido (los hace el navegador, no necesitan archivos) */
+/* EFECTOS DE SONIDO */
 
 function contexto() {
     if (!configuracion.efectos) return null;
 
     try {
         const Contexto = window.AudioContext || window.webkitAudioContext;
+
         if (!Contexto) return null;
 
         if (!contextoAudio) contextoAudio = new Contexto();
+
+        if (contextoAudio.state === "suspended") {
+            contextoAudio.resume().catch(() => {});
+        }
 
         return contextoAudio;
     } catch (error) {
@@ -269,7 +357,6 @@ function sonidoAcierto() {
     tono(988, 0.22, 0.045, 0.22);
 }
 
-// Suena suave mientras el dedo avanza por la letra.
 function sonidoTrazo(avance) {
     const ahora = performance.now();
 
@@ -279,91 +366,151 @@ function sonidoTrazo(avance) {
     tono(380 + avance * 420, 0.07, 0.025);
 }
 
-/* Estrellas y destellos */
+/* ESTRELLAS Y DESTELLOS */
+
+function prepararEstrellas() {
+    document.querySelectorAll(".luna-estrella").forEach((estrella) => {
+        estrella.textContent = "☆";
+        estrella.classList.remove("ganada");
+    });
+
+    const total = $("luna-total");
+
+    if (total) {
+        total.textContent = "0";
+    }
+}
 
 function ganarEstrella() {
-    const estrella = document.querySelectorAll(".luna-estrella")[ninosHechos - 1];
+    const estrellas = document.querySelectorAll(".luna-estrella");
+    const estrella = estrellas[ninosHechos - 1];
 
     if (!estrella) return;
 
-    estrella.textContent = "★";
+    estrella.textContent = "⭐";
     estrella.classList.add("ganada");
-    $("luna-total").textContent = ninosHechos;
+
+    const total = $("luna-total");
+
+    if (total) {
+        total.textContent = ninosHechos;
+    }
+
     tono(880);
 }
 
 function crearDestellos(zona) {
+    if (!zona || !efectos || !escenario) return;
+
     const caja = zona.getBoundingClientRect();
     const base = escenario.getBoundingClientRect();
 
     for (let i = 0; i < 10; i++) {
         const destello = document.createElement("span");
+
         destello.className = "luna-destello";
         destello.textContent = "✦";
-        destello.style.left = caja.left - base.left + Math.random() * caja.width + "px";
-        destello.style.top = caja.top - base.top + Math.random() * caja.height + "px";
+
+        destello.style.left =
+            caja.left - base.left + Math.random() * caja.width + "px";
+
+        destello.style.top =
+            caja.top - base.top + Math.random() * caja.height + "px";
 
         efectos.appendChild(destello);
+
         setTimeout(() => destello.remove(), 1000);
     }
 }
 
-/* Dibujar la letra */
+/* CONSTRUCCIÓN DE LETRAS */
 
 function crear(etiqueta, atributos) {
-    const elemento = document.createElementNS("http://www.w3.org/2000/svg", etiqueta);
+    const elemento = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        etiqueta
+    );
 
-    Object.entries(atributos).forEach(([clave, valor]) => elemento.setAttribute(clave, valor));
+    Object.entries(atributos).forEach(([clave, valor]) => {
+        elemento.setAttribute(clave, valor);
+    });
 
     return elemento;
 }
 
 function construirLetra(caracter) {
     const dibujo = DIBUJOS[caracter];
+    if (!dibujo) return;
 
     capa.innerHTML = "";
     capa.classList.remove("hecha");
 
-    const caminos = dibujo.map((d) => crear("path", { d, class: "t-camino" }));
-    const guias = dibujo.map((d) => crear("path", { d, class: "t-guia" }));
-    const progresos = dibujo.map((d) => crear("path", { d, class: "t-progreso" }));
+    const caminos = dibujo.map((d) => crear("path", {
+        d,
+        class: "t-camino"
+    }));
 
-    [...caminos, ...guias, ...progresos].forEach((trazo) => capa.appendChild(trazo));
+    const guias = dibujo.map((d) => crear("path", {
+        d,
+        class: "t-guia"
+    }));
+
+    const progresos = dibujo.map((d) => crear("path", {
+        d,
+        class: "t-progreso"
+    }));
+
+    [...caminos, ...guias, ...progresos].forEach((trazo) => {
+        capa.appendChild(trazo);
+    });
 
     trazos = dibujo.map((d, i) => {
         const largo = guias[i].getTotalLength();
         const muestras = [];
 
         for (let k = 0; k < MUESTRAS; k++) {
-            const punto = guias[i].getPointAtLength(largo * k / (MUESTRAS - 1));
+            const punto = guias[i].getPointAtLength(
+                largo * k / (MUESTRAS - 1)
+            );
+
             muestras.push([punto.x, punto.y]);
         }
 
         progresos[i].style.strokeDasharray = largo;
         progresos[i].style.strokeDashoffset = largo;
 
-        return { progreso: progresos[i], largo, muestras, cur: 0 };
+        return {
+            progreso: progresos[i],
+            largo,
+            muestras,
+            cur: 0
+        };
     });
 
     indiceTrazo = 0;
     punta.classList.remove("oculta", "activa");
+
     moverPunta();
 }
 
 function dibujar(trazo) {
-    trazo.progreso.style.strokeDashoffset = trazo.largo * (1 - trazo.cur / (MUESTRAS - 1));
+    trazo.progreso.style.strokeDashoffset =
+        trazo.largo * (1 - trazo.cur / (MUESTRAS - 1));
 }
 
 function moverPunta() {
     const trazo = trazos[indiceTrazo];
+    if (!trazo) return;
+
     const [x, y] = trazo.muestras[trazo.cur];
 
     punta.setAttribute("transform", `translate(${x} ${y})`);
     punta.classList.toggle("inicio", trazo.cur === 0);
+
     numero.textContent = indiceTrazo + 1;
 }
 
-/* Pista: una mano que enseña el camino */
+/* DEMOSTRACIÓN Y PISTAS */
 
 function cancelarDemo() {
     idDemo++;
@@ -376,20 +523,27 @@ function mostrarDemo() {
     const id = idDemo;
     const trazo = trazos[indiceTrazo];
 
-    if (!trazo) return;
+    if (!trazo || terminado || finalizando) return;
 
     const desde = trazo.cur;
-    const hasta = Math.min(MUESTRAS - 1, desde + Math.round(MUESTRAS * 0.45));
+    const hasta = Math.min(
+        MUESTRAS - 1,
+        desde + Math.round(MUESTRAS * 0.45)
+    );
+
     const duracion = 1600;
     const inicio = performance.now();
 
     mano.classList.add("visible");
 
     function paso(ahora) {
-        if (id !== idDemo) return;
+        if (id !== idDemo || terminado || !puedeTrazar) return;
 
         const k = Math.min(1, (ahora - inicio) / duracion);
-        const suave = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+        const suave = k < 0.5
+            ? 2 * k * k
+            : 1 - Math.pow(-2 * k + 2, 2) / 2;
+
         const i = Math.round(desde + (hasta - desde) * suave);
         const [x, y] = trazo.muestras[i];
 
@@ -415,16 +569,17 @@ function quitarPista() {
 function programarPista() {
     clearTimeout(temporizadorPista);
 
-    if (terminado) return;
+    if (terminado || finalizando || !puedeTrazar) return;
 
     temporizadorPista = setTimeout(() => {
-        if (!puedeTrazar || trazando || terminado) {
+        if (terminado || finalizando || !puedeTrazar) return;
+
+        if (trazando) {
             programarPista();
             return;
         }
 
         mostrarDemo();
-
         pistasDadas++;
 
         if (pistasDadas % 2 === 1) {
@@ -435,7 +590,7 @@ function programarPista() {
     }, ESPERA_PISTA);
 }
 
-/* Trazar con el dedo */
+/* INTERACCIÓN DEL TRAZADO */
 
 function aPunto(evento) {
     const punto = svg.createSVGPoint();
@@ -460,7 +615,10 @@ function avanzar(punto) {
     let distanciaMejor = Infinity;
 
     for (let i = trazo.cur; i <= fin; i++) {
-        const distancia = Math.hypot(punto.x - trazo.muestras[i][0], punto.y - trazo.muestras[i][1]);
+        const distancia = Math.hypot(
+            punto.x - trazo.muestras[i][0],
+            punto.y - trazo.muestras[i][1]
+        );
 
         if (distancia < distanciaMejor) {
             distanciaMejor = distancia;
@@ -470,8 +628,10 @@ function avanzar(punto) {
 
     if (distanciaMejor <= TOLERANCIA && mejor > trazo.cur) {
         trazo.cur = mejor;
+
         dibujar(trazo);
         moverPunta();
+
         sonidoTrazo(mejor / (MUESTRAS - 1));
 
         if (trazo.cur >= MUESTRAS - 4) {
@@ -482,6 +642,7 @@ function avanzar(punto) {
 
 function completarTrazo() {
     const trazo = trazos[indiceTrazo];
+    if (!trazo) return;
 
     trazo.cur = MUESTRAS - 1;
     dibujar(trazo);
@@ -490,19 +651,22 @@ function completarTrazo() {
     punta.classList.remove("activa");
 
     if (indiceTrazo < trazos.length - 1) {
-        // Falta otro trazo en esta letra (por ejemplo, la rayita de la A).
         indiceTrazo++;
         moverPunta();
+
         tono(660, 0.12);
         programarPista();
+
         return;
     }
 
     completarLetra();
 }
 
+/* EVENTOS DEL TRAZADO */
+
 svg.addEventListener("pointerdown", (evento) => {
-    if (!puedeTrazar || terminado) return;
+    if (!puedeTrazar || terminado || finalizando) return;
 
     evento.preventDefault();
 
@@ -513,20 +677,25 @@ svg.addEventListener("pointerdown", (evento) => {
 
     const [x, y] = trazo.muestras[trazo.cur];
 
-    if (Math.hypot(punto.x - x, punto.y - y) <= TOLERANCIA_INICIO) {
+    const distancia = Math.hypot(
+        punto.x - x,
+        punto.y - y
+    );
+
+    if (distancia <= TOLERANCIA_INICIO) {
         trazando = true;
         quitarPista();
+
         punta.classList.add("activa");
 
         try {
             svg.setPointerCapture(evento.pointerId);
         } catch (error) {
-            // Algunos navegadores no la permiten; el trazo funciona igual.
+            console.warn("Captura de puntero no disponible.");
         }
 
         avanzar(punto);
     } else {
-        // Tocó lejos del punto rojo: se le llama la atención hacia él.
         punta.classList.remove("llama");
         void punta.getBoundingClientRect();
         punta.classList.add("llama");
@@ -534,7 +703,7 @@ svg.addEventListener("pointerdown", (evento) => {
 });
 
 svg.addEventListener("pointermove", (evento) => {
-    if (!trazando) return;
+    if (!trazando || !puedeTrazar) return;
 
     evento.preventDefault();
 
@@ -542,8 +711,12 @@ svg.addEventListener("pointermove", (evento) => {
         ? evento.getCoalescedEvents()
         : [];
 
-    (eventos.length ? eventos : [evento]).forEach((e) => {
-        if (trazando) avanzar(aPunto(e));
+    const movimientos = eventos.length ? eventos : [evento];
+
+    movimientos.forEach((e) => {
+        if (trazando && puedeTrazar) {
+            avanzar(aPunto(e));
+        }
     });
 });
 
@@ -552,24 +725,29 @@ function soltar() {
 
     trazando = false;
     punta.classList.remove("activa");
-    programarPista();
+
+    if (puedeTrazar && !terminado) {
+        programarPista();
+    }
 }
 
 svg.addEventListener("pointerup", soltar);
 svg.addEventListener("pointercancel", soltar);
 
-// Con teclado: Enter o espacio avanzan un poco el trazo.
 svg.addEventListener("keydown", (evento) => {
-    if (!puedeTrazar || terminado) return;
+    if (!puedeTrazar || terminado || finalizando) return;
 
     if (["Enter", " ", "ArrowRight", "ArrowDown"].includes(evento.key)) {
         evento.preventDefault();
 
         const trazo = trazos[indiceTrazo];
+        if (!trazo) return;
 
         trazo.cur = Math.min(MUESTRAS - 1, trazo.cur + 14);
+
         dibujar(trazo);
         moverPunta();
+
         sonidoTrazo(trazo.cur / (MUESTRAS - 1));
 
         if (trazo.cur >= MUESTRAS - 4) {
@@ -578,13 +756,22 @@ svg.addEventListener("keydown", (evento) => {
     }
 });
 
-/* Los niños */
+/* DIBUJO DE LOS NIÑOS */
 
 function dibujarNino(n) {
     const atras = {
         larga: `<path d="M20 60 Q20 8 60 8 Q100 8 100 60 L104 124 L16 124 Z" fill="${n.pelo}"></path>`,
-        rizos: [[24, 50, 16], [96, 50, 16], [34, 24, 16], [86, 24, 16], [60, 14, 18], [18, 76, 12], [102, 76, 12]]
-            .map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${n.pelo}"></circle>`).join(""),
+        rizos: [
+            [24, 50, 16],
+            [96, 50, 16],
+            [34, 24, 16],
+            [86, 24, 16],
+            [60, 14, 18],
+            [18, 76, 12],
+            [102, 76, 12]
+        ].map(([x, y, r]) => `
+            <circle cx="${x}" cy="${y}" r="${r}" fill="${n.pelo}"></circle>
+        `).join(""),
         corto: ""
     }[n.estilo];
 
@@ -594,82 +781,146 @@ function dibujarNino(n) {
         corto: `<path d="M26 60 Q24 12 60 12 Q96 12 94 60 Q60 36 26 60 Z" fill="${n.pelo}"></path>`
     }[n.estilo];
 
-    // Sol va en silla de ruedas: se dibuja sentada, con la silla vista de frente.
     const silla = n.silla ? {
-        atras: `<rect x="26" y="98" width="68" height="56" rx="8" fill="#5A5F73"></rect>
-                <ellipse cx="11" cy="146" rx="9" ry="29" fill="none" stroke="#3A3D4F" stroke-width="5"></ellipse>
-                <ellipse cx="109" cy="146" rx="9" ry="29" fill="none" stroke="#3A3D4F" stroke-width="5"></ellipse>
-                <ellipse cx="11" cy="146" rx="3" ry="4" fill="#3A3D4F"></ellipse>
-                <ellipse cx="109" cy="146" rx="3" ry="4" fill="#3A3D4F"></ellipse>
-                <rect x="20" y="124" width="10" height="5" rx="2" fill="#3A3D4F"></rect>
-                <rect x="90" y="124" width="10" height="5" rx="2" fill="#3A3D4F"></rect>`,
-        delante: `<rect x="22" y="150" width="76" height="7" rx="3" fill="#3A3D4F"></rect>
-                  <rect x="34" y="172" width="52" height="5" rx="2" fill="#3A3D4F"></rect>
-                  <circle cx="26" cy="178" r="5" fill="#3A3D4F"></circle>
-                  <circle cx="94" cy="178" r="5" fill="#3A3D4F"></circle>`
+        atras: `
+            <rect x="26" y="98" width="68" height="56" rx="8" fill="#5A5F73"></rect>
+            <ellipse cx="11" cy="146" rx="9" ry="29" fill="none" stroke="#3A3D4F" stroke-width="5"></ellipse>
+            <ellipse cx="109" cy="146" rx="9" ry="29" fill="none" stroke="#3A3D4F" stroke-width="5"></ellipse>
+            <ellipse cx="11" cy="146" rx="3" ry="4" fill="#3A3D4F"></ellipse>
+            <ellipse cx="109" cy="146" rx="3" ry="4" fill="#3A3D4F"></ellipse>
+            <rect x="20" y="124" width="10" height="5" rx="2" fill="#3A3D4F"></rect>
+            <rect x="90" y="124" width="10" height="5" rx="2" fill="#3A3D4F"></rect>
+        `,
+        delante: `
+            <rect x="22" y="150" width="76" height="7" rx="3" fill="#3A3D4F"></rect>
+            <rect x="34" y="172" width="52" height="5" rx="2" fill="#3A3D4F"></rect>
+            <circle cx="26" cy="178" r="5" fill="#3A3D4F"></circle>
+            <circle cx="94" cy="178" r="5" fill="#3A3D4F"></circle>
+        `
     } : null;
 
     const cuerpo = n.silla
-        ? `<rect x="42" y="148" width="13" height="24" rx="5" fill="${n.piel}"></rect>
-           <rect x="65" y="148" width="13" height="24" rx="5" fill="${n.piel}"></rect>
-           <path d="M34 104 L86 104 L94 152 L26 152 Z" fill="${n.ropa}"></path>
-           <path d="M48 104 L60 120 L72 104 Z" fill="#FFFFFF"></path>`
+        ? `
+            <rect x="42" y="148" width="13" height="24" rx="5" fill="${n.piel}"></rect>
+            <rect x="65" y="148" width="13" height="24" rx="5" fill="${n.piel}"></rect>
+            <path d="M34 104 L86 104 L94 152 L26 152 Z" fill="${n.ropa}"></path>
+            <path d="M48 104 L60 120 L72 104 Z" fill="#FFFFFF"></path>
+        `
         : n.vestido
-        ? `<path d="M36 104 L84 104 L100 172 L20 172 Z" fill="${n.ropa}"></path>
-           <path d="M48 104 L60 120 L72 104 Z" fill="#FFFFFF"></path>`
-        : `<path d="M36 104 L84 104 L90 144 L30 144 Z" fill="${n.ropa}"></path>
-           <path d="M30 144 L90 144 L92 170 L66 170 L60 156 L54 170 L28 170 Z" fill="${n.ropa2}"></path>`;
+        ? `
+            <path d="M36 104 L84 104 L100 172 L20 172 Z" fill="${n.ropa}"></path>
+            <path d="M48 104 L60 120 L72 104 Z" fill="#FFFFFF"></path>
+        `
+        : `
+            <path d="M36 104 L84 104 L90 144 L30 144 Z" fill="${n.ropa}"></path>
+            <path d="M30 144 L90 144 L92 170 L66 170 L60 156 L54 170 L28 170 Z" fill="${n.ropa2}"></path>
+        `;
 
-    return `<svg viewBox="0 0 120 184">
-        ${silla ? silla.atras : ""}
-        ${atras}
-        ${cuerpo}
-        <path d="M38 112 L20 144" stroke="${n.piel}" stroke-width="10" stroke-linecap="round" fill="none"></path>
-        <g class="luna-brazo">
-            <path d="M82 112 L102 144" stroke="${n.piel}" stroke-width="10" stroke-linecap="round" fill="none"></path>
-        </g>
-        ${silla ? silla.delante : ""}
-        <ellipse cx="${n.silla ? 48 : 44}" cy="${n.silla ? 171 : 177}" rx="14" ry="6" fill="#49309A"></ellipse>
-        <ellipse cx="${n.silla ? 72 : 76}" cy="${n.silla ? 171 : 177}" rx="14" ry="6" fill="#49309A"></ellipse>
-        <circle cx="60" cy="62" r="34" fill="${n.piel}"></circle>
-        ${adelante}
-        <circle cx="48" cy="64" r="4" fill="#2B1B12"></circle>
-        <circle cx="72" cy="64" r="4" fill="#2B1B12"></circle>
-        <circle cx="40" cy="74" r="5" fill="#FF7A8A" opacity="0.55"></circle>
-        <circle cx="80" cy="74" r="5" fill="#FF7A8A" opacity="0.55"></circle>
-        <path d="M50 78 Q60 88 70 78" stroke="#A3452B" stroke-width="3" stroke-linecap="round" fill="none"></path>
-    </svg>`;
+    return `
+        <svg viewBox="0 0 120 184">
+            ${silla ? silla.atras : ""}
+            ${atras}
+            ${cuerpo}
+
+            <path d="M38 112 L20 144"
+                  stroke="${n.piel}"
+                  stroke-width="10"
+                  stroke-linecap="round"
+                  fill="none"></path>
+
+            <g class="luna-brazo">
+                <path d="M82 112 L102 144"
+                      stroke="${n.piel}"
+                      stroke-width="10"
+                      stroke-linecap="round"
+                      fill="none"></path>
+            </g>
+
+            ${silla ? silla.delante : ""}
+
+            <ellipse cx="${n.silla ? 48 : 44}"
+                     cy="${n.silla ? 171 : 177}"
+                     rx="14" ry="6" fill="#49309A"></ellipse>
+
+            <ellipse cx="${n.silla ? 72 : 76}"
+                     cy="${n.silla ? 171 : 177}"
+                     rx="14" ry="6" fill="#49309A"></ellipse>
+
+            <circle cx="60" cy="62" r="34" fill="${n.piel}"></circle>
+
+            ${adelante}
+
+            <circle cx="48" cy="64" r="4" fill="#2B1B12"></circle>
+            <circle cx="72" cy="64" r="4" fill="#2B1B12"></circle>
+
+            <circle cx="40" cy="74" r="5"
+                    fill="#FF7A8A" opacity="0.55"></circle>
+
+            <circle cx="80" cy="74" r="5"
+                    fill="#FF7A8A" opacity="0.55"></circle>
+
+            <path d="M50 78 Q60 88 70 78"
+                  stroke="#A3452B"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  fill="none"></path>
+        </svg>
+    `;
 }
 
 function mostrarNino(n) {
-    alumna.classList.remove("llegada", "saluda", "salta", "festeja", "grupo");
+    alumna.classList.remove(
+        "llegada",
+        "saluda",
+        "salta",
+        "festeja",
+        "grupo"
+    );
+
     alumna.innerHTML = dibujarNino(n);
     void alumna.offsetWidth;
 }
 
 function mostrarGrupo() {
-    alumna.classList.remove("llegada", "saluda", "salta", "festeja");
+    alumna.classList.remove(
+        "llegada",
+        "saluda",
+        "salta",
+        "festeja"
+    );
+
     alumna.classList.add("grupo");
     alumna.innerHTML = NINOS.map(dibujarNino).join("");
+
     void alumna.offsetWidth;
 }
 
 function prepararNombre(n) {
     nombre.classList.remove("completo");
+
     nombre.innerHTML = n.nombre
         .split("")
         .map(() => '<span class="nombre-casilla"></span>')
         .join("");
 }
 
-/* Escribir cada nombre */
+/* TURNOS DE APRENDIZAJE */
 
 async function turnoDe(indice) {
+    if (terminado || finalizando) return;
+
     const n = NINOS[indice];
+    if (!n) return;
+
+    const secuencia = ++secuenciaActual;
 
     indiceNino = indice;
     indiceLetra = 0;
+
     puedeTrazar = false;
+    trazando = false;
+
+    quitarPista();
 
     mostrarNino(n);
     prepararNombre(n);
@@ -677,30 +928,54 @@ async function turnoDe(indice) {
 
     alumna.classList.add("llegada", "saluda");
 
-    await dialogoConLimite(n.turno, 6000, 1800);
+    await dialogoConLimite(n.turno, 6000, 1000);
+
+    if (
+        terminado ||
+        finalizando ||
+        secuencia !== secuenciaActual
+    ) {
+        return;
+    }
 
     alumna.classList.remove("saluda");
-
     empezarLetra();
 }
 
 function empezarLetra() {
-    puedeTrazar = true;
+    if (terminado || finalizando) return;
 
-    // Se enseña el camino con la mano antes de empezar.
-    setTimeout(() => {
-        if (puedeTrazar && !trazando) mostrarDemo();
-    }, 500);
+    puedeTrazar = true;
+    trazando = false;
+
+    if (!primeraDemostracion) {
+        primeraDemostracion = true;
+
+        setTimeout(() => {
+            if (puedeTrazar && !trazando && !terminado) {
+                mostrarDemo();
+            }
+        }, 500);
+    }
 
     programarPista();
 }
 
+/* COMPLETAR LETRAS */
+
 async function completarLetra() {
+    if (!puedeTrazar || terminado || finalizando) return;
+
     puedeTrazar = false;
+    trazando = false;
+
     quitarPista();
 
+    const secuencia = secuenciaActual;
     const n = NINOS[indiceNino];
     const casilla = nombre.children[indiceLetra];
+
+    if (!n || !casilla) return;
 
     punta.classList.add("oculta");
     capa.classList.add("hecha");
@@ -711,32 +986,65 @@ async function completarLetra() {
     sonidoAcierto();
     crearDestellos(casilla);
 
+    letrasCompletadas++;
+
     alumna.classList.remove("salta");
     void alumna.getBoundingClientRect();
     alumna.classList.add("salta");
 
-    if (indiceLetra >= n.nombre.length - 1) {
+    const ultimaLetra = indiceLetra >= n.nombre.length - 1;
+
+    if (ultimaLetra) {
         await completarNombre();
         return;
     }
 
-    await pausa(1100);
+    const felicitacion = letrasCompletadas % 2 === 1
+        ? "muyBien"
+        : "excelente";
+
+    await dialogoConLimite(felicitacion, 3500, 850);
+
+    if (
+        terminado ||
+        finalizando ||
+        secuencia !== secuenciaActual
+    ) {
+        return;
+    }
 
     alumna.classList.remove("salta");
+
     indiceLetra++;
     construirLetra(n.nombre[indiceLetra]);
+
     empezarLetra();
 }
 
+/* COMPLETAR NOMBRES */
+
 async function completarNombre() {
     const n = NINOS[indiceNino];
+
+    if (!n || terminado || finalizando) return;
+
+    puedeTrazar = false;
+    quitarPista();
 
     ninosHechos++;
     ganarEstrella();
 
     nombre.classList.add("completo");
+
     cambiarStarly("feliz", true);
     crearDestellos(nombre);
+
+    alumna.classList.remove("salta");
+    alumna.classList.add("festeja");
+
+    await dialogoConLimite(n.bien, 5500, 1800);
+
+    if (terminado || finalizando) return;
 
     const esElUltimo = indiceNino >= NINOS.length - 1;
 
@@ -745,23 +1053,26 @@ async function completarNombre() {
         return;
     }
 
-    alumna.classList.remove("salta");
-    alumna.classList.add("festeja");
-
-    await dialogoConLimite(n.bien, 5000, 2200);
-
-    // El niño se va y llega el siguiente.
     alumna.classList.remove("festeja", "llegada");
 
-    await pausa(1100);
+    await pausa(500);
 
-    turnoDe(indiceNino + 1);
+    if (terminado || finalizando) return;
+
+    await turnoDe(indiceNino + 1);
 }
+
+/* GUARDAR PROGRESO */
 
 function guardarProgreso() {
     try {
-        const guardado = JSON.parse(localStorage.getItem(CLAVE_PROGRESO) || "{}");
-        const progreso = guardado && typeof guardado === "object" ? guardado : {};
+        const guardado = JSON.parse(
+            localStorage.getItem(CLAVE_PROGRESO) || "{}"
+        );
+
+        const progreso = guardado && typeof guardado === "object"
+            ? guardado
+            : {};
 
         if (!Array.isArray(progreso.completadas)) {
             progreso.completadas = [];
@@ -776,97 +1087,141 @@ function guardarProgreso() {
         }
 
         progreso.estrellas[NUMERO_MISION] = 3;
-        localStorage.setItem(CLAVE_PROGRESO, JSON.stringify(progreso));
+
+        localStorage.setItem(
+            CLAVE_PROGRESO,
+            JSON.stringify(progreso)
+        );
     } catch (error) {
         console.warn("No se pudo guardar el progreso.");
     }
 }
 
-async function finalizarMision() {
-    terminado = true;
-    puedeTrazar = false;
+/* FINAL DE LA MISIÓN */
 
+async function finalizarMision() {
+    if (terminado || finalizando) return;
+
+    finalizando = true;
+    puedeTrazar = false;
+    trazando = false;
+
+    secuenciaActual++;
     quitarPista();
 
-    guardarProgreso();
+    alumna.classList.remove("salta", "llegada");
 
-    alumna.classList.remove("salta");
-    alumna.classList.remove("llegada");
+    await pausa(650);
 
-    await pausa(1000);
-
-    // Los tres niños se juntan a festejar.
     mostrarGrupo();
     alumna.classList.add("llegada", "festeja");
 
     cambiarStarly("celebrando", true);
+
     sonidoAcierto();
     crearDestellos(nombre);
 
-    await dialogoConLimite("bienSol", 9000, 3200);
+    await pausa(400);
+
+    // Diálogo final antes de mostrar la celebración.
+    await dialogoConLimite("final", 8000, 1800);
+
+    if (terminado) return;
+
+    await pausa(400);
+
+    guardarProgreso();
+
+    terminado = true;
+    finalizando = false;
 
     detenerAudio();
 
+    // El audio de victoria se reproduce únicamente en la celebración.
     if (typeof window.mostrarCelebracion === "function") {
         window.mostrarCelebracion({
             mision: NUMERO_MISION,
             estrellas: 3,
             titulo: "¡Misión completada!",
-            mensaje: "¡Todos los niños tienen derecho a ir a la escuela y aprender!",
-            audio: RUTA_AUDIO + "victoria.mp3",
+            mensaje: "Todos tenemos derecho a aprender escribir nuestros nombres",
+            audio: configuracion.voz
+                ? RUTA_AUDIO + "victoria.mp3"
+                : null,
             destino: "../mapa.html"
         });
+
+        return;
     }
+
+    // Alternativa si el componente de celebración no está disponible.
+    await dialogoConLimite("victoria", 10000, 2500);
 }
 
-/* Introducción: llegan los niños del autobús */
-
-function terminarIntro() {
-    introActiva = false;
-}
-
-// Si el niño toca la pantalla mientras Starly habla, se pasa al juego.
-function saltarIntro() {
-    if (!introActiva) return;
-
-    terminarIntro();
-    alumna.classList.remove("llegada", "saluda", "grupo");
-
-    pausa(900).then(() => turnoDe(0));
-}
+/* INTRODUCCIÓN EN EL SALÓN */
 
 async function contarHistoria() {
     introActiva = true;
 
     cambiarStarly("feliz");
+
     nombre.innerHTML = "";
+
     construirLetra("A");
     punta.classList.add("oculta");
 
     mostrarGrupo();
     alumna.classList.add("llegada", "saluda");
 
-    await dialogoConLimite("llegada", 5000, 2000);
-    if (!introActiva) return;
+    await dialogoConLimite("inicio", 6500, 1000);
 
-    await dialogoConLimite("inicio", 7000, 2500);
-    if (!introActiva) return;
+    if (!introActiva || terminado) return;
 
-    terminarIntro();
+    await pausa(150);
+
+    await dialogoConLimite("instrucciones", 7500, 1200);
+
+    if (!introActiva || terminado) return;
+
+    introActiva = false;
 
     alumna.classList.remove("saluda", "llegada");
 
-    await pausa(1000);
+    await pausa(350);
 
-    turnoDe(0);
+    await turnoDe(0);
 }
 
-botonAudio.addEventListener("click", () => decir(ultimoDialogo));
-escenario.addEventListener("pointerdown", saltarIntro);
+/* BOTÓN PARA ESCUCHAR A STARLY */
+
+botonAudio.addEventListener("click", () => {
+    if (terminado) return;
+
+    if (finalizando) {
+        decir("final");
+        return;
+    }
+
+    if (puedeTrazar) {
+        decir("pista");
+    } else {
+        decir(ultimoDialogo);
+    }
+});
+
+/* LIMPIEZA */
 
 window.addEventListener("pagehide", () => {
     clearTimeout(temporizadorPista);
+
+    terminado = true;
+    finalizando = false;
+    puedeTrazar = false;
+
+    cancelarDemo();
     detenerAudio();
 });
 
+/* INICIAR MISIÓN */
+
+prepararEstrellas();
 contarHistoria();

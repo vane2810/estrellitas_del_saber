@@ -578,3 +578,34 @@
 
     .luna-alumna { transition-duration: 0.01s; }
 }
+
+/* ESTRELLAS DE PROGRESO */
+
+.luna-estrella {
+    display: inline-block;
+    color: #B9B9C9;
+    filter: grayscale(1);
+    opacity: 0.45;
+    transition: transform 0.35s ease, opacity 0.35s ease;
+}
+
+.luna-estrella.ganada {
+    color: #FFD43B;
+    filter: none;
+    opacity: 1;
+    animation: estrella-ganada 0.5s ease-out;
+}
+
+@keyframes estrella-ganada {
+    0% {
+        transform: scale(0.5);
+    }
+
+    60% {
+        transform: scale(1.35);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
