@@ -993,3 +993,377 @@
     .alb-bandeja .alb-calco { width: 42px; height: 42px; }
     .alb-hueco { width: min(40%, 120px); }
 }
+
+
+
+/* RESPONSIVE - MISIÓN 6 */
+
+.alb-juego {
+    width: 100%;
+    min-height: 100dvh;
+    overflow-x: hidden;
+}
+
+.alb-panel {
+    box-sizing: border-box;
+    max-width: 1320px;
+}
+
+.alb-escenario {
+    width: 100%;
+    min-width: 0;
+}
+
+@media (max-width: 1024px) and (orientation: landscape) {
+    .alb-header {
+        gap: 8px;
+        padding: 6px 18px;
+    }
+
+    .alb-header h1 {
+        font-size: clamp(1rem, 2.2vw, 1.5rem);
+    }
+
+    .alb-mision {
+        font-size: 0.65rem;
+    }
+
+    .alb-volver,
+    .alb-contador {
+        min-height: 36px;
+        padding: 5px 11px;
+        font-size: 0.82rem;
+    }
+
+    .alb-panel {
+        width: 97%;
+        margin: 5px auto 12px;
+        padding: 7px;
+        border-width: 3px;
+        border-radius: 20px;
+    }
+
+    .alb-escenario {
+        height: clamp(300px, 74dvh, 470px);
+        min-height: 0;
+        border-radius: 16px;
+    }
+
+    .alb-guia {
+        top: 7px;
+        left: 9px;
+        width: min(70%, 470px);
+        gap: 7px;
+    }
+
+    .alb-starly {
+        width: 55px;
+        height: 62px;
+    }
+
+    .alb-dialogo {
+        min-height: 42px;
+        padding: 6px 9px;
+        gap: 7px;
+        border-radius: 14px;
+    }
+
+    .alb-dialogo p {
+        font-size: clamp(0.72rem, 1.4vw, 0.88rem);
+        line-height: 1.25;
+    }
+
+    .alb-audio {
+        width: 34px;
+        height: 34px;
+        flex-basis: 34px;
+    }
+
+    .alb-libro {
+        top: 75px;
+        bottom: 12px;
+        width: 94%;
+        grid-template-columns:
+            minmax(0, 1fr)
+            9px
+            minmax(0, 1.15fr);
+        padding: 6px;
+        border-radius: 17px;
+    }
+
+    .alb-pag {
+        min-width: 0;
+        min-height: 0;
+        padding: 8px;
+    }
+
+    .alb-izq {
+        justify-content: center;
+    }
+
+    .alb-der {
+        gap: 6px;
+    }
+
+    .alb-minis {
+        width: 100%;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 7px;
+        max-width: 300px;
+    }
+
+    .alb-mini {
+        border-width: 2px;
+        border-radius: 10px;
+        font-size: clamp(1.3rem, 2.8vw, 2rem);
+    }
+
+    .alb-mini:nth-child(4) {
+        grid-column: 1 / 2;
+    }
+
+    .alb-num {
+        top: -6px;
+        left: -6px;
+        width: 19px;
+        height: 19px;
+        font-size: 0.65rem;
+    }
+
+    .alb-puntos {
+        gap: 5px;
+    }
+
+    .alb-puntos span {
+        width: 9px;
+        height: 9px;
+    }
+
+    .alb-cuerpo {
+        gap: 6px;
+        justify-content: space-evenly;
+    }
+
+    .alb-hueco {
+        width: min(40%, 145px);
+        max-height: 100%;
+        border-width: 3px;
+        border-radius: 15px;
+        font-size: clamp(2.2rem, 5vw, 4rem);
+    }
+
+    .alb-interrogante {
+        font-size: clamp(2.2rem, 5vw, 4rem);
+    }
+
+    .alb-flecha {
+        width: 25px;
+    }
+
+    .alb-bandeja {
+        gap: 6px;
+        padding: 4px;
+        max-height: 100%;
+        justify-content: center;
+    }
+
+    .alb-calco,
+    .alb-bandeja .alb-calco {
+        width: clamp(45px, 5.8vw, 65px);
+        height: clamp(45px, 5.8vw, 65px);
+        border-width: 2px;
+        border-radius: 13px;
+        font-size: clamp(1.5rem, 3vw, 2.1rem);
+        touch-action: none;
+    }
+
+    .alb-pie {
+        gap: 8px;
+        padding: 6px 10px 3px;
+    }
+
+    .alb-pie p {
+        font-size: 0.85rem;
+    }
+
+    .alb-progreso {
+        gap: 7px;
+    }
+
+    .alb-estrella {
+        font-size: 1.4rem;
+    }
+
+    .alb-foto {
+        padding-top: 65px;
+    }
+
+    .alb-polaroid {
+        width: min(75%, 420px, calc((100cqh - 115px) * 1.3));
+        padding: 9px 9px 30px;
+    }
+
+    .alb-pegatina {
+        font-size: clamp(1.4rem, 3.5vw, 2.3rem);
+    }
+
+    .alb-pegatina .alb-grupo {
+        width: clamp(45px, 8vw, 70px);
+    }
+}
+
+@media (max-width: 700px) and (orientation: landscape) {
+    .alb-header {
+        gap: 5px;
+        padding: 4px 10px;
+    }
+
+    .alb-header h1 {
+        font-size: 0.95rem;
+    }
+
+    .alb-panel {
+        width: 98%;
+        padding: 5px;
+    }
+
+    .alb-escenario {
+        height: clamp(260px, 72dvh, 350px);
+        min-height: 0;
+    }
+
+    .alb-guia {
+        top: 5px;
+        left: 6px;
+        width: 65%;
+    }
+
+    .alb-starly {
+        width: 43px;
+        height: 50px;
+    }
+
+    .alb-dialogo {
+        min-height: 36px;
+        padding: 4px 6px;
+    }
+
+    .alb-dialogo p {
+        font-size: 0.68rem;
+    }
+
+    .alb-audio {
+        width: 30px;
+        height: 30px;
+        flex-basis: 30px;
+    }
+
+    .alb-libro {
+        top: 60px;
+        bottom: 7px;
+        width: 96%;
+        grid-template-columns:
+            minmax(0, 1fr)
+            6px
+            minmax(0, 1.15fr);
+        grid-template-rows: minmax(0, 1fr);
+        gap: 0;
+        padding: 4px;
+    }
+
+    .alb-lomo {
+        display: block;
+    }
+
+    .alb-pag {
+        padding: 5px;
+    }
+
+    .alb-minis {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 5px;
+    }
+
+    .alb-mini {
+        border-width: 2px;
+        border-radius: 7px;
+        font-size: 1.2rem;
+    }
+
+    .alb-mini:nth-child(4) {
+        grid-column: 1 / 2;
+    }
+
+    .alb-num {
+        width: 15px;
+        height: 15px;
+        font-size: 0.55rem;
+    }
+
+    .alb-der {
+        gap: 4px;
+    }
+
+    .alb-cuerpo {
+        gap: 4px;
+    }
+
+    .alb-hueco {
+        width: min(38%, 100px);
+        border-width: 2px;
+        border-radius: 10px;
+        font-size: 2rem;
+    }
+
+    .alb-interrogante {
+        font-size: 2rem;
+    }
+
+    .alb-flecha {
+        width: 18px;
+    }
+
+    .alb-bandeja {
+        gap: 4px;
+        padding: 2px;
+    }
+
+    .alb-calco,
+    .alb-bandeja .alb-calco {
+        width: 38px;
+        height: 38px;
+        border-width: 2px;
+        border-radius: 9px;
+        font-size: 1.3rem;
+    }
+
+    .alb-pie {
+        gap: 5px;
+        padding: 4px;
+    }
+
+    .alb-pie p {
+        font-size: 0.75rem;
+    }
+
+    .alb-estrella {
+        font-size: 1.2rem;
+    }
+
+    .alb-foto {
+        padding-top: 52px;
+    }
+
+    .alb-polaroid {
+        width: min(68%, 290px, calc((100cqh - 85px) * 1.3));
+        padding: 7px 7px 23px;
+    }
+
+    .alb-pegatina {
+        font-size: 1.3rem;
+    }
+
+    .alb-pegatina .alb-grupo {
+        width: 43px;
+    }
+}

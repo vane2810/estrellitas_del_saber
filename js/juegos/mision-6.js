@@ -112,7 +112,7 @@ const DIALOGOS = {
         "pista.mp3"
     ],
     final: [
-        "¡Lo logramos! Todos los niños y las niñas tienen derecho a aprender",
+        "¡Logramos recordar todo lo aprendido!",
         "final.mp3"
     ]
 };

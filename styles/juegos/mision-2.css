@@ -1280,3 +1280,231 @@
     }
 }
 
+
+/* RESPONSIVE - LA MOCHILA DE STARLY */
+
+.mochila-juego {
+    width: 100%;
+    min-height: 100dvh;
+    overflow-x: hidden;
+}
+
+.mochila-panel {
+    box-sizing: border-box;
+    max-width: 1150px;
+}
+
+.mochila-escenario {
+    width: 100%;
+    min-width: 0;
+}
+
+@media (max-width: 1024px) and (orientation: landscape) {
+    .mochila-header {
+        gap: 8px;
+        padding: 6px 16px;
+    }
+
+    .mochila-header h1 {
+        font-size: clamp(1rem, 2.3vw, 1.5rem);
+    }
+
+    .mochila-mision {
+        font-size: 0.65rem;
+    }
+
+    .mochila-volver,
+    .mochila-contador {
+        min-height: 36px;
+        padding: 5px 11px;
+        font-size: 0.82rem;
+    }
+
+    .mochila-panel {
+        width: 97%;
+        margin: 5px auto 10px;
+        padding: 7px;
+        border-width: 3px;
+        border-radius: 20px;
+    }
+
+    .mochila-escenario {
+        height: clamp(260px, 66dvh, 440px);
+        min-height: 0;
+        border-radius: 16px;
+    }
+
+    .mochila-guia {
+        top: 8px;
+        left: 10px;
+        width: min(61%, 490px);
+        gap: 6px;
+    }
+
+    .mochila-starly {
+        width: 65px;
+        height: 78px;
+    }
+
+    .mochila-dialogo {
+        min-height: 48px;
+        padding: 6px 9px;
+        gap: 6px;
+        border-radius: 14px;
+    }
+
+    .mochila-dialogo p {
+        font-size: clamp(0.72rem, 1.5vw, 0.9rem);
+        line-height: 1.25;
+    }
+
+    .mochila-audio {
+        width: 34px;
+        height: 34px;
+        flex-basis: 34px;
+    }
+
+    .mochila-lista {
+        top: 10px;
+        right: 2%;
+        gap: 4px;
+        padding: 6px 9px;
+    }
+
+    .lista-titulo {
+        font-size: 0.65rem;
+    }
+
+    .lista-casilla {
+        width: 34px;
+        height: 34px;
+        font-size: 1.1rem;
+    }
+
+    .escondite {
+        --k: 0.72;
+    }
+
+    .mochila {
+        right: 2%;
+        bottom: 2%;
+        width: clamp(75px, 11vw, 115px);
+    }
+
+    .mochila-pie {
+        gap: 8px;
+        padding: 7px 10px 3px;
+    }
+
+    .mochila-pie p {
+        font-size: 0.85rem;
+    }
+
+    .mochila-estrella {
+        font-size: 1.55rem;
+    }
+
+    .historia-utiles {
+        right: calc(2% + clamp(75px, 11vw, 115px) + 8px);
+        bottom: 2%;
+    }
+
+    .historia-util {
+        font-size: 1.7rem;
+    }
+}
+
+@media (max-width: 700px) and (orientation: landscape) {
+    .mochila-header {
+        padding: 5px 10px;
+    }
+
+    .mochila-header h1 {
+        font-size: 1rem;
+    }
+
+    .mochila-panel {
+        width: 98%;
+        padding: 5px;
+    }
+
+    .mochila-escenario {
+        height: clamp(230px, 65dvh, 320px);
+        min-height: 0;
+    }
+
+    .mochila-guia {
+        width: 62%;
+        top: 6px;
+        left: 6px;
+    }
+
+    .mochila-starly {
+        width: 48px;
+        height: 60px;
+    }
+
+    .mochila-dialogo {
+        min-height: 42px;
+        padding: 5px 7px;
+    }
+
+    .mochila-dialogo p {
+        font-size: 0.7rem;
+    }
+
+    .mochila-audio {
+        width: 30px;
+        height: 30px;
+        flex-basis: 30px;
+    }
+
+    .mochila-lista {
+        top: 6px;
+        right: 1%;
+        padding: 5px 7px;
+    }
+
+    .lista-casilla {
+        width: 29px;
+        height: 29px;
+        font-size: 1rem;
+    }
+
+    .escondite {
+        --k: 0.6;
+        left: calc(var(--x) * 1%);
+        bottom: calc(var(--b) * 1%);
+        width: calc(var(--w) * var(--k) * 1px);
+        height: calc(var(--h) * var(--k) * 1px);
+    }
+
+    .escondite .arte {
+        --k: 0.6;
+    }
+
+    .mochila {
+        width: 75px;
+    }
+
+    .mochila-pie {
+        gap: 5px;
+        padding: 5px;
+    }
+
+    .mochila-pie p {
+        font-size: 0.75rem;
+    }
+
+    .mochila-estrella {
+        font-size: 1.3rem;
+    }
+
+    .historia-utiles {
+        right: calc(2% + 83px);
+    }
+
+    .historia-util {
+        font-size: 1.3rem;
+    }
+}

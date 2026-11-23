@@ -1,657 +1,1228 @@
-
 /* ESTRELLITAS DEL SABER - CERTIFICADO FINAL */
 
-.certificado-final {
-    --final-morado: var(--color-morado, #6241ad);
-    --final-amarillo: var(--color-amarillo, #ffdc63);
+.cer-pagina {
+    margin: 0;
+    min-height: 100dvh;
+    overflow: hidden;
+    background: #BDE9FF;
+}
+
+.cer-escena,
+.cer-escena *,
+.cer-escena *::before,
+.cer-escena *::after {
+    box-sizing: border-box;
+}
+
+.cer-escena {
+    --cer-fuente: var(--fuente-titulos, "Trebuchet MS"), "Trebuchet MS", Arial, sans-serif;
+    --cer-morado: var(--color-morado, #5B3FB5);
+    --cer-amarillo: var(--color-amarillo, #FFD84D);
+    --cer-naranja: var(--color-naranja, #FF8745);
+    --cer-espacio: var(--color-espacio, #171044);
     position: relative;
+    width: 100%;
+    height: 100dvh;
+    overflow: hidden;
     isolation: isolate;
-    min-height: 100vh;
-    min-height: 100dvh;
-    overflow: hidden;
-    color: #ffffff;
-    background:
-        radial-gradient(ellipse at 50% 40%, #314f99 0%, transparent 65%),
-        linear-gradient(180deg, #15265e 0%, #091331 100%);
+    font-family: var(--fuente-textos, "Trebuchet MS", Arial, sans-serif);
+    user-select: none;
+    -webkit-user-select: none;
 }
 
-.certificado-final [hidden] {
-    display: none !important;
-}
+.cer-escena [hidden] { display: none !important; }
 
-.certificado-cielo {
+/* ---------- Fondo ---------- */
+
+.cer-cielo {
     position: absolute;
     inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    overflow: hidden;
-}
-
-.final-estrella-fondo {
-    position: absolute;
-    left: var(--x);
-    top: var(--y);
-    width: var(--tamano);
-    height: var(--tamano);
-    border-radius: 50%;
-    background: #ffffff;
-    opacity: .6;
-    animation: final-titilar var(--duracion) ease-in-out infinite alternate;
-    animation-delay: var(--retraso);
-}
-
-@keyframes final-titilar {
-    from { opacity: .2; transform: scale(.7); }
-    to { opacity: 1; transform: scale(1.3); }
-}
-
-.final-escena {
-    position: relative;
-    width: 100%;
-    min-height: 100vh;
-    min-height: 100dvh;
-    padding: 25px 18px;
-}
-
-.final-escena-certificado {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 18px;
-    text-align: center;
-}
-
-.final-encabezado h1,
-.final-fin-contenido h2,
-.final-despedida-texto {
-    font-family: var(--fuente-titulos, inherit);
-}
-
-.final-encabezado h1 {
-    margin: 8px 0;
-    color: #ffec98;
-    font-size: clamp(2rem, 5vw, 3.2rem);
-    line-height: 1.15;
-    text-shadow: 0 4px 12px #0005;
-}
-
-.final-encabezado p {
-    margin: 0;
-    font-size: clamp(.95rem, 2vw, 1.15rem);
-}
-
-.final-marca {
-    color: var(--final-amarillo);
-    font-size: .8rem;
-    font-weight: 800;
-    letter-spacing: .15em;
-}
-
-.final-entrega {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 25px;
-    width: min(100%, 900px);
-}
-
-.final-starly {
-    flex: 0 0 22%;
-    animation: final-flotar 2.6s ease-in-out infinite;
-}
-
-.final-starly-imagen {
-    display: block;
-    width: 100%;
-    max-width: 190px;
-    max-height: 240px;
-    object-fit: contain;
-    filter: drop-shadow(0 8px 12px #0005);
-}
-
-.final-starly-sombra {
-    width: 65%;
-    height: 12px;
-    margin: 0 auto;
-    border-radius: 50%;
-    background: #0005;
-    filter: blur(6px);
-}
-
-@keyframes final-flotar {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-12px); }
-}
-
-.final-diploma {
-    flex: 1;
-    max-width: 600px;
-    padding: 9px;
-    border: 5px solid #e7b94d;
-    border-radius: 15px;
-    background: #fff6d6;
-    color: #30345f;
-    box-shadow: 0 15px 40px #0005;
-    animation: final-entregar .8s ease both;
-}
-
-.final-diploma-interior {
-    padding: clamp(15px, 3vw, 28px);
-    border: 2px solid #e1c57d;
-    border-radius: 7px;
     background:
-        radial-gradient(circle at top, #ffffff 0%, transparent 70%),
-        #fffaf0;
+        radial-gradient(circle at 50% 44%, #FFFBEA, transparent 64%),
+        linear-gradient(180deg, #CDEBFF, #FFF4DC);
 }
 
-.final-diploma-decoracion {
-    color: #d9a82d;
-    font-size: 1.5rem;
-    letter-spacing: .25em;
-}
-
-.final-diploma-marca {
-    margin: 7px 0;
-    color: var(--final-morado);
-    font-size: .75rem;
-    font-weight: 800;
-    letter-spacing: .12em;
-}
-
-.final-diploma h2 {
-    margin: 8px 0 14px;
-    color: #51358c;
-    font-family: var(--fuente-titulos, inherit);
-    font-size: clamp(1.4rem, 3vw, 2.2rem);
-}
-
-.final-diploma p {
-    margin: 9px auto;
-    line-height: 1.5;
-}
-
-.final-diploma-nombre {
-    display: block;
-    margin: 10px 0;
-    color: #aa7b20;
-    font-family: var(--fuente-titulos, inherit);
-    font-size: clamp(1.4rem, 3vw, 2rem);
-}
-
-.final-diploma-descripcion {
-    max-width: 420px;
-    font-size: .95rem;
-}
-
-.final-diploma-medalla {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 9px;
-    margin: 12px auto;
-    padding: 8px 18px;
-    border: 2px solid #d8ab38;
-    border-radius: 40px;
-    background: #fff0b5;
-    color: #77551b;
-}
-
-.final-diploma-medalla span {
-    font-size: 2rem;
-}
-
-.final-diploma-medalla strong {
-    font-size: .72rem;
-    line-height: 1.25;
-}
-
-.final-diploma-estrellas {
-    color: #a67b21;
-    font-size: .85rem;
-    font-weight: 800;
-}
-
-.final-diploma-firma {
-    color: var(--final-morado);
-    font-weight: 800;
-}
-
-@keyframes final-entregar {
-    from {
-        opacity: 0;
-        transform: translateY(35px) scale(.88);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-.final-mensaje {
-    min-height: 28px;
-    margin: 0;
-    color: #ffefa2;
-    font-size: clamp(1rem, 2.5vw, 1.3rem);
-    font-weight: 800;
-}
-
-.final-acciones {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 12px;
-}
-
-.final-boton {
-    min-height: 48px;
-    padding: 11px 22px;
-    border: 3px solid #ffffff;
-    border-radius: 30px;
-    font-family: var(--fuente-titulos, inherit);
-    font-size: 1rem;
-    font-weight: 800;
-    cursor: pointer;
-    transition: transform .2s ease, opacity .2s ease;
-}
-
-.final-boton:hover:not(:disabled) {
-    transform: translateY(-3px);
-}
-
-.final-boton:focus-visible,
-.final-control-audio:focus-visible {
-    outline: 4px solid var(--final-amarillo);
-    outline-offset: 4px;
-}
-
-.final-boton:disabled {
-    opacity: .55;
-    cursor: wait;
-}
-
-.final-boton-principal {
-    background: var(--final-amarillo);
-    color: #42256f;
-    box-shadow: 0 5px 0 #b48128;
-}
-
-.final-boton-secundario {
-    background: var(--final-morado);
-    color: #ffffff;
-    box-shadow: 0 5px 0 #32216a;
-}
-
-.final-control-audio {
-    position: fixed;
-    z-index: 50;
-    top: 16px;
-    right: 16px;
-    display: grid;
-    place-items: center;
-    width: 45px;
-    height: 45px;
-    border: 2px solid #ffffff;
+.cer-rayos {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 170vmax;
+    height: 170vmax;
+    margin: -85vmax 0 0 -85vmax;
     border-radius: 50%;
-    background: var(--final-morado);
-    color: #ffffff;
-    font-size: 1.3rem;
-    cursor: pointer;
+    background: repeating-conic-gradient(rgba(255, 214, 84, 0.17) 0 7deg, transparent 7deg 22deg);
+    -webkit-mask-image: radial-gradient(circle, #000 0, transparent 55%);
+    mask-image: radial-gradient(circle, #000 0, transparent 55%);
+    opacity: 0;
+    transition: opacity 1.4s ease;
 }
 
-.final-escena-despedida {
-    text-align: center;
+.cer-rayos.on {
+    opacity: 1;
+    animation: cer-girar 50s linear infinite;
 }
 
-.final-despedida-texto {
-    position: relative;
-    z-index: 5;
-    max-width: 750px;
-    margin: 9vh auto 0;
-    color: #fff0a0;
-    font-size: clamp(1.5rem, 4vw, 2.7rem);
-    font-weight: 800;
-    text-shadow: 0 4px 14px #0007;
-}
-
-.final-espacio-vuelo {
+.cer-noche {
     position: absolute;
     inset: 0;
-    overflow: hidden;
+    opacity: 0;
+    background:
+        radial-gradient(ellipse at 72% 18%, rgba(110, 80, 220, 0.55), transparent 55%),
+        linear-gradient(180deg, #0B0830, #241672 62%, #3E2A94);
+    transition: opacity 2.6s ease;
 }
 
-.final-plataforma {
+.cer-estrellas {
     position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 2.6s ease;
+}
+
+.cer-estrella-fondo {
+    position: absolute;
+    border-radius: 50%;
+    background: #FFFFFF;
+    animation: cer-titilar var(--t, 3s) ease-in-out infinite;
+    animation-delay: var(--r, 0s);
+}
+
+.cer-planeta {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 3s ease;
+}
+
+.cer-planeta.p1 {
+    right: 7%;
     bottom: 9%;
-    left: 50%;
-    width: min(360px, 75vw);
-    height: 28px;
-    transform: translateX(-50%);
+    width: 17vmin;
+    height: 17vmin;
+    background: radial-gradient(circle at 32% 30%, #FFC58A, #E8647E 60%, #8C2F7A);
+    box-shadow: 0 0 40px rgba(255, 140, 120, 0.4);
+    animation: cer-flotar 7s ease-in-out infinite;
+}
+
+.cer-planeta.p1::after {
+    content: "";
+    position: absolute;
+    top: 42%;
+    left: -28%;
+    width: 156%;
+    height: 22%;
+    border: 5px solid rgba(255, 224, 160, 0.8);
     border-radius: 50%;
-    background: #4865a0;
-    box-shadow: 0 0 30px #89baff44;
+    transform: rotate(-16deg);
 }
 
-.final-nave {
-    position: absolute;
-    z-index: 2;
-    bottom: calc(9% + 20px);
-    left: 50%;
-    width: 150px;
-    height: 225px;
-    transform: translateX(-50%);
-    transform-origin: center 70%;
-    filter: drop-shadow(0 10px 12px #0005);
+.cer-planeta.p2 {
+    top: 34%;
+    left: 5%;
+    width: 9vmin;
+    height: 9vmin;
+    background: radial-gradient(circle at 32% 30%, #BFEAFF, #4F8FF0 65%, #2B4FB0);
+    box-shadow: 0 0 30px rgba(110, 180, 255, 0.4);
+    animation: cer-flotar 9s ease-in-out infinite reverse;
 }
 
-.final-nave-punta {
-    position: absolute;
-    z-index: 2;
-    top: 0;
-    left: 25px;
-    width: 100px;
-    height: 130px;
-    background: #f16a7b;
-    clip-path: polygon(50% 0, 100% 100%, 0 100%);
-}
+.cer-escena.noche .cer-noche,
+.cer-escena.noche .cer-estrellas { opacity: 1; }
 
-.final-nave-cuerpo {
-    position: absolute;
-    z-index: 3;
-    top: 90px;
-    left: 25px;
-    width: 100px;
-    height: 110px;
-    border-radius: 12px 12px 35px 35px;
-    background: linear-gradient(90deg, #c4e4ff, #ffffff, #b5d6f5);
-}
+.cer-escena.noche .cer-planeta { opacity: 0.95; }
+.cer-escena.noche .cer-rayos { opacity: 0; }
 
-.final-nave-ventana {
-    position: absolute;
-    z-index: 5;
-    top: 92px;
-    left: 46px;
-    display: grid;
-    place-items: center;
-    width: 58px;
-    height: 58px;
-    overflow: hidden;
-    border: 7px solid #6173b5;
-    border-radius: 50%;
-    background: #a6eaff;
-}
-
-.final-nave-ventana img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-.final-nave-aleta {
-    position: absolute;
-    z-index: 1;
-    bottom: 24px;
-    width: 47px;
-    height: 80px;
-    background: #f16a7b;
-}
-
-.final-nave-aleta-izquierda {
-    left: 0;
-    clip-path: polygon(100% 0, 100% 100%, 0 100%);
-}
-
-.final-nave-aleta-derecha {
-    right: 0;
-    clip-path: polygon(0 0, 100% 100%, 0 100%);
-}
-
-.final-nave-motor {
+.cer-globos {
     position: absolute;
     z-index: 4;
-    bottom: 20px;
-    left: 40px;
-    width: 70px;
-    height: 22px;
-    border-radius: 8px;
-    background: #5369aa;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
 }
 
-.final-nave-fuego {
+/* ---------- Starly y su cuadro de texto ---------- */
+
+.cer-guia {
     position: absolute;
-    z-index: 0;
-    bottom: -70px;
-    left: 52px;
-    width: 46px;
-    height: 105px;
-    opacity: 0;
-    background: linear-gradient(
-        #fff7a1,
-        #ffc22b 40%,
-        #ff693d 80%,
-        transparent
-    );
-    clip-path: polygon(0 0, 100% 0, 75% 75%, 50% 100%, 25% 75%);
-    transform-origin: top;
+    z-index: 35;
+    top: 14px;
+    left: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: min(88%, 520px);
+    pointer-events: none;
+    transition: opacity 0.8s ease;
 }
 
-.final-nave.encendida .final-nave-fuego {
-    opacity: 1;
-    animation: final-fuego .15s ease-in-out infinite alternate;
+.cer-guia.fuera { opacity: 0; }
+
+.cer-starly {
+    width: 78px;
+    height: 84px;
+    flex-shrink: 0;
+    object-fit: contain;
+    animation: cer-flotar 3s ease-in-out infinite;
 }
 
-.final-nave.temblando {
-    animation: final-temblor .15s linear infinite alternate;
+.cer-dialogo {
+    display: flex;
+    align-items: center;
+    flex: 0 1 auto;
+    min-width: 0;
+    gap: 10px;
+    min-height: 68px;
+    padding: 10px 10px 10px 17px;
+    border: 3px solid #DCCFFF;
+    border-radius: 20px;
+    background: #FFFFFF;
+    box-shadow: 0 4px 0 rgba(73, 48, 154, 0.12);
 }
 
-.final-nave.despegando {
-    animation: final-despegue 5s cubic-bezier(.35, 0, .65, 1) forwards;
+.cer-dialogo p {
+    flex: 1;
+    margin: 0;
+    color: #49309A;
+    font-size: clamp(0.9rem, 1.8vw, 1.15rem);
+    font-weight: 800;
 }
 
-@keyframes final-fuego {
-    from { transform: scaleY(.8); }
-    to { transform: scaleY(1.15); }
-}
-
-@keyframes final-temblor {
-    from { translate: -3px 0; }
-    to { translate: 3px 0; }
-}
-
-@keyframes final-despegue {
-    0% {
-        transform: translateX(-50%) translateY(0) scale(1);
-        opacity: 1;
-    }
-    20% {
-        transform: translateX(-50%) translateY(-55px) scale(1);
-    }
-    50% {
-        transform: translateX(-40%) translateY(-35vh) scale(.7);
-    }
-    80% {
-        transform: translateX(10vw) translateY(-70vh) scale(.25);
-        opacity: 1;
-    }
-    100% {
-        transform: translateX(20vw) translateY(-100vh) scale(.03);
-        opacity: 0;
-    }
-}
-
-.final-escena-fin {
+.cer-audio {
     display: grid;
     place-items: center;
+    flex: 0 0 42px;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: 3px solid #FFFFFF;
+    border-radius: 50%;
+    background: #49309A;
+    box-shadow: 0 4px 0 #30206B;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.cer-audio svg {
+    width: 23px;
+    height: 23px;
+    fill: #FFFFFF;
+    stroke: #FFFFFF;
+    stroke-width: 1.3;
+}
+
+.cer-audio.reproduciendo { animation: cer-pulso 1s infinite; }
+
+/* ---------- Certificado (se dibuja en 600 x 470 y se escala) ---------- */
+
+.cer-zona {
+    position: absolute;
+    z-index: 10;
+    top: 86px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: grid;
+    place-items: center;
+}
+
+.cer-caja {
+    position: relative;
+    width: calc(600px * var(--s, 1));
+    height: calc(470px * var(--s, 1));
+}
+
+.cer-escala {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 600px;
+    height: 470px;
+    transform: scale(var(--s, 1));
+    transform-origin: 0 0;
+}
+
+.cer-diploma {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+.cer-diploma.entra { animation: cer-cae 1.1s cubic-bezier(0.3, 1.35, 0.5, 1) forwards; }
+.cer-diploma.entrado { opacity: 1; animation: cer-respirar 4s ease-in-out infinite; }
+.cer-diploma.sacude { opacity: 1; animation: cer-sacudir 0.5s ease-out; }
+.cer-diploma.sale { opacity: 1; animation: cer-sale 1.2s cubic-bezier(0.6, 0, 0.8, 0.4) forwards; }
+
+.cer-marco {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 52px 24px 18px;
+    border: 10px double #E0A92E;
+    border-radius: 30px;
+    background:
+        radial-gradient(circle, rgba(255, 214, 84, 0.13) 2px, transparent 3px) 0 0 / 24px 24px,
+        #FFFCF0;
+    box-shadow: 0 12px 0 rgba(125, 84, 20, 0.22), 0 26px 44px rgba(40, 20, 90, 0.3);
     text-align: center;
 }
 
-.final-fin-contenido {
+.cer-esquina {
+    position: absolute;
+    color: #E7B94A;
+    font-size: 28px;
+    line-height: 1;
+    opacity: 0.75;
+    animation: cer-titilar 2.2s ease-in-out infinite;
+}
+
+.cer-esquina.e1 { top: 8px; left: 12px; }
+.cer-esquina.e2 { top: 8px; right: 12px; animation-delay: 0.5s; }
+.cer-esquina.e3 { bottom: 8px; left: 12px; animation-delay: 1s; }
+.cer-esquina.e4 { bottom: 8px; right: 12px; animation-delay: 1.5s; }
+
+/* Cinta roja de arriba */
+.cer-cinta {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 320px;
+    height: 56px;
+    border-radius: 12px;
+    background: #E4644E;
+    box-shadow: 0 5px 0 #B5412F;
+    color: #FFFFFF;
+    font-family: var(--cer-fuente);
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-shadow: 0 2px 0 #A9301F;
+    transform: translateX(-50%) scaleX(0);
+}
+
+.cer-cinta::before,
+.cer-cinta::after {
+    content: "";
+    position: absolute;
+    top: 14px;
+    z-index: -1;
+    width: 44px;
+    height: 56px;
+    background: #B83A26;
+}
+
+.cer-cinta::before { left: -26px; clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 34% 50%); }
+.cer-cinta::after { right: -26px; clip-path: polygon(0 0, 100% 0, 66% 50%, 100% 100%, 0 100%); }
+
+.cer-diploma.armado .cer-cinta {
+    animation: cer-cinta 0.6s cubic-bezier(0.3, 1.4, 0.5, 1) 0.9s forwards;
+}
+
+.cer-titulo {
+    margin: 4px 0 0;
+    font-family: var(--cer-fuente);
+    font-size: 62px;
+    font-weight: 800;
+    line-height: 1.02;
+}
+
+.cer-linea-titulo { display: block; }
+
+.cer-letra {
+    display: inline-block;
+    color: var(--c);
+    text-shadow: 0 3px 0 rgba(73, 48, 154, 0.12);
+    opacity: 0;
+}
+
+.cer-diploma.armado .cer-letra {
+    animation: cer-letra 0.55s cubic-bezier(0.3, 1.6, 0.5, 1) calc(1.2s + var(--i) * 0.055s) forwards;
+}
+
+.cer-espacio { display: inline-block; width: 0.28em; }
+
+.cer-ninos {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 16px;
+    height: 144px;
+    margin-top: 12px;
+}
+
+.cer-ninos::after {
+    content: "";
+    position: absolute;
+    right: 18%;
+    bottom: -8px;
+    left: 18%;
+    height: 16px;
+    border-radius: 50%;
+    background: rgba(90, 70, 40, 0.14);
+}
+
+.cer-ninos > svg {
+    position: relative;
+    z-index: 1;
+    width: 94px;
+    height: 144px;
+    overflow: visible;
+    transform-origin: 50% 100%;
+    opacity: 0;
+}
+
+.cer-diploma.armado .cer-ninos > svg {
+    animation:
+        cer-sube 0.6s cubic-bezier(0.3, 1.5, 0.5, 1) calc(1.9s + var(--k) * 0.18s) forwards,
+        cer-salto 1.1s ease-in-out calc(3.2s + var(--k) * 0.3s) infinite;
+}
+
+.cer-diploma.armado .cer-ninos > svg:nth-child(3) {
+    animation:
+        cer-sube 0.6s cubic-bezier(0.3, 1.5, 0.5, 1) calc(1.9s + var(--k) * 0.18s) forwards,
+        cer-rodar 1.8s ease-in-out calc(3.2s + var(--k) * 0.3s) infinite;
+}
+
+/* Sellos de las misiones */
+.cer-sellos {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin: 18px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.cer-sellos li {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    font-size: 34px;
+    line-height: 1;
+    filter: grayscale(1);
+    opacity: 0.22;
+}
+
+.cer-sellos li.on {
+    filter: none;
+    opacity: 1;
+    animation: cer-sello 0.5s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.cer-lema {
+    margin: 10px 0 0;
+    color: var(--cer-morado);
+    font-family: var(--cer-fuente);
+    font-size: 22px;
+    font-weight: 700;
+}
+
+/* Medalla que se "sella" al final */
+.cer-medalla {
+    position: absolute;
+    right: -34px;
+    bottom: -42px;
+    z-index: 3;
+    width: 112px;
+    height: 140px;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    opacity: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.cer-medalla.sellada { animation: cer-sellar 0.6s cubic-bezier(0.3, 1.5, 0.5, 1) forwards; }
+.cer-medalla.brinca { animation: cer-brinco 0.5s ease-out; opacity: 1; }
+
+.cer-cintas i {
+    position: absolute;
+    top: 70px;
+    width: 34px;
+    height: 68px;
+    background: #4FA3F7;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 82%, 0 100%);
+}
+
+.cer-cintas i:first-child { left: 22px; transform: rotate(12deg); }
+.cer-cintas i:last-child { right: 22px; background: #E8503A; transform: rotate(-12deg); }
+
+.cer-disco {
+    position: absolute;
+    top: 0;
+    left: 6px;
+    display: grid;
+    place-items: center;
+    width: 100px;
+    height: 100px;
+    border: 6px solid #FFE9A0;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #FFE98A, #F2B230 70%, #D4921A);
+    box-shadow: 0 6px 0 #B9801A, 0 0 0 4px rgba(255, 214, 84, 0.45);
+}
+
+.cer-disco b {
+    font-size: 50px;
+    line-height: 1;
+    filter: drop-shadow(0 3px 0 rgba(150, 80, 0, 0.3));
+}
+
+/* Destello que pasa por encima */
+.cer-brillo {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: 20px;
+    pointer-events: none;
+}
+
+.cer-brillo::before {
+    content: "";
+    position: absolute;
+    top: -20%;
+    left: -40%;
+    width: 30%;
+    height: 140%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.75), transparent);
+    transform: skewX(-20deg);
+    animation: cer-pasar 4.5s ease-in-out 4s infinite;
+}
+
+/* ---------- Cohete de Starly ---------- */
+
+.cer-nave-pos {
+    position: absolute;
+    z-index: 20;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+}
+
+.cer-nave {
+    --ancho: clamp(160px, 38vmin, 290px);
+    width: var(--ancho);
+    margin-top: 6vh;
+}
+
+.cer-cohete {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 12px 18px rgba(10, 5, 50, 0.45));
+    animation: cer-flotar 2.2s ease-in-out infinite;
+}
+
+.cer-cohete-respaldo {
+    display: block;
+    font-size: clamp(5rem, 16vmin, 9rem);
+    line-height: 1;
+    text-align: center;
+    animation: cer-flotar 2.2s ease-in-out infinite;
+}
+
+.cer-cohete.brinca { animation: cer-brinco 0.5s ease-out, cer-flotar 2.2s ease-in-out 0.5s infinite; }
+.cer-nave-pos.despega .cer-cohete { animation: cer-vibrar 0.09s linear infinite; }
+
+/* ---------- Viaje ---------- */
+
+.cer-lineas {
+    position: absolute;
+    z-index: 18;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.cer-linea {
+    position: absolute;
+    left: 0;
+    height: 3px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.85));
+    animation: cer-correr linear forwards;
+}
+
+.cer-chispa {
+    position: absolute;
+    z-index: 19;
+    color: #FFE27A;
+    font-size: 22px;
+    line-height: 1;
+    pointer-events: none;
+    text-shadow: 0 0 8px #FFB84A;
+    animation: cer-chispa 0.8s ease-out forwards;
+}
+
+.cer-fugaz {
+    position: absolute;
+    z-index: 25;
+    width: 0;
+    height: 0;
+}
+
+.cer-cabeza {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #FFF6B8;
+    font-size: 38px;
+    line-height: 1;
+    text-shadow: 0 0 12px #FFD454, 0 0 28px #FFB84A;
+    transform: translate(-50%, -50%);
+}
+
+.cer-cola {
+    position: absolute;
+    top: -3px;
+    right: 0;
+    width: 260px;
+    height: 6px;
+    border-radius: 6px;
+    background: linear-gradient(90deg, transparent, rgba(255, 232, 150, 0.95));
+    transform-origin: 100% 50%;
+}
+
+.cer-despedida {
+    position: absolute;
+    z-index: 26;
+    top: 28%;
+    right: 0;
+    left: 0;
+    margin: 0;
+    padding: 0 22px;
+    font-family: var(--cer-fuente);
+    font-size: clamp(3.4rem, 13vw, 7.2rem);
+    font-weight: 800;
+    line-height: 1.1;
+    text-align: center;
+    filter: drop-shadow(0 6px 0 rgba(23, 16, 68, 0.55)) drop-shadow(0 0 24px rgba(255, 216, 77, 0.35));
+}
+
+.cer-despedida::before,
+.cer-despedida::after {
+    content: "⭐";
+    position: absolute;
+    top: 46%;
+    font-size: 0.34em;
+    animation: cer-titilar 1.8s ease-in-out infinite;
+}
+
+.cer-despedida::before { left: 10%; }
+.cer-despedida::after { right: 10%; animation-delay: 0.8s; }
+
+/* Letras en amarillo y naranja con borde morado, como el logo del juego */
+.cer-palabra {
+    position: relative;
+    display: inline-block;
+    padding: 0 0.03em;
+    opacity: 0;
+    animation:
+        cer-palabra 0.7s cubic-bezier(0.3, 1.5, 0.5, 1) calc(var(--i) * 0.11s) forwards,
+        cer-ola 2.6s ease-in-out calc(1.4s + var(--i) * 0.1s) infinite;
+}
+
+.cer-trazo {
+    position: absolute;
+    top: 0;
+    left: 0.03em;
+    color: var(--cer-morado);
+    -webkit-text-stroke: 0.2em var(--cer-morado);
+    pointer-events: none;
+}
+
+.cer-relleno {
+    position: relative;
+    color: transparent;
+    background: linear-gradient(180deg, #FFF3A6 0%, var(--cer-amarillo) 45%, var(--cer-naranja) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+.cer-espacio-desp { display: inline-block; width: 0.3em; }
+
+.cer-botones {
+    position: absolute;
+    z-index: 30;
+    right: 0;
+    bottom: 11%;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 0 16px;
+}
+
+.cer-boton {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
-    animation: final-aparecer 1s ease both;
+    gap: 2px;
+    min-width: clamp(120px, 26vw, 170px);
+    padding: 14px 22px 12px;
+    border: 4px solid #FFFFFF;
+    border-radius: 28px;
+    background: #8467D7;
+    box-shadow: 0 8px 0 #4A3399;
+    color: #FFFFFF;
+    font-family: var(--cer-fuente);
+    font-size: clamp(1.2rem, 3.4vw, 1.6rem);
+    font-weight: 600;
+    text-decoration: none;
+    animation: cer-pop 0.6s cubic-bezier(0.3, 1.6, 0.5, 1) backwards;
+    -webkit-tap-highlight-color: transparent;
 }
 
-.final-fin-estrella {
-    color: var(--final-amarillo);
-    font-size: 5rem;
-    filter: drop-shadow(0 0 20px #ffdf64);
-    animation: final-flotar 3s ease-in-out infinite;
+.cer-boton span { font-size: clamp(2rem, 6vw, 2.8rem); line-height: 1.1; }
+.cer-mapa { background: #FF9F43; box-shadow: 0 8px 0 #C46A12; animation-delay: 0.2s; }
+.cer-boton:hover { transform: translateY(-3px) scale(1.04); }
+.cer-boton:active { transform: translateY(4px); box-shadow: 0 3px 0 #4A3399; }
+.cer-mapa:active { box-shadow: 0 3px 0 #C46A12; }
+.cer-boton:focus-visible { outline: 4px dashed #FFE27A; outline-offset: 4px; }
+
+/* ---------- Efectos ---------- */
+
+.cer-efectos {
+    position: absolute;
+    z-index: 40;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
 }
 
-.final-fin-contenido h2 {
-    margin: 0;
-    color: #fff0a0;
-    font-size: clamp(4rem, 12vw, 7rem);
+.cer-confeti {
+    position: absolute;
+    top: -20px;
+    width: 9px;
+    height: 14px;
+    border-radius: 2px;
+    animation: cer-confeti linear forwards;
 }
 
-.final-fin-contenido p {
-    margin: 0;
-    font-size: clamp(1.2rem, 3vw, 1.8rem);
-    font-weight: 800;
+.cer-destello {
+    position: absolute;
+    color: #FFD454;
+    font-size: 28px;
+    text-shadow: 0 0 6px #FFFFFF;
+    animation: cer-destello 1s forwards;
 }
 
-.final-fin-contenido > span {
-    color: #c4d8ff;
-    font-size: .85rem;
-    font-weight: 800;
-    letter-spacing: .15em;
+.cer-onda {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 4px solid #FFD454;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: cer-onda 0.8s ease-out forwards;
 }
 
-.final-fin-contenido .final-boton {
-    margin-top: 20px;
+.cer-globo {
+    position: absolute;
+    bottom: -110px;
+    width: 54px;
+    height: 68px;
+    border-radius: 50% 50% 46% 46%;
+    background: var(--c, #FF7BA9);
+    animation: cer-globo var(--t, 7s) ease-in forwards;
 }
 
-@keyframes final-aparecer {
-    from { opacity: 0; }
-    to { opacity: 1; }
+.cer-globo::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: 2px;
+    height: 46px;
+    background: rgba(90, 70, 120, 0.5);
 }
 
-@media (max-width: 650px) {
-    .final-escena-certificado {
-        padding: 65px 12px 24px;
-        gap: 12px;
-    }
+/* ---------- Animaciones ---------- */
 
-    .final-entrega {
-        flex-direction: column;
-        gap: 6px;
-    }
+@keyframes cer-girar { to { transform: rotate(360deg); } }
 
-    .final-starly {
-        flex: none;
-        width: 100px;
-    }
-
-    .final-starly-imagen {
-        max-height: 110px;
-    }
-
-    .final-diploma {
-        width: min(100%, 440px);
-    }
-
-    .final-diploma-interior {
-        padding: 12px;
-    }
-
-    .final-diploma p {
-        margin: 6px auto;
-    }
-
-    .final-boton {
-        padding: 10px 15px;
-        font-size: .9rem;
-    }
-
-    .final-nave {
-        scale: .8;
-        transform-origin: bottom center;
-    }
+@keyframes cer-flotar {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
 }
 
-@media (max-height: 700px) and (min-width: 651px) {
-    .final-escena-certificado {
-        gap: 8px;
-        padding: 12px;
-    }
+@keyframes cer-pulso {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(132, 103, 215, 0.4); }
+    50% { box-shadow: 0 0 0 10px rgba(132, 103, 215, 0); }
+}
 
-    .final-starly-imagen {
-        max-height: 155px;
-    }
+@keyframes cer-titilar {
+    0%, 100% { opacity: 0.25; transform: scale(0.7); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
 
-    .final-diploma-interior {
-        padding: 10px 18px;
-    }
+@keyframes cer-cae {
+    0% { opacity: 0; transform: translateY(-130%) rotate(-14deg) scale(0.6); }
+    100% { opacity: 1; transform: translateY(0) rotate(0) scale(1); }
+}
+
+@keyframes cer-respirar {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-5px) rotate(0.4deg); }
+}
+
+@keyframes cer-sacudir {
+    0%, 100% { transform: translate(0, 0); }
+    15% { transform: translate(-8px, 4px) rotate(-0.8deg); }
+    35% { transform: translate(7px, -4px) rotate(0.8deg); }
+    55% { transform: translate(-5px, 3px); }
+    75% { transform: translate(4px, -2px); }
+}
+
+@keyframes cer-sale {
+    0% { opacity: 1; transform: translateY(0) scale(1) rotate(0); }
+    100% { opacity: 0; transform: translateY(-40%) scale(0.25) rotate(10deg); }
+}
+
+@keyframes cer-cinta {
+    from { transform: translateX(-50%) scaleX(0); }
+    to { transform: translateX(-50%) scaleX(1); }
+}
+
+@keyframes cer-letra {
+    0% { opacity: 0; transform: translateY(30px) scale(0.3) rotate(-14deg); }
+    70% { opacity: 1; transform: translateY(-8px) scale(1.2) rotate(4deg); }
+    100% { opacity: 1; transform: translateY(0) scale(1) rotate(0); }
+}
+
+@keyframes cer-sube {
+    0% { opacity: 0; transform: translateY(70px) scale(0.4); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes cer-salto {
+    0%, 100% { transform: translateY(0) scale(1, 1); }
+    15% { transform: translateY(0) scale(1.06, 0.92); }
+    45% { transform: translateY(-13%) scale(0.97, 1.05); }
+    75% { transform: translateY(0) scale(1.04, 0.95); }
+}
+
+@keyframes cer-rodar {
+    0%, 100% { transform: translateX(-6%) rotate(-2deg); }
+    50% { transform: translateX(6%) rotate(2deg); }
+}
+
+@keyframes cer-sello {
+    0% { transform: scale(2.4) rotate(-40deg); opacity: 0; }
+    70% { transform: scale(0.9) rotate(6deg); opacity: 1; }
+    100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+@keyframes cer-sellar {
+    0% { opacity: 0; transform: scale(3.2) rotate(-35deg); }
+    65% { opacity: 1; transform: scale(0.88) rotate(5deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+@keyframes cer-brinco {
+    0%, 100% { transform: scale(1) rotate(0); }
+    40% { transform: scale(1.2) rotate(-10deg); }
+    70% { transform: scale(0.95) rotate(6deg); }
+}
+
+@keyframes cer-pasar {
+    0% { left: -40%; }
+    35%, 100% { left: 140%; }
+}
+
+@keyframes cer-llama {
+    from { transform: scaleX(0.8); }
+    to { transform: scaleX(1.15); }
+}
+
+@keyframes cer-llama-fuerte {
+    from { transform: scaleX(1.5) scaleY(1.1); }
+    to { transform: scaleX(2.3) scaleY(1.3); }
+}
+
+@keyframes cer-pop {
+    0% { transform: scale(0.2) rotate(-20deg); opacity: 0; }
+    70% { transform: scale(1.2) rotate(5deg); opacity: 1; }
+    100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+@keyframes cer-vibrar {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-2px, 1px); }
+    75% { transform: translate(2px, -1px); }
+}
+
+@keyframes cer-ola {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-7px); }
+}
+
+@keyframes cer-correr {
+    from { transform: translateX(110vw); opacity: 1; }
+    to { transform: translateX(-60vw); opacity: 0.2; }
+}
+
+@keyframes cer-chispa {
+    0% { opacity: 1; transform: translate(0, 0) scale(1) rotate(0); }
+    100% { opacity: 0; transform: translate(-30px, 14px) scale(0.2) rotate(120deg); }
+}
+
+@keyframes cer-palabra {
+    0% { opacity: 0; transform: translateY(24px) scale(0.5); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes cer-confeti {
+    0% { transform: translateY(0) rotate(0); opacity: 1; }
+    100% { transform: translateY(var(--caida, 700px)) rotate(var(--giro, 540deg)); opacity: 0.9; }
+}
+
+@keyframes cer-destello {
+    0% { opacity: 1; transform: translateY(0) scale(0.5); }
+    100% { opacity: 0; transform: translateY(-50px) scale(1.4) rotate(60deg); }
+}
+
+@keyframes cer-onda {
+    0% { opacity: 1; transform: translate(-50%, -50%) scale(0.4); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(6); }
+}
+
+@keyframes cer-globo {
+    0% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-60vh) translateX(26px); }
+    100% { transform: translateY(-125vh) translateX(-20px); }
+}
+
+/* ---------- Pantallas pequeñas ---------- */
+
+@media (max-width: 600px) {
+    .cer-guia { top: 8px; left: 8px; gap: 5px; width: calc(100% - 16px); }
+    .cer-starly { width: 48px; height: 60px; }
+    .cer-dialogo { flex: 1 1 auto; gap: 6px; min-height: 55px; padding: 6px 6px 6px 10px; }
+    .cer-dialogo p { font-size: 0.85rem; }
+    .cer-audio { flex-basis: 36px; width: 36px; height: 36px; }
+    .cer-zona { top: 76px; }
+    .cer-botones { bottom: 14%; gap: 12px; }
+}
+
+@media (max-height: 520px) and (min-width: 601px) {
+    .cer-guia { top: 8px; left: 10px; }
+    .cer-starly { width: 46px; height: 52px; }
+    .cer-dialogo { min-height: 46px; padding: 5px 6px 5px 12px; }
+    .cer-zona { top: 66px; }
+    .cer-botones { bottom: 8%; }
+    .cer-boton { padding: 8px 18px 8px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .final-estrella-fondo,
-    .final-starly,
-    .final-diploma,
-    .final-fin-estrella {
+    .cer-starly,
+    .cer-rayos.on,
+    .cer-esquina,
+    .cer-diploma.entrado,
+    .cer-brillo::before,
+    .cer-planeta,
+    .cer-cohete,
+    .cer-estrella-fondo {
         animation: none;
-    }
-
-    .final-nave.temblando {
-        animation: none;
-    }
-
-    .final-nave.despegando {
-        animation: final-despegue-reducido .5s ease forwards;
-    }
-
-    @keyframes final-despegue-reducido {
-        to {
-            opacity: 0;
-            transform: translateX(-50%) translateY(-80px) scale(.5);
-        }
     }
 }
 
-@media print {
-    @page {
-        size: landscape;
-        margin: 12mm;
+
+/* RESPONSIVE - CERTIFICADO FINAL */
+
+.cer-pagina {
+    width: 100%;
+    min-height: 100dvh;
+    overflow: hidden;
+}
+
+.cer-escena {
+    width: 100%;
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.cer-caja {
+    --s: min(
+        1,
+        calc((100vw - 90px) / 600),
+        calc((100dvh - 160px) / 470)
+    );
+
+    width: calc(600px * var(--s));
+    height: calc(470px * var(--s));
+}
+
+.cer-escala {
+    transform: scale(var(--s));
+    transform-origin: top left;
+}
+
+@media (max-width: 1024px) and (orientation: landscape) {
+    .cer-guia {
+        top: 7px;
+        left: 10px;
+        width: min(65%, 440px);
+        gap: 7px;
     }
 
-    body,
-    .certificado-final {
-        background: #ffffff !important;
+    .cer-starly {
+        width: 53px;
+        height: 60px;
     }
 
-    .certificado-cielo,
-    .final-encabezado,
-    .final-starly,
-    .final-mensaje,
-    .final-acciones,
-    .final-control-audio,
-    .final-escena-despedida,
-    .final-escena-fin {
-        display: none !important;
+    .cer-dialogo {
+        min-height: 44px;
+        padding: 6px 8px;
+        gap: 7px;
+        border-width: 2px;
+        border-radius: 14px;
     }
 
-    .final-escena-certificado {
-        display: flex !important;
-        min-height: auto;
-        padding: 0;
+    .cer-dialogo p {
+        font-size: clamp(0.7rem, 1.4vw, 0.9rem);
+        line-height: 1.25;
     }
 
-    .final-entrega {
-        width: 100%;
+    .cer-audio {
+        flex-basis: 34px;
+        width: 34px;
+        height: 34px;
     }
 
-    .final-diploma {
-        width: 100%;
-        max-width: none;
-        animation: none;
-        box-shadow: none;
-        print-color-adjust: exact;
-        -webkit-print-color-adjust: exact;
+    .cer-audio svg {
+        width: 19px;
+        height: 19px;
     }
 
-    .final-diploma-interior {
-        padding: 35px;
+    .cer-zona {
+        top: 65px;
+    }
+
+    .cer-caja {
+        --s: min(
+            0.85,
+            calc((100vw - 90px) / 600),
+            calc((100dvh - 110px) / 470)
+        );
+    }
+
+    .cer-nave {
+        --ancho: clamp(115px, 30vmin, 210px);
+        margin-top: 3vh;
+    }
+
+    .cer-despedida {
+        top: 24%;
+        padding: 0 15px;
+        font-size: clamp(2.2rem, 9vw, 5rem);
+    }
+
+    .cer-botones {
+        bottom: 6%;
+        gap: 12px;
+    }
+
+    .cer-boton {
+        min-width: 120px;
+        padding: 8px 15px;
+        border-width: 3px;
+        border-radius: 19px;
+        font-size: clamp(0.9rem, 2vw, 1.2rem);
+        box-shadow: 0 5px 0 #4A3399;
+    }
+
+    .cer-boton span {
+        font-size: clamp(1.5rem, 3vw, 2rem);
+    }
+
+    .cer-mapa {
+        box-shadow: 0 5px 0 #C46A12;
+    }
+}
+
+@media (max-width: 700px) and (orientation: landscape) {
+    .cer-guia {
+        top: 5px;
+        left: 7px;
+        width: min(60%, 340px);
+        gap: 5px;
+    }
+
+    .cer-starly {
+        width: 40px;
+        height: 47px;
+    }
+
+    .cer-dialogo {
+        min-height: 35px;
+        padding: 4px 6px;
+        gap: 5px;
+        border-radius: 11px;
+    }
+
+    .cer-dialogo p {
+        font-size: 0.68rem;
+    }
+
+    .cer-audio {
+        flex-basis: 29px;
+        width: 29px;
+        height: 29px;
+    }
+
+    .cer-audio svg {
+        width: 17px;
+        height: 17px;
+    }
+
+    .cer-zona {
+        top: 52px;
+    }
+
+    .cer-caja {
+        --s: min(
+            0.7,
+            calc((100vw - 75px) / 600),
+            calc((100dvh - 85px) / 470)
+        );
+    }
+
+    .cer-nave {
+        --ancho: clamp(95px, 27vmin, 150px);
+        margin-top: 2vh;
+    }
+
+    .cer-despedida {
+        top: 22%;
+        font-size: clamp(1.9rem, 8vw, 3.6rem);
+    }
+
+    .cer-botones {
+        bottom: 5%;
+        gap: 8px;
+    }
+
+    .cer-boton {
+        min-width: 105px;
+        padding: 6px 10px;
+        border-width: 2px;
+        border-radius: 15px;
+        font-size: 0.85rem;
+    }
+
+    .cer-boton span {
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 480px) and (orientation: portrait) {
+    .cer-guia {
+        top: 8px;
+        left: 8px;
+        width: calc(100% - 16px);
+        gap: 6px;
+    }
+
+    .cer-starly {
+        width: 45px;
+        height: 55px;
+    }
+
+    .cer-dialogo {
+        min-height: 50px;
+        padding: 6px 8px;
+        gap: 6px;
+        border-radius: 14px;
+    }
+
+    .cer-dialogo p {
+        font-size: 0.78rem;
+    }
+
+    .cer-audio {
+        flex-basis: 34px;
+        width: 34px;
+        height: 34px;
+    }
+
+    .cer-zona {
+        top: 75px;
+    }
+
+    .cer-caja {
+        --s: min(
+            0.68,
+            calc((100vw - 65px) / 600),
+            calc((100dvh - 155px) / 470)
+        );
+    }
+
+    .cer-nave {
+        --ancho: clamp(120px, 38vw, 185px);
+    }
+
+    .cer-despedida {
+        top: 28%;
+        padding: 0 10px;
+        font-size: clamp(2.2rem, 11vw, 4rem);
+    }
+
+    .cer-botones {
+        bottom: 10%;
+        gap: 10px;
+        padding: 0 10px;
+    }
+
+    .cer-boton {
+        min-width: 0;
+        flex: 1;
+        max-width: 155px;
+        padding: 9px 7px;
+        border-width: 3px;
+        border-radius: 17px;
+        font-size: 0.9rem;
+    }
+
+    .cer-boton span {
+        font-size: 1.7rem;
+    }
+}
+
+@media (max-height: 360px) and (orientation: landscape) {
+    .cer-zona {
+        top: 45px;
+    }
+
+    .cer-caja {
+        --s: min(
+            0.55,
+            calc((100vw - 65px) / 600),
+            calc((100dvh - 75px) / 470)
+        );
+    }
+
+    .cer-nave {
+        --ancho: clamp(80px, 25vmin, 125px);
+    }
+
+    .cer-despedida {
+        top: 20%;
+        font-size: clamp(1.8rem, 7vw, 3rem);
+    }
+
+    .cer-botones {
+        bottom: 4%;
+    }
+
+    .cer-boton {
+        padding: 5px 9px;
     }
 }

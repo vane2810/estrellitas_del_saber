@@ -34,7 +34,7 @@ const RUTA_CERTIFICADO = "certificado.html";
 
 const RUTA_NARRACIONES = "../audio/narraciones/";
 const RUTA_EFECTOS = "../audio/efecto/";
-const RUTA_MUSICA = "../audio/musica/";
+const RUTA_MUSICA = "../audio/música/";
 
 /* MISIONES */
 
@@ -68,7 +68,7 @@ const misiones = [
     },
     {
         id: 4,
-        nombre: "¡Armemos el salón!",
+        nombre: "¡Organicemos el salón!",
         titulo: "¡Armemos el salón!",
         descripcion: "Ayudemos a organizar nuestro salón para aprender.",
         icono: "🧩",
@@ -251,7 +251,7 @@ const audioMapa = {
     bienvenida: RUTA_NARRACIONES + "mapa_bienvenida.mp3",
     siguiente: RUTA_NARRACIONES + "mapa_siguiente_mision.mp3",
     final: RUTA_NARRACIONES + "mapa_final.mp3",
-    musica: RUTA_MUSICA + "aventura_espacial.mp3",
+    musica: RUTA_MUSICA + "mapa.mp3",
     efectoSeleccion: RUTA_EFECTOS + "seleccion.mp3",
     efectoEstrellas: RUTA_EFECTOS + "estrellas.mp3",
     efectoMedalla: RUTA_EFECTOS + "medalla.mp3"
@@ -459,7 +459,7 @@ function actualizarMusica() {
         );
 
         musicaActual.loop = true;
-        musicaActual.volume = 0.18;
+        musicaActual.volume = 0.1;
     }
 
     if (configuracion.musica) {
@@ -1341,6 +1341,51 @@ document.addEventListener("keydown", evento => {
         premioContinuar.focus();
     }
 });
+
+/* AUDIO DE ORIENTACIÓN MÓVIL */
+
+const audioGirarTelefono = new Audio(
+    "../audio/narraciones/girar_telefono.mp3"
+);
+
+const orientacionMovil = window.matchMedia(
+    "(max-width: 767px) and (orientation: portrait)"
+);
+
+let avisoOrientacionReproducido = false;
+
+function verificarOrientacionMovil() {
+    if (orientacionMovil.matches) {
+        if (!avisoOrientacionReproducido && configuracion.voz) {
+            avisoOrientacionReproducido = true;
+            audioGirarTelefono.currentTime = 0;
+
+            audioGirarTelefono.play().catch(() => {
+                avisoOrientacionReproducido = false;
+            });
+        }
+    } else {
+        audioGirarTelefono.pause();
+        audioGirarTelefono.currentTime = 0;
+        avisoOrientacionReproducido = false;
+    }
+}
+
+orientacionMovil.addEventListener(
+    "change",
+    verificarOrientacionMovil
+);
+
+document.addEventListener(
+    "pointerdown",
+    () => {
+        if (orientacionMovil.matches && !avisoOrientacionReproducido) {
+            verificarOrientacionMovil();
+        }
+    }
+);
+
+verificarOrientacionMovil();
 
 /* REINTENTAR AUDIO BLOQUEADO */
 

@@ -1,120 +1,117 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#101B48">
     <title>Certificado | Estrellitas del Saber</title>
-    <link rel="icon" type="image/webp" href="../img/personajes/starly/starly2.webp">
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/certificado.css">
     <script src="../js/certificado.js" defer></script>
 </head>
-<body>
-    <main class="certificado-final" id="certificado-final">
-        <div class="certificado-cielo" id="certificado-cielo" aria-hidden="true"></div>
+<body class="cer-pagina">
+    <main class="cer-escena" id="cer-escena">
 
-        <section class="final-escena final-escena-certificado" id="escena-certificado">
-            <header class="final-encabezado">
-                <span class="final-marca">ESTRELLITAS DEL SABER</span>
-                <h1>¡Misión cumplida!</h1>
-                <p>¡Completaste nuestra aventura!</p>
-            </header>
+        <!-- Fondo: de día para el certificado, de noche para el viaje -->
+        <div class="cer-cielo"></div>
+        <div class="cer-rayos" id="cer-rayos"></div>
+        <div class="cer-noche"></div>
+        <div class="cer-globos" id="cer-globos"></div>
+        <div class="cer-estrellas" id="cer-estrellas"></div>
+        <span class="cer-planeta p1"></span>
+        <span class="cer-planeta p2"></span>
 
-            <div class="final-entrega">
-                <div class="final-starly">
-                    <img
-                        src="../img/personajes/starly/starly2.webp"
-                        alt="Starly felicitando al tripulante"
-                        class="final-starly-imagen"
-                    >
-                    <div class="final-starly-sombra"></div>
-                </div>
+        <!-- Starly -->
+        <div class="cer-guia" id="cer-guia">
+            <img
+                src="../img/personajes/starly/starly_globos.webp"
+                alt="Starly"
+                class="cer-starly"
+                id="cer-starly"
+            >
 
-                <article class="final-diploma" id="diploma">
-                    <div class="final-diploma-interior">
-                        <div class="final-diploma-decoracion">★ ✦ ★</div>
-                        <p class="final-diploma-marca">ESTRELLITAS DEL SABER</p>
-                        <h2>Certificado de logro</h2>
-                        <p>Se reconoce a nuestro</p>
-                        <strong class="final-diploma-nombre">¡Gran Tripulante!</strong>
-                        <p class="final-diploma-descripcion">
-                            Por completar las seis misiones de esta
-                            aventura y aprender que todos los niños
-                            y las niñas tienen derecho a la educación.
-                        </p>
-                        <div class="final-diploma-medalla">
-                            <span>★</span>
-                            <strong>ESTRELLA<br>DEL SABER</strong>
+            <div class="cer-dialogo">
+                <p id="cer-mensaje" aria-live="polite">¡Ganaste el certificado final!</p>
+
+                <button type="button" id="cer-audio" class="cer-audio" aria-label="Escuchar a Starly">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M4 9v6h4l5 4V5L8 9H4z"></path>
+                        <path d="M16 9a5 5 0 0 1 0 6M18.5 6a9 9 0 0 1 0 12"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- El certificado -->
+        <div class="cer-zona" id="cer-zona">
+            <div class="cer-caja" id="cer-caja">
+                <div class="cer-escala">
+                    <section class="cer-diploma" id="cer-diploma" aria-label="Certificado Estrellitas del Saber">
+                        <div class="cer-marco">
+                            <span class="cer-esquina e1">★</span>
+                            <span class="cer-esquina e2">★</span>
+                            <span class="cer-esquina e3">★</span>
+                            <span class="cer-esquina e4">★</span>
+
+                            <div class="cer-cinta"><span>CERTIFICADO</span></div>
+
+                            <h1 class="cer-titulo" id="cer-titulo" aria-label="Estrellitas del Saber"></h1>
+
+                            <div class="cer-ninos" id="cer-ninos"></div>
+
+                            <ol class="cer-sellos" id="cer-sellos" aria-label="Misiones completadas">
+                                <li>⭐</li>
+                                <li>⭐</li>
+                                <li>⭐</li>
+                                <li>⭐</li>
+                                <li>⭐</li>
+                                <li>⭐</li>
+                            </ol>
+
+                            <p class="cer-lema">Todos los niños tienen derecho a aprender</p>
+
+                            <button type="button" class="cer-medalla" id="cer-medalla" aria-label="Medalla de estrella">
+                                <span class="cer-cintas"><i></i><i></i></span>
+                                <span class="cer-disco"><b>⭐</b></span>
+                            </button>
+
+                            <span class="cer-brillo" aria-hidden="true"></span>
                         </div>
-                        <p class="final-diploma-estrellas" id="certificado-estrellas">
-                            18 estrellas de aventura
-                        </p>
-                        <p class="final-diploma-firma">Con cariño, Starly</p>
-                    </div>
-                </article>
-            </div>
-
-            <p class="final-mensaje" id="mensaje-certificado" aria-live="polite">
-                ¡Lo logramos, tripulante!
-            </p>
-
-            <div class="final-acciones">
-                <button class="final-boton final-boton-secundario"
-                        id="btn-guardar" type="button">
-                    Guardar certificado
-                </button>
-                <button class="final-boton final-boton-principal"
-                        id="btn-continuar" type="button" disabled>
-                    Finalizar aventura
-                </button>
-            </div>
-        </section>
-
-        <section class="final-escena final-escena-despedida"
-                 id="escena-despedida" hidden>
-            <div class="final-despedida-texto"
-                 id="texto-despedida" aria-live="polite">
-                ¡Hasta pronto, tripulante!
-            </div>
-
-            <div class="final-espacio-vuelo">
-                <div class="final-nave" id="final-nave">
-                    <div class="final-nave-punta"></div>
-                    <div class="final-nave-cuerpo"></div>
-                    <div class="final-nave-ventana">
-                        <img src="../img/personajes/starly/starly2.webp"
-                             alt="Starly dentro de la nave">
-                    </div>
-                    <div class="final-nave-aleta final-nave-aleta-izquierda"></div>
-                    <div class="final-nave-aleta final-nave-aleta-derecha"></div>
-                    <div class="final-nave-motor"></div>
-                    <div class="final-nave-fuego"></div>
+                    </section>
                 </div>
-                <div class="final-plataforma"></div>
             </div>
-        </section>
+        </div>
 
-        <section class="final-escena final-escena-fin"
-                 id="escena-fin" hidden>
-            <div class="final-fin-contenido">
-                <div class="final-fin-estrella">★</div>
-                <h2>¡FIN!</h2>
-                <p>¡Nunca dejes de aprender!</p>
-                <span>ESTRELLITAS DEL SABER</span>
-                <button class="final-boton final-boton-principal"
-                        id="btn-volver" type="button">
-                    Volver al mapa
-                </button>
+        <!-- El cohete de Starly -->
+        <div class="cer-nave-pos" id="cer-nave-pos" hidden>
+            <div class="cer-nave" id="cer-nave">
+                <img
+                    src="../img/personajes/starly/starlycohete.webp"
+                    alt="Starly en su cohete"
+                    class="cer-cohete"
+                    id="cer-cohete"
+                    loading="eager"
+                    decoding="async"
+                >
+                <span class="cer-cohete-respaldo" id="cer-cohete-respaldo" hidden aria-hidden="true">🚀</span>
             </div>
-        </section>
+        </div>
 
-        <button class="final-control-audio"
-                id="btn-audio" type="button"
-                aria-label="Activar o desactivar narración">
-            🔊
-        </button>
+        <div class="cer-lineas" id="cer-lineas"></div>
+
+        <div class="cer-fugaz" id="cer-fugaz" hidden>
+            <span class="cer-cola" id="cer-cola"></span>
+            <span class="cer-cabeza">★</span>
+        </div>
+
+        <p class="cer-despedida" id="cer-despedida" hidden aria-label="¡Hasta pronto!"></p>
+
+        <!-- Botones finales -->
+        <nav class="cer-botones" id="cer-botones" hidden>
+            <a href="../index.html" class="cer-boton cer-inicio"><span aria-hidden="true">🏠</span>Inicio</a>
+            <a href="mapa.html" class="cer-boton cer-mapa"><span aria-hidden="true">🗺️</span>Mapa</a>
+        </nav>
+
+        <div class="cer-efectos" id="cer-efectos"></div>
     </main>
 </body>
 </html>

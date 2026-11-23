@@ -609,3 +609,248 @@
         transform: scale(1);
     }
 }
+
+
+/* RESPONSIVE - MISIÓN 5 */
+
+.luna-juego {
+    width: 100%;
+    min-height: 100dvh;
+    overflow-x: hidden;
+}
+
+.luna-panel {
+    box-sizing: border-box;
+    max-width: 1150px;
+}
+
+.luna-escenario {
+    width: 100%;
+    min-width: 0;
+}
+
+@media (max-width: 1024px) and (orientation: landscape) {
+    .luna-header {
+        gap: 8px;
+        padding: 6px 18px;
+    }
+
+    .luna-header h1 {
+        font-size: clamp(1rem, 2.3vw, 1.5rem);
+    }
+
+    .luna-mision {
+        font-size: 0.65rem;
+    }
+
+    .luna-volver,
+    .luna-contador {
+        min-height: 36px;
+        padding: 5px 11px;
+        font-size: 0.82rem;
+    }
+
+    .luna-panel {
+        width: 97%;
+        margin: 5px auto 12px;
+        padding: 7px;
+        border-width: 3px;
+        border-radius: 20px;
+    }
+
+    .luna-escenario {
+        height: clamp(290px, 72dvh, 460px);
+        min-height: 0;
+        border-radius: 16px;
+    }
+
+    .luna-guia {
+        top: 7px;
+        left: 9px;
+        width: min(65%, 460px);
+        gap: 6px;
+    }
+
+    .luna-starly {
+        width: 55px;
+        height: 65px;
+    }
+
+    .luna-dialogo {
+        min-height: 42px;
+        padding: 6px 9px;
+        gap: 7px;
+        border-radius: 14px;
+    }
+
+    .luna-dialogo p {
+        font-size: clamp(0.72rem, 1.4vw, 0.88rem);
+        line-height: 1.25;
+    }
+
+    .luna-audio {
+        width: 34px;
+        height: 34px;
+        flex-basis: 34px;
+    }
+
+    .luna-pizarra {
+        top: 75px;
+        bottom: 82px;
+        left: 43%;
+        width: min(57%, 570px);
+        min-height: 0;
+        padding: 5px;
+        border-width: 7px;
+        border-radius: 12px;
+        transform: translateX(-50%);
+    }
+
+    .luna-trazo {
+        width: 100%;
+        height: 100%;
+        touch-action: none;
+    }
+
+    .luna-nombre {
+        bottom: 9px;
+        left: 43%;
+        gap: 5px;
+        padding: 5px 9px;
+        border-radius: 12px;
+        transform: translateX(-50%);
+    }
+
+    .nombre-casilla {
+        width: clamp(34px, 4vw, 48px);
+        height: clamp(34px, 4vw, 48px);
+        font-size: clamp(1.4rem, 2.5vw, 2rem);
+        border-bottom-width: 4px;
+    }
+
+    .luna-alumna {
+        right: 2%;
+        bottom: 8px;
+        width: clamp(75px, 10vw, 110px);
+    }
+
+    .luna-alumna.grupo {
+        width: clamp(145px, 19vw, 215px);
+    }
+
+    .luna-piso {
+        height: 20%;
+    }
+
+    .luna-pie {
+        gap: 8px;
+        padding: 7px 10px 3px;
+    }
+
+    .luna-pie p {
+        font-size: 0.85rem;
+    }
+
+    .luna-progreso {
+        gap: 7px;
+        font-size: 0.7rem;
+    }
+
+    .luna-estrella {
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 700px) and (orientation: landscape) {
+    .luna-header {
+        gap: 5px;
+        padding: 4px 10px;
+    }
+
+    .luna-header h1 {
+        font-size: 0.95rem;
+    }
+
+    .luna-panel {
+        width: 98%;
+        padding: 5px;
+    }
+
+    .luna-escenario {
+        height: clamp(250px, 70dvh, 330px);
+        min-height: 0;
+    }
+
+    .luna-guia {
+        top: 5px;
+        left: 6px;
+        width: 63%;
+    }
+
+    .luna-starly {
+        width: 42px;
+        height: 50px;
+    }
+
+    .luna-dialogo {
+        min-height: 35px;
+        padding: 4px 6px;
+        gap: 5px;
+    }
+
+    .luna-dialogo p {
+        font-size: 0.68rem;
+    }
+
+    .luna-audio {
+        width: 30px;
+        height: 30px;
+        flex-basis: 30px;
+    }
+
+    .luna-pizarra {
+        top: 60px;
+        bottom: 67px;
+        left: 42%;
+        width: 58%;
+        padding: 4px;
+        border-width: 5px;
+    }
+
+    .luna-nombre {
+        bottom: 6px;
+        left: 42%;
+        gap: 3px;
+        padding: 4px 6px;
+    }
+
+    .nombre-casilla {
+        width: 32px;
+        height: 32px;
+        font-size: 1.35rem;
+        border-bottom-width: 3px;
+    }
+
+    .luna-alumna {
+        right: 1%;
+        bottom: 6px;
+        width: 65px;
+    }
+
+    .luna-alumna.grupo {
+        width: 130px;
+    }
+
+    .luna-pie {
+        gap: 5px;
+        padding: 5px;
+    }
+
+    .luna-pie p {
+        font-size: 0.75rem;
+    }
+
+    .luna-estrella {
+        font-size: 1.25rem;
+    }
+}

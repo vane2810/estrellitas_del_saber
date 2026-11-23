@@ -9,7 +9,7 @@
 /* Contenedor principal */
 
 .mapa {
-
+    width: 100%;
     position: relative;
 
     isolation: isolate;
@@ -3426,4 +3426,80 @@
     .premio-medalla-grande::before, .premio-medalla-grande::after,
     .premio-decoraciones span, .premio-boton, .premio-boton::before,
     .premio-boton::after, .estrella-recompensa { animation: none !important; }
+}
+
+/* AVISO DE ORIENTACIÓN MÓVIL */
+
+.aviso-horizontal {
+    display: none;
+}
+
+@media (max-width: 767px) and (orientation: portrait) {
+    .aviso-horizontal {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background: linear-gradient(180deg, #81D9F5, #C7F3FF);
+        text-align: center;
+    }
+
+    .aviso-horizontal-contenido {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        max-width: 340px;
+    }
+
+    .aviso-horizontal-starly {
+        width: 135px;
+        height: 145px;
+        object-fit: contain;
+        animation: aviso-flotar 2s ease-in-out infinite;
+    }
+
+    .aviso-horizontal-telefono {
+        font-size: 4rem;
+        animation: aviso-girar 2.5s ease-in-out infinite;
+    }
+
+    .aviso-horizontal h2 {
+        color: #51309A;
+        font-size: 1.7rem;
+        font-weight: 800;
+    }
+
+    .aviso-horizontal p {
+        color: #51309A;
+        font-size: 1.05rem;
+        line-height: 1.5;
+    }
+
+    body:has(.aviso-horizontal) {
+        overflow: hidden;
+    }
+}
+
+@keyframes aviso-girar {
+    0%, 20% {
+        transform: rotate(0deg);
+    }
+
+    60%, 100% {
+        transform: rotate(90deg);
+    }
+}
+
+@keyframes aviso-flotar {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
 }
